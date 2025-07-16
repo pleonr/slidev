@@ -1,11 +1,13 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# Slidev Workspace Starter
 
-To start the slide show:
+This starter helps you manage multiple **Slidev** presentations in a single monorepo. Since each Slidev project is an independent package, using a **pnpm workspace** makes it easy to manage, develop, and deploy them together.
 
-- `pnpm install`
-- `pnpm dev`
-- visit <http://localhost:3030>
+## ✨ Features
 
-Edit the [slides.md](./slides.md) to see the changes.
+- **Workspace-friendly**: Manage all your Slidev presentations as separate packages within a single workspace.
+- **Automated deployment**: Use GitHub Actions to automatically deploy each presentation to GitHub Pages.
+- **Easy to scale**: Quickly add new Slidev projects by creating new packages in the workspace.
 
-Learn more about Slidev at the [documentation](https://sli.dev/).
+## 📦 Demo
+
+Check out the live demo: https://leochiu-a.github.io/slidev-workspace-starter/
