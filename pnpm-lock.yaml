@@ -21,7 +21,11 @@ catalogs:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      yaml:
+        specifier: ^2.8.0
+        version: 2.8.0
 
   slide-decks:
     dependencies:
