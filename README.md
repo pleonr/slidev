@@ -25,3 +25,24 @@ This starter helps you manage multiple **Slidev** presentations in a single mono
 ## 📦 Demo
 
 Check out the live demo: https://leochiu-a.github.io/slidev-workspace-starter/
+
+
+## Stuff to remember
+
+```bash
+npm i -g pnpm
+```
+
+```bash
+pnpm create slidev
+```
+
+Basic Commands
+
+Slidev provides a set of commands in its CLI. Here are some common ones:
+
+- slidev - Start the dev server. See the dev command.
+- slidev export - Export the slides to PDF, PPTX, or PNGs. See 📖 Exporting📖 Exporting.
+- slidev build - Build the slides as a static web application. See 📖 Hosting📖 Hosting.
+- slidev format - Format the slides. See the format command.
+- slidev --help - Show the help message
