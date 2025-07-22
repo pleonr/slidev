@@ -7,7 +7,7 @@ background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
 title: Welcome to Slidev
 info: |
-  ## Slidev Starter Template
+  ## Slidev Starter Template test
   Presentation slides for developers.
 
   Learn more at [Sli.dev](https://sli.dev)
