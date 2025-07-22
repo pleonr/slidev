@@ -85,8 +85,9 @@ Existe vantagem em toda essa burocrácia?
 
 A arquitetura tradicional, também conhecida como monolítica ou de Cliente/Servidor, nesse modelo de arquitetur a maior
 parte do processamento é realizada no lado do servidor, normalmente usando o padrão MVC(model, view, controller).
-
-![](/monolito.png)
+<div class="flex items-center">
+  <img src="/monolito.png" style="width: 70%; margin-left: auto; margin-right: auto;" />
+</div>
 
 ---
 
@@ -97,7 +98,8 @@ o cliente incorpora parte do processamento. Regras de negócio no servidor. Comu
 Aplicação no cliente e tráfego de dados no formato JSON, XML, possuí menor acoplamento e possibilita
 a multiplataforma.
 
-![](/multicamadas.png)
+<img src="/multicamadas.png" style="width: 80%; margin-left: auto; margin-right: auto;" />
+
 
 ---
 
@@ -115,6 +117,7 @@ cada uma implantável e escalonável de forma independente.
 de expor funcionalidades.
 
 <!--
+hideInToc: true
 - Benefits:
 Faster Development: Focus on code, not infrastructure management.
 Increased Scalability: Cloud providers handle scaling automatically, adapting to demand spikes.
@@ -127,8 +130,10 @@ Debugging Complexity: Debugging issues across distributed functions can be chall
 -->
 
 ---
-
-![](/tecnologias.png)
+layout: image
+image: /tecnologias.png
+backgroundSize: contain
+---
 
 ---
 
