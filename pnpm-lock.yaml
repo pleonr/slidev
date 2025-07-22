@@ -97,7 +97,7 @@ importers:
         specifier: ^3.5.17
         version: 3.5.17(typescript@5.8.3)
 
-  slides/designsoftwarebuged:
+  slides/reactnative:
     dependencies:
       '@slidev/cli':
         specifier: ^52.0.0

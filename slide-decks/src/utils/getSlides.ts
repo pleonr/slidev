@@ -1,10 +1,16 @@
 export function getSlides() {
   return [
     {
-      title: 'Introdução a Design de Software',
+      title: 'Design de Software',
       url: 'designsoftware',
       description: 'Introdução a Design de Software',
-      image: 'https://picsum.photos/200/300',
+      image: '/designsoftware.png',
+    },
+    {
+      title: 'React Native',
+      url: 'reactnative',
+      description: 'Introdução ao React Native',
+      image: '/reactnative.png',
     }
   ]
 }
