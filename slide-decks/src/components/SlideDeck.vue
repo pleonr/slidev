@@ -4,7 +4,7 @@
       <h1
         class="text-4xl font-extrabold tracking-tight text-gray-900 mb-10 font-sans drop-shadow-sm"
       >
-        Slides Utilizados em aula
+        Slides utilizados em aula
       </h1>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <SlideCard
