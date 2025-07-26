@@ -17,6 +17,8 @@ interface SlideFrontmatter {
   mdc?: boolean;
   seoMeta?: {
     ogImage?: string;
+    ogTitle?: string;
+    ogDescription?: string;
   };
   [key: string]: any;
 }

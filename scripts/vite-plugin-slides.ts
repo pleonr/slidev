@@ -32,6 +32,7 @@ export function slidesPlugin(): Plugin {
                   path: s.path,
                   title: s.frontmatter.title,
                   theme: s.frontmatter.theme,
+                  seoMeta: s.frontmatter.seoMeta,
                 }))
               );
 

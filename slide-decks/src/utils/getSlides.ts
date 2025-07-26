@@ -6,8 +6,8 @@ export function getSlides() {
       return slidesData.map((slide) => ({
         title: slide.frontmatter.title || slide.path,
         url: slide.path,
-        description: slide.frontmatter.info || 'No description available',
-        image: slide.frontmatter.background || 'https://picsum.photos/200/300',
+        description: slide.frontmatter.seoMeta?.ogDescription || 'No description available',
+        image: slide.frontmatter.seoMeta?.ogImage || 'https://picsum.photos/200/300',
         author: 'John Doe',
         date: '2021-01-01',
         theme: slide.frontmatter.theme,

@@ -6,6 +6,11 @@ declare module 'virtual:slides-data' {
     info?: string
     class?: string
     transition?: string
+    seoMeta?: {
+      ogImage?: string
+      ogTitle?: string
+      ogDescription?: string
+    }
   }
 
   interface SlideData {
