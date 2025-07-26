@@ -15,7 +15,7 @@
     </CardHeader>
 
     <CardContent class="space-y-3">
-      <CardDescription class="line-clamp-3 text-sm">{{ description }}</CardDescription>
+      <CardDescription class="line-clamp-3 text-sm h-[40px]">{{ description }}</CardDescription>
 
       <div class="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t">
         <div class="flex items-center gap-1">
