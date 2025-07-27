@@ -1,5 +1,6 @@
 import reactNativeImage from '@/assets/reactnative.png'
 import designSoftwareImage from '@/assets/designsoftware.png'
+import sistemasdistribuidos from '@/assets/sistemasdistribuidos.png'
 
 export function getSlides() {
   return [
@@ -14,6 +15,12 @@ export function getSlides() {
       url: 'reactnative',
       description: 'Introdução ao React Native',
       image: reactNativeImage,
+    },
+    {
+      title: 'Ubiquitous Computing, Clouds, IoT e Smart Environments',
+      url: 'sistemasdistribuidos',
+      description: 'Introdução Ubiquitous Computing, Clouds, IoT e Smart Environments',
+      image: sistemasdistribuidos,
     }
   ]
 }
