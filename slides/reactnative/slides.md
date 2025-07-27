@@ -5,9 +5,6 @@ background: side-logo.png
 image: /side-logo.png
 title: React Native
 author: Pablo Leon Rodrigues
-info: |
-  ## ITEC - UPF
-  Design de Software
 class: text-center
 drawings:
   persist: false
