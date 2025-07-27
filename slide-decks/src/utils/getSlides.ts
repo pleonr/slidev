@@ -1,6 +1,7 @@
 import reactNativeImage from '@/assets/reactnative.png'
 import designSoftwareImage from '@/assets/designsoftware.png'
 import sistemasdistribuidos from '@/assets/sistemasdistribuidos.png'
+import webmobile from '@/assets/webmobile.png'
 
 export function getSlides() {
   return [
@@ -21,6 +22,12 @@ export function getSlides() {
       url: 'sistemasdistribuidos',
       description: 'Introdução Ubiquitous Computing, Clouds, IoT e Smart Environments',
       image: sistemasdistribuidos,
+    },
+    {
+      title: 'Programação Web Mobile',
+      url: 'webmobile',
+      description: 'design, programação, web',
+      image: webmobile,
     }
   ]
 }
