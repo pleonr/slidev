@@ -2,6 +2,7 @@ import reactNativeImage from '@/assets/reactnative.png'
 import designSoftwareImage from '@/assets/designsoftware.png'
 import sistemasdistribuidos from '@/assets/sistemasdistribuidos.png'
 import webmobile from '@/assets/webmobile.png'
+import api from '@/assets/api.png'
 
 export function getSlides() {
   return [
@@ -28,6 +29,12 @@ export function getSlides() {
       url: 'webmobile',
       description: 'design, programação, web',
       image: webmobile,
+    },
+    {
+      title: "API's",
+      url: 'api',
+      description: 'api, design, programação, web',
+      image: api,
     }
   ]
 }
