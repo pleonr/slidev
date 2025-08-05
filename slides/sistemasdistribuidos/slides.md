@@ -703,25 +703,53 @@ Entidades em comunicação
 
 ### Entidades em comunicação
 
+No contexto de modelos de arquitetura para sistemas distribuídos, uma das primeiras decisões de projeto é identificar quais entidades irão interagir e como essa interação será realizada.
+
+Segundo Coulouris, as entidades ativas que compõem um sistema distribuído são processos executando em diferentes dispositivos, que se comunicam por meio de troca de mensagens. Essas entidades podem ser modeladas de várias formas, com diferentes níveis de abstração.
+
 <br>
 
-- Processos
-  - Alguns tipos podem não ser suportados
-  - Threads são em geral os pontos de comunicação
-- Objetos
-  - Acessados por meio de uma linguagem de definição de interface (IDL)
-- Componentes
-  - Similares a Objetos (interface)
-  - Fornecem as dependências explícitas: remove dependências ocultas
-- Serviços Web
-  - Uso de interface e encapsulamento
-  - Associados a padrões da W3C
+1. Processos
+  - Unidade básica de execução em um sistema.
+  - Podem representar uma aplicação completa ou uma parte dela.
+  - Cada processo pode conter múltiplas threads para execução concorrente.
+  - Em sistemas distribuídos, processos normalmente estão em máquinas diferentes e se comunicam por rede.
+
+  > Coulouris destaca que processos em diferentes hosts não compartilham memória, por isso dependem exclusivamente da comunicação via mensagens.
+
+---
+
+2. Objetos Distribuídos
+  - Extensão do modelo de objetos para sistemas distribuídos.
+  - Cada objeto possui estado e métodos, e pode ser invocado remotamente (ex: Java RMI *remote method invocation*).
+  - Necessitam de uma Interface de Definição de Objeto (IDL), que descreve os métodos disponíveis para acesso remoto.
+
+3. Componentes
+  - Mais flexíveis que objetos tradicionais.
+  - Expõem interfaces explícitas e podem ser dinamicamente ligados/desligados.
+  - Utilizados em arquiteturas baseadas em componentes distribuídos (ex: CORBA, COM+).
+  - Possuem independência de linguagem e foco na reusabilidade.
+
+4. Serviços Web (Web Services)
+  - Entidades autônomas que oferecem funcionalidades acessíveis pela rede.
+  - Utilizam padrões abertos (WSDL, SOAP, REST, etc).
+  - Permitem interoperabilidade entre plataformas e linguagens distintas.
+  - São componentes-chave em arquiteturas orientadas a serviços (SOA).
+<!--
+    Exemplo: Um servidor RMI com o método getTemperature() pode ser acessado remotamente por um cliente.
+
+    Em sistemas distribuídos, entidades em comunicação são as partes ativas do sistema que interagem por troca de mensagens. Elas podem ser modeladas como processos, objetos, componentes ou serviços, conforme o nível de abstração e o paradigma arquitetural adotado. Cada modelo tem implicações em desempenho, escalabilidade e interoperabilidade.
+-->
 
 ---
 layout: two-cols
 ---
 
 ### Paradigmas de Comunicação
+
+São os modelos abstratos que definem como entidades em um sistema distribuído interagem entre si por meio de mensagens. Eles variam quanto ao nível de acoplamento, flexibilidade, direcionamento da mensagem, entre outros aspectos.
+
+::right::
 
 - **Comunicação entre processos**
   - Baixo nível de suporte
@@ -734,10 +762,14 @@ layout: two-cols
   - Uso de filas, publish-subscribe, espaços de tupla e memória compartilhada distribuída
   - Desacoplamento espacial e temporal
 
-::right::
+
+---
 
 #### Comunicação entre processos (Process-to-Process Communication)
 
+Também chamado de IPC (*InterProcess Communication*) é o paradigma mais baixo nível.
+
+- CoulourisRequer que os processos saibam explicitamente onde o outro está (endereços e portas).
 - É o paradigma mais primitivo, baseado em troca direta de mensagens entre processos.
 - Usa APIs de sockets (ex: TCP, UDP) para envio e recebimento de dados.
 - Tem baixo nível de abstração, exigindo maior controle do programador.
@@ -801,11 +833,26 @@ layout: two-cols
 
 ---
 
+
+| Paradigma             | Acoplamento Espacial | Acoplamento Temporal | Comunicação | Exemplo                    |
+| --------------------- | -------------------- | -------------------- | --------------- | -------------------------- |
+| Comunicação direta    | Alto                 | Alto                 | Direta          | Sockets (TCP/UDP)          |
+| Invocação remota      | Médio                | Alto                 | Direta          | RPC, RMI, gRPC             |
+| Publish/Subscribe     | Baixo                | Baixo                | Indireta        | MQTT, Kafka, ROS           |
+| Filas de mensagem     | Baixo                | Baixo                | Indireta        | RabbitMQ, AWS SQS          |
+| Tuple Spaces          | Baixo                | Baixo                | Indireta        | JavaSpaces, Linda          |
+| Memória compartilhada | Baixo                | Variável             | Indireta        | TreadMarks, DSM frameworks |
+
+<!--
 | Paradigma            | Acoplamento | Abstração | Exemplos            | Vantagem                             |
 | -------------------- | ----------- | --------- | ------------------- | ------------------------------------ |
 | Comunicação direta   | Alto        | Baixa     | Sockets TCP/UDP     | Controle direto                      |
 | Invocação remota     | Médio       | Média     | RPC, RMI, gRPC      | Facilidade de uso                    |
 | Comunicação indireta | Baixo       | Alta      | MQ, Pub/Sub, Tuplas | Escalabilidade e tolerância a falhas |
+
+“Cada paradigma oferece um trade-off entre acoplamento, desempenho e complexidade. Arquitetos de sistemas devem escolher com base nas necessidades da aplicação e no ambiente distribuído em que ela está inserida.”
+
+-->
 
 
 ---
@@ -818,7 +865,7 @@ layout: two-cols
 layout: two-cols
 ---
 
-### Funções e Responsabilidades
+## Funções e Responsabilidades
 
 - O estilo das funções é fundamental para a arquitetura global
 - **Estilos básicos:**
