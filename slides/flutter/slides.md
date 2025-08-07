@@ -798,12 +798,11 @@ layout: two-cols
 
 No Flutter tudo é considerado um widget, o próprio app é um `widget` que encapsula outros `widgets`.
 
-O Flutter não utiliza widgets nativos ele gera uma implementação própria que controla cada pixel desenhado.
+O Flutter não utiliza widgets nativos de cada plataforma, ele gera uma implementação própria que controla cada pixel desenhado.
 
 Podemos usar o outline para ver árvore de widgets do aplicativo.
 
 https://docs.flutter.dev/ui/widgets
-
 
 ::right::
 
@@ -813,11 +812,60 @@ https://docs.flutter.dev/ui/widgets
 layout: two-cols
 ---
 
+```dart
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Oi')),
+        body: Center(
+          child: Text('Olá, Flutter!'),
+        ),
+      ),
+    );
+  }
+}
+```
+
+::right::
+
+| Widget           | Descrição                                           |
+| ---------------- | --------------------------------------------------- |
+| `Text`           | Exibe um texto                                      |
+| `Image`          | Exibe uma imagem                                    |
+| `Column` / `Row` | Organiza elementos vertical ou horizontalmente      |
+| `Container`      | Componente genérico com estilo, margem, padding etc |
+| `Scaffold`       | Estrutura básica de tela (app bar, body, FAB, etc)  |
+| `MaterialApp`    | Wrapper para Material Design                        |
+| `AppBar`         | Faz parte da estrutura do Scaffold                  |
+
+<!--
+| `MaterialApp`    | Wrapper que fornece uma estrutura básica para aplicativos que seguem o Material Design |
+-->
+
+---
+layout: two-cols-header
+---
+
+No Flutter, tudo é um widget.
+
+> “Widgets são os blocos de construção da interface do Flutter. Eles descrevem como a interface deve parecer.”
+>  — Flutter Docs
+
+::left::
+
 ### Stateless
 
 widgets sem estado(**stateless**) são o tipo de widget que não armazena nenhum estado. Ou seja, eles não
 armazenam valores que podem mudar. Por exemplo, um ícone é sem estado, você define a imagem do ícone quando a cria
 e depois não muda mais.
+
+<br><br><br><br>
 
 ::right::
 
@@ -872,6 +920,28 @@ passes some variable to the children() widget via the constructor.
 re-inserted into another part of the tree
 - dispose(): We use this method when we remove permanently like should release resource created by an object
 like stop animation
+-->
+
+---
+
+| Etapa                     | Descrição                                           |
+| ------------------------- | --------------------------------------------------- |
+| `createState()`           | Cria o objeto `State` para o widget                 |
+| `initState()`             | Inicializações únicas ao inserir o widget na árvore |
+| `didChangeDependencies()` | Reage a mudanças em dependências externas           |
+| `build()`                 | Constrói a UI; é chamado várias vezes               |
+| `didUpdateWidget()`       | Responde a atualizações de propriedades do widget   |
+| `setState()`              | Atualiza o estado e dispara nova construção         |
+| `deactivate()`            | Widget removido, porém possível reinserção          |
+| `dispose()`               | Limpeza final após remoção permanente               |
+| `mounted`                 | Indica se o widget ainda está ativo                 |
+
+<!--
+Use este ciclo de vida para gerenciar recursos com segurança: inicialize em initState(), reaja em didUpdateWidget() ou didChangeDependencies(), e limpe tudo em dispose().
+
+Evite chamar setState() em build(), pois isso pode gerar loops de reconstrução indesejados.
+
+Sempre verifique mounted antes de chamar setState() se houver chamadas assíncronas onde o estado pode ter sido desmontado.
 -->
 
 ---
@@ -999,6 +1069,68 @@ executamos o comando `flutter pub add shared_preferences`.
     });
   }
 ```
+
+---
+
+## Assets
+
+No Flutter, você pode carregar **imagens locais (assets)** ou **imagens da internet (network)**.
+
+Para isso, crie uma pasta chamada `assets/images/` e adicione uma imagem `logo.png`. Agora para utilizar esse assets precisamos editar o `pubspec.yaml` adicionando:
+
+```yaml
+flutter:
+  assets:
+    - assets/images/logo.png
+```
+
+Por fim vamos usar a imagem com o widget `Image`
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+      child: Image.asset('assets/images/logo.png'),
+    ),
+  );
+}
+```
+<!--
+Image.asset(
+  'assets/images/logo.png',
+  width: 200,
+  height: 200,
+  fit: BoxFit.cover,
+)
+
+Rode flutter pub get após adicionar imagens
+Reinicie o app após editar o pubspec.yaml (não só hot reload)
+-->
+
+---
+
+Podemos usar também uma imagem hospedada online.
+
+```dart
+Image.network('https://flutter.dev/images/flutter-logo-sharing.png')
+```
+
+E caso ela não esteja disponível podemos usar um placeholder
+
+```dart
+Image.network(
+  'https://example.com/imagem.png',
+  loadingBuilder: (context, child, loadingProgress) {
+    if (loadingProgress == null) return child;
+    return CircularProgressIndicator();
+  },
+  errorBuilder: (context, error, stackTrace) {
+    return Icon(Icons.error);
+  },
+)
+```
+
 
 ---
 
@@ -1613,20 +1745,6 @@ Running Gradle task
 build/app/outputs/flutter-apk/app.apk
  (19.6MB).
 ```
-
-
-
-
-
-
-
-
-
-
----
-
-
-Claro! Abaixo estão as referências no formato **ABNT** para todos os links fornecidos:
 
 ---
 
