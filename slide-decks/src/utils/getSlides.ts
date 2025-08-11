@@ -42,6 +42,12 @@ export function getSlides() {
       url: 'flutter',
       description: 'mobile, flutter, programação',
       image: flutter,
+    },
+    {
+      title: "TypeScript e TypeORM",
+      url: 'typescript',
+      description: 'javascript, typescript, orm, typeorm, programação',
+      image: api,
     }
   ]
 }
