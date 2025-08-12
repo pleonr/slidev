@@ -1291,6 +1291,15 @@ Plataformas IoT que atualizam dispositivos enviando apenas código necessário.
 
 ---
 
+| Aspecto                | Código Móvel                                             | Agente Móvel                                                     |
+| ---------------------- | -------------------------------------------------------- | ---------------------------------------------------------------- |
+| **Estado de execução** | Não leva estado em andamento; inicia do zero no destino. | Carrega código, dados e **estado ativo**.                        |
+| **Autonomia**          | Depende do controle externo.                             | Atua autonomamente.                                              |
+| **Objetivo**           | Executar lógica específica no destino.                   | Realizar tarefa completa, possivelmente migrando por vários nós. |
+
+
+---
+
 ## Padrões de Arquiteturas
 
 Os padrões de arquitetura são baseados nos elementos de arquitetura dos sistemas distribuídos e fornecem estruturas recorrentes para melhorar o desempenho e a organização de sistemas. Eles não são soluções completas, mas ajudam a estruturar a solução de maneira eficiente.
