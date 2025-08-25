@@ -22,7 +22,19 @@ export:
 <Toc columns="2" maxDepth="3"></Toc>
 
 ---
+hideInToc: true
+---
 
+Segundo a lei de [Atwood](https://blog.codinghorror.com/the-principle-of-least-power)
+
+
+<img src="/atwoodslaw.jpg" class="m-auto rounded " />
+
+<!--
+Jeff Atwood - Programador, co-fundador do stack-overflow, soltou essa frase em 2007
+-->
+
+---
 
 ## PERN
 
@@ -146,11 +158,82 @@ Desenvolvimento mais fácil: Como os desenvolvedores não precisam manipular o D
 -->
 
 
-
 ---
 layout: image
 image: /virtualdoomreact.webp
 ---
+
+---
+layout: two-cols
+---
+
+### JSX (*tsx*)
+
+JSX é um javascript usando que retorna markup(*mais ou menos*). Utilizamos `camelCase` para declarar atributos dentro do markup utilizado pelo JSX
+
+<img class="m-auto -z-5 top-0 bottom-0 max-w-80" style="background-color: white" src="/naming-conventions.png"/>
+
+::right::
+
+Por exemplo:
+
+```html
+<button class="btn">
+
+<button className="btn">
+```
+
+Dentro do markup utilizamos `{}` para renderizar data.
+
+```js
+const background = 'red'
+<div style={{ background }} />
+```
+
+---
+
+### Props no React
+
+- **Props (propriedades)** são parâmetros passados de um componente pai para um componente filho.
+- Permitem **reutilização** e **configuração** de componentes.
+- São **imutáveis** dentro do componente que os recebe.
+
+- `props` → Dados enviados ao componente (strings, numbers, objetos, funções, etc.).
+- `children` → Conteúdo JSX passado entre as tags do componente.
+  - Exemplo:
+    ```tsx
+    <Card>
+      <p>Esse é o conteúdo interno (children)</p>
+    </Card>
+    ```
+
+---
+
+### Comonente Button
+
+```tsx
+type ButtonProps = {
+  label: string
+  onClick: () => void
+  children?: React.ReactNode
+}
+
+export function Button({ label, onClick, children }: ButtonProps) {
+  return (
+    <button onClick={onClick}>
+      {label} {children}
+    </button>
+  )
+}
+```
+
+Usando o componente
+
+```tsx
+<Button label="Salvar" onClick={() => alert("Salvo!")}>
+  aqui vai o children
+</Button>
+```
 
 ---
 
@@ -233,14 +316,11 @@ import "@/styles/globals.css"
 
 ---
 
-### Criando o componente de navegação
-
 ```typescript
 import Link from 'next/link'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-
 const NavbarTop = () => {
   return (
     <Navbar bg="dark" data-bs-theme="dark" fixed="top">
@@ -254,11 +334,6 @@ const NavbarTop = () => {
           </Nav.Link>
         </Nav>
       </Container>
-      <Navbar.Collapse className="justify-content-end">
-          <Nav>
-            <Nav.Link href="#link">Logoff</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
     </Navbar>
   )
 }

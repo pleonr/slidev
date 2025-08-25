@@ -20,6 +20,12 @@ export function getSlides() {
       image: reactNativeImage,
     },
     {
+      title: 'React',
+      url: 'react',
+      description: 'Introdução ao React',
+      image: reactNativeImage,
+    },
+    {
       title: 'Ubiquitous Computing, Clouds, IoT e Smart Environments',
       url: 'sistemasdistribuidos',
       description: 'Introdução Ubiquitous Computing, Clouds, IoT e Smart Environments',
