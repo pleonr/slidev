@@ -11,6 +11,7 @@ drawings:
 transition: slide-left
 mdc: true
 selectable: true
+download: true
 export:
   format: pdf
   timeout: 30000
