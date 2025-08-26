@@ -1801,21 +1801,76 @@ Processo 1 recebeu mensagem. Novo relógio: 6
 
 ---
 
+## Dependabilidade
+
+<img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" src="/dependabilidade.png"/>
+
+
+---
+
+- Atributos
+  - Disponibilidade: o sistema está pronto para uso quando necessário.
+  - Confiabilidade: o sistema continua operando corretamente por um intervalo de tempo.
+  - Segurança (safety): o sistema não causa danos a pessoas/ambiente mesmo frente a falhas.
+  - Integridade: o estado/dados não são corrompidos ou alterados indevidamente.
+  - Manutenibilidade: facilidade e rapidez para reparar e evoluir o sistema (tempo de restauração).
+  - Confidencialidade: informação só acessível por quem tem autorização (intersecção com segurança).
+- Ameaças (como o problema aparece)
+  - Falhas (faults): causas potenciais — humanas, físicas, de software, ambientais.
+  - Erros (errors): estados internos incorretos causados por falhas.
+  - Defeitos (failures): quando o serviço entregue diverge do especificado (o usuário percebe).
+- Meios (como enfrentamos)
+  - Prevenção de falhas: evitar que falhas entrem no sistema (revisões, padrões, verificação).
+  - Tolerância a falhas: o sistema continua correto apesar de falhas (redundância, deteção/recuperação).
+  - Remoção de falhas: encontrar e corrigir falhas já presentes (testes, depuração, correções).
+  - Previsão de falhas: entender probabilidade/impacto (métricas como MTTF/MTTR, análise e modelagem).
+
+
 ## Modelos de Falhas
+
+Em sistemas distribuídos, compostos por múltiplos computadores interconectados, a ocorrência de falhas não é uma possibilidade remota, mas sim uma realidade inevitável. Diferentemente de sistemas centralizados, onde o erro geralmente se limita a um único ponto, em sistemas distribuídos uma falha pode se propagar por toda a rede, comprometendo a confiabilidade, a disponibilidade e a consistência do sistema como um todo.
 
 - Define como as falhas se manifestam
 - Proporciona entendimento dos efeitos e consequências
 - Conceitos-chave: Falha - Erro - Defeito
+  - **Falha** (*fault*): trata de inconsistências físicas ou lógicas, que podem causar um erro.
+  - **Erro** (*error*): é um estado inconsistente do sistema, que pode levar a um defeito.
+  - **Defeito** (*failure*): é um comportamento incorreto de um sistema frente a sua especificação
+
+A relação entre esses conceitos pode ser vista da seguinte maneira: uma Falha pode causar um Erro, e um erro pode levar a uma Defeito caso não seja tratado adequadamente.
+
+---
+layout: two-cols
+---
+
+- Falha (Fault): causa inicial – pode ser de hardware, software, rede ou humana.
+
+- Erro (Error): estado incorreto do sistema resultante da falha.
+
+- Defeito (Failure): manifestação externa percebida pelo usuário, quando o sistema não entrega o serviço correto.
+
+::right::
+
+```mermaid
+flowchart TD
+    subgraph Sistema_Distribuido["Sistema Distribuído"]
+        A[Falha] --> B[Erro]
+        B --> C[Defeito]
+    end
+
+    A:::fault -->|Causa| B:::error
+    B:::error -->|Propaga| C:::failure
+
+    classDef fault fill:#f88,stroke:#333,stroke-width:2px,color:#fff
+    classDef error fill:#fbb,stroke:#333,stroke-width:2px,color:#000
+    classDef failure fill:#faa,stroke:#333,stroke-width:2px,color:#000
+```
+
+---
 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/falhaerrodefeito.png"/>
 
   (Referência: T. S. Weber, 2014)
-
----
-
-### Problema dos dois Generais
-
-<img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/two-generals.png"/>
 
 ---
 
@@ -1828,6 +1883,12 @@ A única forma de comunicação entre os generais é por meio de mensageiros, qu
 Para que o ataque seja bem-sucedido, ambos os generais precisam atacar exatamente ao mesmo tempo. Se um atacar sem o outro, o exército inimigo derrotará o general solitário.
 
 O problema surge porque nenhum dos generais pode ter certeza absoluta de que sua mensagem foi recebida pelo outro. Mesmo que um general envie uma mensagem com a ordem de ataque e o outro responda confirmando o recebimento, não há garantia de que essa confirmação também chegue com sucesso. Isso cria um ciclo infinito de confirmações, sem que um consenso definitivo possa ser alcançado.
+
+---
+
+#### Problema dos dois Generais
+
+<img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/two-generals.png"/>
 
 ---
 
@@ -1850,34 +1911,44 @@ Embora o problema dos dois generais seja matematicamente impossível de resolver
 
 ---
 
-### Erro, Falha e Defeito
-
-- Erro: É uma discrepância entre o comportamento esperado e o comportamento real de um sistema. Um erro pode ser resultado de um defeito e pode levar a uma falha.
-- Defeito (Bug): É uma imperfeição no design, implementação ou operação do sistema. Um defeito pode levar à ocorrência de um erro em determinadas circunstâncias.
-- Falha: Ocorre quando um erro afeta o funcionamento do sistema, tornando-o incapaz de fornecer o serviço esperado.
-
-A relação entre esses conceitos pode ser vista da seguinte maneira: um defeito pode causar um erro, e um erro pode levar a uma falha caso não seja tratado adequadamente.
-
----
+### Modelos de Falha
 
 Os Modelos de Falhas são utilizados em sistemas distribuídos para definir, classificar e entender como as falhas podem ocorrer e se manifestar. Eles são essenciais para a análise dos efeitos das falhas e para o desenvolvimento de sistemas tolerantes a falhas.
 
-- Falhas por Omissão – Ocorrem quando um componente do sistema falha ao executar uma operação esperada, como a não entrega de uma mensagem ou a ausência de resposta de um serviço.
-- Falhas Arbitrárias – Incluem comportamentos inesperados e imprevisíveis, como respostas erradas ou funcionamento incorreto.
-- Falhas de Temporização – Acontecem quando um sistema distribuído síncrono não consegue respeitar os prazos estabelecidos para resposta.
-- Modelo de Falhas de Cristian – Uma abordagem para entender e lidar com falhas no tempo de execução de sistemas distribuídos.
+- Transientes: ocorrem uma vez e desaparecem
+- Intermitentes: ocorrem, somem, reaparecem
+- Permanentes: continua até que o problema seja corrigido
+- Reproduzíveis: acontecem sempre de acordo com uma ou mais condições
 
 ---
 
-### Falhas por Omissão e Arbitrárias
+#### Falhas de Omissão
 
-| Parada<br>por falha       | Processo             | O processo para e permanece parado. Outros processos podem detectar esse estado.                                                               |
-|---------------------------|:--------------------:|------------------------------------------------------------------------------------------------------------------------------------------------|
-| Colapso                   | Processo             | O processo para e permanece parado. Outros processos podem não detectar esse estado.                                                           |
-| Omissão                   | Canal                | Uma mensagem inserida em um buffer de envio nunca chega no buffer de recepção do destinatário.                                                 |
-| Omissão de envio       | Processo             | Um processo conclui um envio, mas a mensagem não é enviada                                                                                     |
-| Omissão de recepção    | Processo             | Uma mensagem é colocada no buffer de recepção de um processo, mas esse processo não a recebe efetivamente.                                     |
-| Arbitrária (bizantina) | Processo ou canal | Ele pode enviar/transmitir mensagens arbitrárias em qualquer momento, cometer omissões; um processo pode parar ou realizar uma ação incorreta. |
+Ocorrem quando um componente do sistema falha ao executar uma operação esperada, como a não entrega de uma mensagem ou a ausência de resposta de um serviço
+
+- Ocorrem quando **mensagens não são enviadas ou recebidas** corretamente.
+- Podem se manifestar em diferentes níveis:
+  - **Envio**: processo não transmite a mensagem.
+  - **Recepção**: processo não recebe a mensagem enviada.
+  - **Canal**: perda de pacotes na rede.
+- Exemplo: em um protocolo cliente-servidor, o servidor nunca recebe a requisição do cliente.
+  **Impacto:** Pode causar bloqueios ou inconsistência na execução distribuída.
+
+---
+
+#### Falhas Arbitrárias ou Bizantinas
+
+Incluem comportamentos inesperados e imprevisíveis, como respostas erradas ou funcionamento incorreto.
+
+- Também chamadas de **falhas bizantinas**.
+- O processo apresenta **comportamento incorreto ou imprevisível**:
+  - Envia mensagens inválidas ou contraditórias.
+  - Responde de forma incoerente a diferentes processos.
+- Extremamente difíceis de detectar.
+- Exemplo: um nó malicioso em um algoritmo de consenso envia valores diferentes para cada participante.
+
+**Impacto:** Afeta a **confiabilidade** e pode comprometer totalmente o consenso.
+
 
 ---
 
@@ -1926,21 +1997,74 @@ Podemos mitigar o problema da falha Bizantine utilizando as seguintes abordagens
 
 ---
 
-### Falhas de Temporização
+### Falhas por Omissão e Arbitrárias
 
-- Aplicáveis a sistemas distribuídos síncronos
-- Problema: indisponibilidade de resposta dentro de um intervalo de tempo
+| Parada<br>por falha       | Processo             | O processo para e permanece parado. Outros processos podem detectar esse estado.                                                               |
+|---------------------------|:--------------------:|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Colapso                   | Processo             | O processo para e permanece parado. Outros processos podem não detectar esse estado.                                                           |
+| Omissão                   | Canal                | Uma mensagem inserida em um buffer de envio nunca chega no buffer de recepção do destinatário.                                                 |
+| Omissão de envio       | Processo             | Um processo conclui um envio, mas a mensagem não é enviada                                                                                     |
+| Omissão de recepção    | Processo             | Uma mensagem é colocada no buffer de recepção de um processo, mas esse processo não a recebe efetivamente.                                     |
+| Arbitrária (bizantina) | Processo ou canal | Ele pode enviar/transmitir mensagens arbitrárias em qualquer momento, cometer omissões; um processo pode parar ou realizar uma ação incorreta. |
+
+---
+
+#### Falhas de Armazenamento
+
+- Relacionadas à **integridade dos dados**.
+- Tipos de problemas:
+  - Dados não gravados.
+  - Dados gravados de forma incorreta.
+  - Perda de dados devido a falha de hardware/servidor.
+- Exemplo: em um banco distribuído, um nó replica dados incorretamente após falha de energia.
+- **Impacto:** Afeta **consistência e durabilidade** das transações.
+
+---
+
+#### Falhas de Temporização
+
+Acontecem quando um sistema distribuído síncrono não consegue respeitar os prazos estabelecidos para resposta.
+
+- Associadas a **sistemas distribuídos síncronos**.
+- Ocorrem quando um processo **não responde dentro do intervalo esperado**.
+  - **Atraso excessivo** no envio.
+  - **Resposta tardia** que já não é mais válida.
+- Exemplo: em um protocolo de commit (2PC), um participante responde após o tempo limite, entrando em “período de incerteza”.
+- **Impacto:** Pode gerar bloqueios, timeouts e necessidade de abortar operações.
 
 | Relógio    | Processo | O relógio local do processo ultrapassa os limites de sua taxa de desvio em relação ao tempo físico. |
 |------------|:--------:|:---------------------------------------------------------------------------------------------------:|
 | Desempenho | Processo |              O processo ultrapassa os limites do intervalo de tempo entre duas etapas.              |
 | Desempenho | Canal    |                  A transmissão de uma mensagem demora mais do que o limite deﬁnido.                |
 
+
 ---
 
-### Modelo de Falhas de Christian
+#### Modelo de Falhas de Christian
 
 É uma abordagem para caracterizar e detectar falhas em sistemas distribuídos baseada em premissas temporais. Nesse modelo, pressupõe-se que os processos podem falhar de forma definitiva (crash-stop) e que existe um limite superior conhecido para atrasos nas comunicações e respostas. Assim, se um processo não responder dentro desse tempo previamente estipulado, o sistema o considera como tendo falhado.
+
+- Proposto por **Flaviu Cristian (1989)**.
+- Usado em **sincronização de relógios** em sistemas distribuídos.
+- Assume um sistema **síncrono**, com limites conhecidos para:
+  - Tempo de execução de processos.
+  - Tempo de transmissão de mensagens.
+  - Taxa de desvio dos relógios.
+- Fornece uma forma de **estimar o erro máximo** no ajuste de relógios.
+
+---
+
+1. Cliente solicita a hora a um servidor de tempo.
+2. A resposta sofre **atrasos na rede**:
+   - **δmin** → atraso mínimo.
+   - **δmax** → atraso máximo.
+3. O horário recebido pelo cliente está dentro de um **intervalo de confiança**.
+
+**Falhas possíveis:**
+- **Omissão**: resposta não chega.
+- **Temporização**: resposta fora do limite aceitável.
+
+---
 
 - Assunção de falhas por crash-stop: uma vez que um processo falha, ele deixa de operar e não se recupera espontaneamente.
 - Dependência de limites temporais: o modelo supõe que é possível definir um tempo máximo de resposta (timeout) baseado em características conhecidas da rede e do processamento. Se esse tempo for excedido, o processo é marcado como inoperante.
@@ -1952,6 +2076,19 @@ O modelo de falhas de Christian fornece uma base para projetar mecanismos de det
 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/modelodefalhasdecristian.png"/>
 (Referência: T. S. Weber, 2014)
+
+
+---
+
+## ✅ Comparação
+- **Confiabilidade:** foco em **não falhar** durante o período observado. MTTF
+- **Disponibilidade:** foco no **tempo total em operação** (importa reparar rápido). MTTF + MTTR
+- Um servidor pode ser **confiável** (falha raramente) mas ter baixa disponibilidade (reparo lento).
+- Outro pode ser **menos confiável** (falha mais), mas **altamente disponível** (recupera rápido).
+
+<img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/metricas.png"/>
+
+
 
 ---
 layout: two-cols
