@@ -422,9 +422,7 @@ layout: two-cols
 
 Um componente funcional, basicamente, é uma função em JavaScript/ES6 que retorna um elemento do React (JSX).
 
-Os componentes funcionais oferecem uma sintaxe mais concisa, facilidade de reutilização e melhor desempenho,
-sendo a escolha preferida para novos projetos e aqueles que buscam uma abordagem mais moderna de desenvolvimento. Eles
-possibilitam gerênciar o lifecycle através de `hooks`.
+Os componentes funcionais oferecem uma sintaxe mais concisa, facilidade de reutilização e melhor desempenho, sendo a escolha preferida para novos projetos e aqueles que buscam uma abordagem mais moderna de desenvolvimento. Eles possibilitam gerênciar o lifecycle através de `hooks`.
 
 - é uma função em JavaScript/ES6
 - deve retornar um elemento em React (JSX)
@@ -480,6 +478,15 @@ function Counter() {
 }
 ```
 
+<!--
+return (
+    <div>
+      <p>Valor: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Incrementar</button>
+    </div>
+  );
+-->
+
 ::right::
 
 - A chamada `{useState(0)}` declara a variável de estado count com um valor inicial de 0.
@@ -511,6 +518,23 @@ useEffect(() => {
 }, []);
 ```
 
+<!--
+import { useState, useEffect } from "react";
+
+function Relogio() {
+  const [hora, setHora] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setHora(new Date()), 1000);
+
+    // Cleanup quando o componente for desmontado
+    return () => clearInterval(timer);
+  }, []);
+
+  return <p>Hora atual: {hora.toLocaleTimeString()}</p>;
+}
+-->
+
 ::right::
 
 - O primeiro argumento `function` é uma função que contém a lógica do efeito colateral.
@@ -521,6 +545,21 @@ o efeito será executado após cada renderização.
 Ao executar, por padrão o `effect` vai rodar depois do render inicial e depois de cada update subsequente. Esse
 padrão pode ser alterado usando a um `array` de dependências. Se o array estiver vazio essa função só vai executar uma
 vez, se tiver um valor(es), toda vez que esse valor for alterado a função vai ser executada.
+
+---
+
+### useContext hook
+
+Utilizado para facilitar o consumo de valores do Context API sem precisar passar props manualmente. Evita o “prop drilling” (passar props de componente em componente até chegar onde precisa).
+
+```typescript
+const TemaContext = React.createContext("light");
+
+function Botao() {
+  const tema = React.useContext(TemaContext);
+  return <button style={{ background: tema === "dark" ? "black" : "white" }}>Clique</button>;
+}
+```
 
 ---
 
@@ -567,6 +606,82 @@ return(
             <button onClick={() => setWord("yes")}>yes</button>
         </div>
     )
+```
+
+---
+
+### callback
+
+Um callback é uma função passada como prop de um componente pai para um componente filho.
+Assim, o filho pode “avisar” o pai quando algo acontece (ex: clique em um botão, envio de formulário, seleção de item etc.).
+
+- É um jeito de inverter o fluxo: o filho não decide, apenas notifica.
+- Quem tem a lógica e os dados é o pai (a página ou container).
+
+1. Separação de responsabilidades
+- O componente filho deve ser apenas apresentação (UI).
+- O pai é quem sabe o que fazer com as informações (regras, lógica de negócio).
+
+2. Reuso
+- Se o filho tiver lógica dentro dele, você não consegue reutilizar.
+- Se o filho apenas dispara um callback, ele pode ser usado em qualquer lugar.
+
+3.Unidirecionalidade do React
+- O React segue o fluxo de cima para baixo (pai → filho).
+- Callbacks permitem que um evento “suba” do filho para o pai, respeitando esse fluxo.
+
+<!--
+**Como funciona?**
+O pai define a função handleEnviar que contém a lógica (atualizar estado, chamar API, etc.).
+O pai passa essa função como prop para o filho (onEnviar={handleEnviar}).
+O filho recebe a prop e chama essa função (onEnviar(texto)) quando o usuário interage.
+O pai recebe o valor e toma as decisões (armazenar no estado, mandar para servidor, etc.).
+
+**Por que a lógica deve ficar no pai e não no filho?**
+O pai tem o estado global/local que interessa à página.
+O filho pode ser usado em contextos diferentes (um formulário pode servir para criar um usuário ou editar um perfil).
+Se a lógica estivesse no filho, seria engessada: o filho teria que saber sempre o que fazer.
+Colocando a lógica no pai, o mesmo componente filho pode ter comportamentos diferentes dependendo de onde é usado.
+-->
+
+---
+
+```typescript
+function Pagina() {
+  const [nome, setNome] = React.useState("");
+
+  // Função que o filho vai chamar
+  function handleEnviar(dado) {
+    setNome(dado);
+    console.log("Recebi do filho:", dado);
+  }
+
+  return (
+    <div>
+      <h1>Nome recebido: {nome}</h1>
+      <Formulario onEnviar={handleEnviar} />
+    </div>
+  );
+}
+```
+
+---
+
+```typescript
+function Formulario({ onEnviar }) {
+  const [texto, setTexto] = React.useState("");
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={texto}
+        onChange={(e) => setTexto(e.target.value)}
+      />
+      <button onClick={() => onEnviar(texto)}>Enviar</button>
+    </div>
+  );
+}
 ```
 
 ---
