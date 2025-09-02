@@ -19,9 +19,10 @@ This starter helps you manage multiple **Slidev** presentations in a single mono
   ```
 
 2. Change `base` of `slidev-workspace.yaml`. This is the base path for GitHub Pages, typically the same as the repository name.
+
 3. change `BASE_PATH` of `.github/workflows/deploy.yml` to the same as `base` of `slidev-workspace.yaml`.
 
-3. Set up the GitHub Pages build and deploy based on GitHub Actions. `Settings > Pages > Build and deployment > Source > GitHub Actions`
+4. Set up the GitHub Pages build and deploy based on GitHub Actions. `Settings > Pages > Build and deployment > Source > GitHub Actions`
 
 ## 📦 Demo
 
