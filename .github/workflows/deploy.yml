@@ -52,7 +52,7 @@ jobs:
         run: |
           pnpm build
           mkdir -p "_gh-pages"
-          cp -r slide-decks/dist/. "_gh-pages/"
+          cp -r ./dist/. "_gh-pages/"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
