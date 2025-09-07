@@ -4,6 +4,7 @@ This starter helps you manage multiple **Slidev** presentations in a single mono
 
 ## ✨ Features
 
+- **Built with slidev-workspace**: Powered by [`slidev-workspace`](https://github.com/leochiu-a/slidev-workspace), a package that simplifies the management of slides workflow.
 - **Workspace-friendly**: Manage all your Slidev presentations as separate packages within a single workspace.
 - **Automated deployment**: Use GitHub Actions to automatically deploy each presentation to GitHub Pages.
 - **Easy to scale**: Quickly add new Slidev projects by creating new packages in the workspace.
