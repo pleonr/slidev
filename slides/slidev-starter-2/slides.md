@@ -23,6 +23,7 @@ mdc: true
 # open graph
 # seoMeta:
 #  ogImage: https://cover.sli.dev
+routerMode: hash
 ---
 
 # Slidev Starter 2

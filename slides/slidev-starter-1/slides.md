@@ -25,6 +25,7 @@ seoMeta:
   ogImage: https://cover.sli.dev
   ogTitle: Slidev Starter 1
   ogDescription: Presentation slides for developers - Slidev Starter 1
+routerMode: hash
 ---
 
 # Slidev Starter 1
