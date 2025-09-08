@@ -826,17 +826,6 @@ const results = await playlistRepo
 
 ---
 
-# Migrations — quando e por quê?
-
-- Sempre que criar/alterar entidades, gere uma migration:
-```bash
-npm run typeorm -- migration:generate ./src/migrations/InitMusicSystem -d src/config/data-source.ts
-npm run typeorm -- migration:run -d src/config/data-source.ts
-```
-- Garantem **histórico** e **previsibilidade** do schema.
-- Evitam `synchronize: true` em produção.
-
----
 
 https://www.typescriptlang.org/
 
