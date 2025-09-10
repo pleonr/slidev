@@ -187,53 +187,149 @@ Dentro do markup utilizamos `{}` para renderizar data.
 
 ```js
 const background = 'red'
-<div style={{ background }} />
+<div style={ background } />
 ```
 
 ---
 
-### Props no React
+Para começar a falar do react vamos usar um boilerplate
 
-- **Props (propriedades)** são parâmetros passados de um componente pai para um componente filho.
-- Permitem **reutilização** e **configuração** de componentes.
-- São **imutáveis** dentro do componente que os recebe.
+```bash
+npx create-react-app my-app --template typescript
+```
 
-- `props` → Dados enviados ao componente (strings, numbers, objetos, funções, etc.).
-- `children` → Conteúdo JSX passado entre as tags do componente.
-  - Exemplo:
-    ```tsx
-    <Card>
-      <p>Esse é o conteúdo interno (children)</p>
-    </Card>
-    ```
-
----
-
-### Comonente Button
+Isso vai criar um projeto básico usando typescript e react.
 
 ```tsx
-type ButtonProps = {
-  label: string
-  onClick: () => void
-  children?: React.ReactNode
-}
-
-export function Button({ label, onClick, children }: ButtonProps) {
+function MyButton() {
   return (
-    <button onClick={onClick}>
-      {label} {children}
-    </button>
-  )
+    <button>I'm a button</button>
+  );
 }
 ```
 
-Usando o componente
+---
+layout: two-cols
+---
+
+### Mostrando dados
+
+O JSX permite colocar linguagem de marcação em JavaScript. As chaves `{}` permitem que você “escape” para o JavaScript para que você possa incorporar alguma variável do seu código.
 
 ```tsx
-<Button label="Salvar" onClick={() => alert("Salvo!")}>
-  aqui vai o children
-</Button>
+const user = {
+  name: 'Hedy Lamarr',
+  imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
+  imageSize: 90,
+};
 ```
+
+::right::
+
+```tsx
+<h1>{user.name}</h1>
+<img
+  className="avatar"
+  src={user.imageUrl}
+  alt={'Photo of ' + user.name}
+  style={{
+    width: user.imageSize,
+    height: user.imageSize
+  }}
+/>
+```
+
+---
+
+### Render condicional
+
+No React, não há sintaxe especial para as condições de escrita. Em vez disso, você usará as mesmas técnicas que usa ao escrever código JavaScript regular. Por exemplo, você pode usar uma instrução IF para incluir condicionalmente JSX:
+
+```tsx
+let content;
+let isLoggedIn = false;
+
+if (isLoggedIn) {
+  content = <AdminPanel />;
+} else {
+  content = <LoginForm />;
+}
+return (
+  <div>
+    {content}
+  </div>
+);
+```
+
+---
+
+Se você preferir um código mais compacto, pode usar o condicional `?`. Ao contrário de um `if`, ele funciona dentro do JSX:
+
+```tsx
+<>
+  {isLoggedIn ? (
+    <h1>olá</h1>
+  ) : (
+    <h1>login</h1>
+  )}
+</>
+```
+
+Quando você não precisa do `else`, também pode usar uma sintaxe lógica e mais curta:
+
+```tsx
+<div>
+  {isLoggedIn && <h1>olá</h1>}
+</div>
+```
+
+---
+
+### Eventos
+
+Podemos responder a eventos declarando uma função...
+
+```tsx
+function MyButton() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+```
+
+Observe como `onClick={handleclick}` não tem parênteses no final! Você não precisa invocar a função, você só precisa indicar ela, o React fará a chamada para a função quando o evento for acionado.
+
+---
+
+### Renderizando listas
+
+Para renderizar listas podemos utilizar funcionalidades do javascript como `for` loop e a função `map` renderizar listas de componentes.
+
+```tsx
+const products = [
+  { title: 'Cabbage', id: 1 },
+  { title: 'Garlic', id: 2 },
+  { title: 'Apple', id: 3 },
+];
+
+const listItems = products.map(product =>
+  <li key={product.id}>
+    {product.title}
+  </li>
+);
+
+return (
+  <ul>{listItems}</ul>
+);
+```
+
+
 
 ---
 
@@ -292,6 +388,51 @@ layout: two-cols
 Um componente é um bloco de código reutilizável e independente, que divide a interface do usuário em partes menores.
 
 ![](/componentes-react.png)
+
+---
+
+### Props no React
+
+- **Props (propriedades)** são parâmetros passados de um componente pai para um componente filho.
+- Permitem **reutilização** e **configuração** de componentes.
+- São **imutáveis** dentro do componente que os recebe.
+
+- `props` → Dados enviados ao componente (strings, numbers, objetos, funções, etc.).
+- `children` → Conteúdo JSX passado entre as tags do componente.
+  - Exemplo:
+    ```tsx
+    <Card>
+      <p>Esse é o conteúdo interno (children)</p>
+    </Card>
+    ```
+
+---
+
+### Componente Button
+
+```tsx
+type ButtonProps = {
+  label: string
+  onClick: () => void
+  children?: React.ReactNode
+}
+
+export function Button({ label, onClick, children }: ButtonProps) {
+  return (
+    <button onClick={onClick}>
+      {label} {children}
+    </button>
+  )
+}
+```
+
+Usando o componente
+
+```tsx
+<Button label="Salvar" onClick={() => alert("Salvo!")}>
+  aqui vai o children
+</Button>
+```
 
 ---
 
