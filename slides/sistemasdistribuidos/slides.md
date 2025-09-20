@@ -8,7 +8,6 @@ author: Pablo Leon Rodrigues
 class: text-center
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
 mdc: true
 selectable: true
@@ -17,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: /sistemasdistribuidos/sistemasdistribuidos.png
+  ogImage: ../cover/sistemasdistribuidos.png
   ogTitle: Ubiquitous Computing, Clouds, IoT e Smart Environments
   ogDescription: Support material for classes
 routerMode: hash
