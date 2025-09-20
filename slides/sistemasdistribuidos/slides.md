@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: ../cover/sistemasdistribuidos.png
+  ogImage: https://cover.sli.dev
   ogTitle: Ubiquitous Computing, Clouds, IoT e Smart Environments
   ogDescription: Support material for classes
 routerMode: hash
