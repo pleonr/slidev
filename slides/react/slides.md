@@ -11,10 +11,15 @@ drawings:
 transition: slide-left
 mdc: true
 selectable: true
+download: true
 export:
   format: pdf
-  timeout: 30000
   withClicks: false
+seoMeta:
+  ogImage: https://cover.sli.dev
+  ogTitle: React
+  ogDescription: Support material for classes
+routerMode: hash
 ---
 
 ---
