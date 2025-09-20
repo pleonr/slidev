@@ -12,11 +12,12 @@ drawings:
 transition: slide-left
 mdc: true
 selectable: true
+download: true
 export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: /sistemasdistribuidos.png
+  ogImage: /sistemasdistribuidos/sistemasdistribuidos.png
   ogTitle: Ubiquitous Computing, Clouds, IoT e Smart Environments
   ogDescription: Support material for classes
 routerMode: hash
