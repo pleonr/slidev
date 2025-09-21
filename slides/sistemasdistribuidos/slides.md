@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://cover.sli.dev
+  ogImage: https://picsum.photos/id/171/800/600
   ogTitle: Ubiquitous Computing, Clouds, IoT e Smart Environments
   ogDescription: Support material for classes
 routerMode: hash

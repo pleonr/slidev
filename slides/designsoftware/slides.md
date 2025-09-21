@@ -17,7 +17,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://cover.sli.dev
+  ogImage: https://picsum.photos/id/60/800/600
   ogTitle: Design de Software
   ogDescription: Support material for classes
 routerMode: hash

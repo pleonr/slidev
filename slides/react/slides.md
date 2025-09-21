@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://cover.sli.dev
+  ogImage: https://picsum.photos/id/113/800/600
   ogTitle: React
   ogDescription: Support material for classes
 routerMode: hash

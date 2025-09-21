@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://cover.sli.dev
+  ogImage: https://picsum.photos/id/39/800/600
   ogTitle: API's
   ogDescription: Support material for classes, TEDSII, WebMob, Ubiquitous
 routerMode: hash
