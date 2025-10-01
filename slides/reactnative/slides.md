@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://picsum.photos/id/160/800/600
+  ogImage: auto
   ogTitle: React Native
   ogDescription: Support material for classes
 routerMode: hash

@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://picsum.photos/id/155/800/600
+  ogImage: auto
   ogTitle: TypeScript e TypeORM
   ogDescription: Support material for classes
 routerMode: hash

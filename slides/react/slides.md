@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://picsum.photos/id/113/800/600
+  ogImage: auto
   ogTitle: React
   ogDescription: Support material for classes
 routerMode: hash
@@ -1025,22 +1025,6 @@ Ele consiste em:
 - O servidor busca essa sessão para checar se ela é válida
 - Se estiver tudo certo o servidor devolve o response
 
----
-
-<div class="left-10 top-0 right-0 bottom-20 max-w-full max-h-full absolute">
-
-```mermaid
-sequenceDiagram
-    Actor Cliente
-    Cliente->>+Servidor: Cliente faz login
-    Servidor->>+DB: Servidor cria sessão e armazena
-    Servidor-->>-Cliente: Servidor devolve sessionId
-    Note right of Cliente: Cliente armazena em cookie
-    Cliente->>+Servidor: Cliente envia request com cookie
-    Servidor-->>+DB: Servidor valida session
-    Servidor-->>+Cliente: Servidor devolve response
-```
-</div>
 
 ---
 
@@ -1080,8 +1064,6 @@ uma API escalada horizontalmente em um cloud server
 5) e imagine que temos 1 milhão de usuários logados em cada instância e cada usuário vai fazer em média 5 requisições
 
 ---
-layout: two-cols
----
 
 ### JWT
 
@@ -1093,21 +1075,7 @@ No JWT é utilizado um token Base64 que pode ser usado com par de chaves ou assi
 
 Usando JWT o servidor não precisa armazenar nada, ele gera o JWT e devolve para o cliente.
 
-::right::
 
-
-<br><br><br>
-
-```mermaid
-sequenceDiagram
-    Actor Cliente
-    Cliente->>+Servidor: Cliente faz login
-    Note right of Servidor: Servidor gera um JWT
-    Servidor-->>-Cliente: Servidor devolve o JWT
-    Cliente->>+Servidor: Cliente envia request com cookie
-    Note right of Servidor: Servidor valida a signature do JWT
-    Servidor-->>-Cliente: Servidor devolve response
-```
 
 ---
 

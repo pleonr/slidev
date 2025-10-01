@@ -16,7 +16,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: https://picsum.photos/id/225/800/600
+  ogImage: auto
   ogTitle: Programação Web Mobile
   ogDescription: Support material for classes
 routerMode: hash
