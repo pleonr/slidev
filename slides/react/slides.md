@@ -16,7 +16,6 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: auto
   ogTitle: React
   ogDescription: Support material for classes
 routerMode: hash
