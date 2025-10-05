@@ -1,7 +1,6 @@
 ---
 src: ../cover/cover.md
 theme: default
-background: side-logo.png
 image: /side-logo.png
 title: Design de Software
 author: Pablo Leon Rodrigues
@@ -17,7 +16,6 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: auto
   ogTitle: Design de Software
   ogDescription: Support material for classes
 routerMode: hash

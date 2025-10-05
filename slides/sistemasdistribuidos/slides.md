@@ -1,7 +1,6 @@
 ---
 src: ../cover/cover.md
 theme: default
-background: side-logo.png
 image: /side-logo.png
 title: Ubiquitous Computing, Clouds, IoT e Smart Environments
 author: Pablo Leon Rodrigues
@@ -16,7 +15,6 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: auto
   ogTitle: Ubiquitous Computing, Clouds, IoT e Smart Environments
   ogDescription: Support material for classes
 routerMode: hash

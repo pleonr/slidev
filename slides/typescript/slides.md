@@ -1,7 +1,6 @@
 ---
 src: ../cover/cover.md
 theme: default
-background: side-logo.png
 image: /side-logo.png
 title: TypeScript e TypeORM
 author: Pablo Leon Rodrigues
@@ -16,7 +15,6 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogImage: auto
   ogTitle: TypeScript e TypeORM
   ogDescription: Support material for classes
 routerMode: hash

@@ -1,7 +1,6 @@
 ---
 src: ../cover/cover.md
 theme: default
-background: side-logo.png
 image: /side-logo.png
 title: React
 author: Pablo Leon Rodrigues
@@ -18,6 +17,7 @@ export:
 seoMeta:
   ogTitle: React
   ogDescription: Support material for classes
+  ogImage: ./og-image.png
 routerMode: hash
 ---
 
