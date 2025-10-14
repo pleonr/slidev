@@ -17,7 +17,7 @@ export:
 seoMeta:
   ogTitle: React
   ogDescription: Support material for classes
-  ogImage: ./og-image.png
+  ogImage: og-image.png
 routerMode: hash
 ---
 
