@@ -24,6 +24,18 @@ routerMode: hash
 
 ---
 layout: image
+image: /spassu.png
+---
+
+
+---
+layout: image
+image: /spassu2.png
+---
+
+
+---
+layout: image
 image: /grifo.png
 ---
 
@@ -49,6 +61,10 @@ O HPC Harpia pesa cerca de 50 toneladas e mede 50 metros de comprimento, conside
 A máquina, equivalente a 10 milhões de celulares ou 200 mil notebooks, contribuirá para que a companhia mantenha a liderança em capacidade de processamento na América Latina. No valor de R$435 milhões, ele é o maior do lote de cinco novos supercomputadores comprados pela empresa que, juntos, custam R$500 milhões e aumentarão a capacidade computacional da Petrobras em mais de 60%.
 
 ::right::
+
+## Main Seismic cluster
+
+### 2025: 146 PFlops
 
 ![Supercomputador Harpia](/harpia.jpg)
 
