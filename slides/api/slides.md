@@ -705,19 +705,19 @@ SOLID é um acrônimo para cinco princípios de design orientado a objetos que v
 
 ---
 
-## S - Single Responsibility Principle (SRP) {style="color: blue;"}
+## S - Single Responsibility Principle (SRP) {style="color: lightblue;"}
 
-O SRP define que uma classe ou módulo deve ter apenas uma razão para mudar, ou seja,
-deve possuir uma única responsabilidade.
-Em termos simples, cada classe, função, ou módulo deve focar em realizar uma única tarefa ou propósito.
+O SRP define que uma classe ou módulo deve ter apenas uma razão para mudar, ou seja, deve possuir uma única responsabilidade.
+
+> **Cada classe deve fazer uma coisa só.**
 
 Se uma classe tem várias responsabilidades, ela pode ser afetada por mudanças em qualquer uma
 dessas responsabilidades, tornando o código mais suscetível a falhas.
 
-- Manutenção facilitada:{style="color: green;"} Se uma classe faz apenas uma coisa, é mais fácil localizar e corrigir problemas quando algo der errado.
-- Redução de acoplamento:{style="color: green;"} Classes com responsabilidades únicas tendem a ser menos dependentes umas das outras, o que facilita a refatoração e evolução do sistema.
-- Reutilização de código:{style="color: green;"} Classes pequenas e especializadas são mais fáceis de reutilizar em diferentes contextos.
-- Testabilidade:{style="color: green;"} Classes que cumprem apenas uma responsabilidade têm menos dependências e cenários a serem testados, facilitando a criação de testes unitários.
+- Manutenção facilitada:{style="color: lightgreen;"} Se uma classe faz apenas uma coisa, é mais fácil localizar e corrigir problemas quando algo der errado.
+- Redução de acoplamento:{style="color: lightgreen;"} Classes com responsabilidades únicas tendem a ser menos dependentes umas das outras, o que facilita a refatoração e evolução do sistema.
+- Reutilização de código:{style="color: lightgreen;"} Classes pequenas e especializadas são mais fáceis de reutilizar em diferentes contextos.
+- Testabilidade:{style="color: lightgreen;"} lightgreen que cumprem apenas uma responsabilidade têm menos dependências e cenários a serem testados, facilitando a criação de testes unitários.
 
 
 ---
@@ -765,18 +765,18 @@ class EmailSender {
 
 ---
 
-## O - Open/Closed Principle (OCP){style="color: blue;"}
+## O - Open/Closed Principle (OCP){style="color: lightblue;"}
 
-O Open/Closed Principle afirma que uma classe, módulo ou função deve estar aberto para extensão,
-mas fechado para modificação. Isso significa que o comportamento de um sistema deve poder ser estendido sem a
-necessidade de alterar o código-fonte existente.
+O Open/Closed Principle afirma que uma classe, módulo ou função deve estar aberto para extensão, mas fechado para modificação.
+
+> O código pode ganhar novas funções, mas sem precisar mudar o que já funciona.
 
 A ideia principal é separar o código que pode mudar do que permanece estável.
 Para isso, você pode usar abstrações, como interfaces, herança e polimorfismo, dependendo da linguagem utilizada.
 
-- Maior flexibilidade e extensibilidade:{style="color: green;"} Você pode adicionar novos comportamentos ao software sem alterar seu funcionamento atual, facilitando a evolução do código.
-- Menos risco de bugs:{style="color: green;"} Como você não modifica o código que já está em produção, reduz-se o risco de introduzir novos problemas ao adicionar funcionalidades.
-- Reutilização de código:{style="color: green;"} As abstrações utilizadas para aplicar o OCP incentivam a reutilização de componentes, o que torna o código mais eficiente.
+- Maior flexibilidade e extensibilidade:{style="color: lightgreen;"} Você pode adicionar novos comportamentos ao software sem alterar seu funcionamento atual, facilitando a evolução do código.
+- Menos risco de bugs:{style="color: lightgreen;"} Como você não modifica o código que já está em produção, reduz-se o risco de introduzir novos problemas ao adicionar funcionalidades.
+- Reutilização de código:{style="color: lightgreen;"} As abstrações utilizadas para aplicar o OCP incentivam a reutilização de componentes, o que torna o código mais eficiente.
 
 ---
 layout: two-cols
@@ -821,13 +821,15 @@ image: /BarbaraLiskov.jpg
 backgroundSize: fit
 ---
 
-## L - Liskov Substitution Principle (LSP){style="color: blue;"}
+## L - Liskov Substitution Principle (LSP){style="color: lightblue;"}
 
 O princípio de substituição de [Liskov](https://www.youtube.com/watch?v=-Z-17h3jG0A), proposto por [Barbara Liskov](https://pmg.csail.mit.edu/~liskov/), afirma que objetos de uma classe derivada (subclasse) devem poder ser substituídos por objetos da classe base (superclasse) sem alterar as propriedades corretas do programa.
 
-> “Se S é um subtipo de T, então objetos do tipo T podem ser substituídos por objetos do tipo S sem alterar as propriedades desejáveis do programa.”
+> Se algo funciona com a classe pai, também deve funcionar com o filho
 
-Se você tem uma classe base e uma subclasse que herda dela, a subclasse deve preservar o comportamento esperado da classe base. Caso contrário, a herança não está sendo aplicada corretamente, e isso pode quebrar o código que utiliza a classe base.
+<br>
+
+> “Se S é um subtipo de T, então objetos do tipo T podem ser substituídos por objetos do tipo S sem alterar as propriedades desejáveis do programa.”
 
 <!--
 ## Importância do LSP:
@@ -881,15 +883,17 @@ class Penguin extends Bird {
 
 ---
 
-## I - Interface Segregation Principle (ISP){style="color: blue;"}
+## I - Interface Segregation Principle (ISP){style="color: lightblue;"}
 
 O ISP afirma que os clientes não devem ser forçados a depender de interfaces que não utilizam. Em outras palavras, uma interface deve ser específica para as necessidades dos clientes que a utilizam, em vez de ser uma interface "inchada" com métodos que alguns clientes não precisam.
 
+> Melhor ter vários contratos pequenos do que um grandão que obriga todo mundo a fazer coisas que não precisa.
+
 Isso significa que é melhor ter várias interfaces pequenas e especializadas, cada uma com métodos diretamente relacionados a um determinado comportamento, do que uma única interface grande e generalizada.
 
-- Evita a implementação de métodos desnecessários:{style="color: green;"} As classes só implementam o que realmente precisam, reduzindo a complexidade.
-- Menor acoplamento:{style="color: green;"} Cada cliente só depende de uma interface que faz sentido para ele, o que torna o código mais modular.
-- Facilidade de manutenção:{style="color: green;"} Interfaces menores são mais fáceis de entender, modificar e manter, já que mudanças em uma parte do sistema não impactam outras desnecessariamente.
+- Evita a implementação de métodos desnecessários:{style="color: lightgreen;"} As classes só implementam o que realmente precisam, reduzindo a complexidade.
+- Menor acoplamento:{style="color: lightgreen;"} Cada cliente só depende de uma interface que faz sentido para ele, o que torna o código mais modular.
+- Facilidade de manutenção:{style="color: lightgreen;"} Interfaces menores são mais fáceis de entender, modificar e manter, já que mudanças em uma parte do sistema não impactam outras desnecessariamente.
 
 ---
 layout: two-cols
@@ -976,14 +980,16 @@ class AdvancedPrinter
 
 ---
 
-## D - Dependency Inversion Principle (DIP){style="color: blue;"}
+## D - Dependency Inversion Principle (DIP){style="color: lightblue;"}
 
 O DIP afirma que módulos de alto nível não devem depender de módulos de baixo nível, ele sugere que devemos depender de interfaces ou abstrações em vez de depender de implementações concretas. Isso reduz o acoplamento entre as diferentes partes de um sistema, tornando-o mais flexível e fácil de modificar.
 
-- Desacoplamento:{style="color: green;"} O DIP reduz o acoplamento entre diferentes partes do sistema, permitindo que mudanças em uma parte não exijam mudanças em outra.
-- Facilidade para testar:{style="color: green;"} Quando dependemos de abstrações, é mais fácil substituir implementações reais por mocks ou stubs em testes.
-- Flexibilidade:{style="color: green;"} O sistema pode evoluir e adaptar-se a novos requisitos sem grandes refatorações, uma vez que as implementações podem ser alteradas sem impactar os módulos de alto nível.
-- Reutilização de código:{style="color: green;"} Interfaces e abstrações bem definidas promovem a reutilização de módulos, já que eles podem trabalhar com diferentes implementações.
+> Os objetos grandes devem depender de ideias gerais, não de detalhes.
+
+- Desacoplamento:{style="color: lightgreen;"} O DIP reduz o acoplamento entre diferentes partes do sistema, permitindo que mudanças em uma parte não exijam mudanças em outra.
+- Facilidade para testar:{style="color: lightgreen;"} Quando dependemos de abstrações, é mais fácil substituir implementações reais por mocks ou stubs em testes.
+- Flexibilidade:{style="color: lightgreen;"} O sistema pode evoluir e adaptar-se a novos requisitos sem grandes refatorações, uma vez que as implementações podem ser alteradas sem impactar os módulos de alto nível.
+- Reutilização de código:{style="color: lightgreen;"} Interfaces e abstrações bem definidas promovem a reutilização de módulos, já que eles podem trabalhar com diferentes implementações.
 
 <!--
 Módulos de alto e baixo nível:
@@ -994,49 +1000,71 @@ O DIP sugere que os módulos de alto nível não devem depender diretamente dos 
 
 ---
 
-Nesse caso, a classe `NotificationManager` (alto nível) depende diretamente da classe `EmailService` (baixo nível). Isso é uma violação do DIP, porque NotificationManager está fortemente acoplado a um serviço específico para enviar notificações. Se um dia for necessário mudar para um serviço de notificação por SMS, ou adicionar outros tipos de notificação, será necessário modificar o código de NotificationManager, o que quebra a flexibilidade e a modularidade.
+Por exemplo, pensem em um programa para uma Cafeteira(*de capsulas*), ela precisa fazer, café, chá, ou outra bebida quente.
 
-```typescript
-class EmailService {
-  sendEmail(to: string, message: string): void {
-    console.log(`Enviando e-mail para ${to}: ${message}`);
-  }
+```java
+class Cafeteira {
+    private Cafe cafe = new Cafe(); // Depende diretamente da classe Cafe
+
+    public void preparar() {
+        cafe.fazerCafe();
+    }
 }
-class NotificationManager {
-  private emailService: EmailService;
-  constructor() {
-    this.emailService = new EmailService();
-  }
-  notify(to: string, message: string): void {
-    this.emailService.sendEmail(to, message);
-  }
+```
+
+Aqui, a Cafeteira depende diretamente da classe Cafe. Se um dia quisermos trocar por Chá, teremos que mexer no código da Cafeteira, quebrando o princípio do “Aberto/Fechado”
+
+---
+
+Para corrigir, podemos criar abstrações (interface).
+
+```java
+interface Bebida {
+    void preparar();
+}
+
+class Cafe implements Bebida {
+    public void preparar() {
+        System.out.println("Preparando café...");
+    }
+}
+
+class Cha implements Bebida {
+    public void preparar() {
+        System.out.println("Preparando chá...");
+    }
 }
 ```
 
 ---
 
-Para corrigir, podemos criar uma abstração (interface).
+E a Cafeteira agora depende da interface, não de uma bebida específica
 
-```typescript
-interface NotificationService {
-  send(to: string, message: string): void;
-}
-class EmailService implements NotificationService {
-  send(to: string, message: string): void { ... }
-}
-class SMSService implements NotificationService {
-  send(to: string, message: string): void { ... }
-}
-class NotificationManager {
-  private notificationService: NotificationService;
-  constructor(notificationService: NotificationService) {
-    this.notificationService = notificationService;
-  }
-  notify(to: string, message: string): void {
-    this.notificationService.send(to, message);
-  }
+```java
+class Cafeteira {
+    private Bebida bebida;
+
+    public Cafeteira(Bebida bebida) { // Inversão de dependência
+        this.bebida = bebida;
+    }
+
+    public void prepararBebida() {
+        bebida.preparar();
+    }
 }
 ```
+
+<!--
+```java
+public class Main {
+    public static void main(String[] args) {
+        Bebida cafe = new Cafe();
+        Cafeteira cafeteira = new Cafeteira(cafe);
+        cafeteira.prepararBebida();
+    }
+}
+```
+ -->
 
 ---
 
