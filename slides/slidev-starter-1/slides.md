@@ -22,7 +22,6 @@ transition: slide-left
 mdc: true
 # open graph
 seoMeta:
-  ogImage: https://cover.sli.dev
   ogTitle: Slidev Starter 1
   ogDescription: Presentation slides for developers - Slidev Starter 1
 routerMode: hash
