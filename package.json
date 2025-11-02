@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "export-og": "slidev-workspace export-og",
     "preview": "slidev-workspace preview",
     "build": "slidev-workspace build"
   },
@@ -12,5 +13,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "playwright-chromium": "^1.56.1"
+  }
 }
