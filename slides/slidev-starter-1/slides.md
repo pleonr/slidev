@@ -20,6 +20,7 @@ drawings:
 transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
+author: Leo Chiu
 # open graph
 seoMeta:
   ogTitle: Slidev Starter 1
