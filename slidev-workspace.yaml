@@ -1,5 +1,4 @@
 baseUrl: /slidev-workspace-starter
-outputDir: ./dist
 
 hero:
   title: Slidev Workspace Starter
