@@ -487,5 +487,106 @@ python subscriber.py
 python publisher.py
 ```
 
-- Acesse `http://localhost:15672` Login `user` e senha: `guest`
+- Acesse `http://localhost:15672` Login `guest` e senha: `guest`
+
+---
+
+## Monitoramento de microsserviços
+
+Monitoramento é o processo contínuo de coleta, análise e visualização de métricas para garantir que sistemas estejam funcionando corretamente.
+
+É uma forma eficaz de proativa para identificação de problemas, como erros durante a execução, downtime de serviços, garantia de SLAs(Service Legal Agreements) e identificação de pontos de melhoria no sistema.
+
+Dentre os conceitos fundamentais podemos destacar, Métricas, Logs, Tracing, Observabilidade.
+
+
+<div>
+  <img class="m-auto -z-5 bottom-0 right-0 left-0 max-w-75" style="background-color: white" src="/Datadog_logo.png"/>
+  <img class="m-auto -z-5 bottom-0 right-0 max-w-75" style="background-color: white" src="/graphana.png"/>
+  <img class="m-auto -z-5 bottom-45 right-0 max-w-60" style="background-color: white" src="/new_relic.png"/>
+  <img class="m-auto -z-5 bottom-0 left-0 max-w-70" style="background-color: white" src="/prometheus.png"/>
+</div>
+
+---
+layout: two-cols
+---
+
+### Métricas {style="color: lightgreen;"}
+
+Indicadores quantitativos sobre desempenho e saúde de um sistema.
+
+- Latência (tempo de resposta de uma API)
+- Taxa de erros e sucessos
+- Uso de recursos CPU/memória, disco, rede
+- Taxa de requisições (RPS - Requests per Second)
+
+Ferramentas: Prometheus, Datadog, New Relic...
+
+### Tracing {style="color: lightgreen;"}
+
+Rastreio de requisições através de múltiplos serviços, sendo uma ferramenta importante para entender o fluxo do sistema e identificar gargalos.
+
+Ferramentas: Jaeger, OpenTelemetry, Zipkin...
+
+::right::
+
+### Logs {style="color: lightgreen;"}
+
+Registros detalhados de eventos que ocorrem no sistema
+
+- Logs de acesso (HTTP)
+- Logs de aplicação (ex.: exceções, mensagens do sistema)
+- Logs de sistema (ex.: kernel, infraestrutura)
+
+Ferramentas: ELK Stack (Elasticsearch, Logstash, Kibana), Fluentd...
+
+### Alertas {style="color: lightgreen;"}
+
+Configuração de notificações baseadas em eventos anormais ou limiares de métricas.
+
+Ferramentas: PagerDuty, Grafana Alerting...
+
+
+
+---
+
+### OpenTelemetry
+
+OpenTelemetry (OTel) é um projeto open source mantido pela Cloud Native Computing Foundation (CNCF), criado com o objetivo de padronizar a coleta e o envio de dados de observabilidade — ou seja, métricas, logs e traces (rastreamentos de execução),em sistemas distribuídos
+
+- APIs e SDKs para várias linguagens (Go, Java, Python, C#, Node.js, etc.);
+- Agentes e coletores para capturar e exportar dados;
+- Integração com ferramentas de análise como Prometheus, Grafana, Jaeger, Zipkin, New Relic, Datadog, Elastic, entre outros.
+
+![OpenTelemetry](/opentelemetry.png)
+
+---
+
+### Stack LGTM
+
+![LGTM](/lgtm.png)
+
+---
+
+A pilha LGTM é uma solução de observabilidade de código aberto que combina quatro ferramentas – Loki, Grafana, Tempo e Mimir (ou Prometheus), para monitorar e depurar sistemas distribuídos. Ele fornece uma visão completa de logs, métricas e rastreamentos, com Loki para logs, Grafana para visualização, Tempo para rastreamento distribuído e Mimir (ou Prometheus) para métricas
+
+1. Loki: Loki é um sistema de agregação de logs. Ele é otimizado para armazenamento e recuperação econômica de logs, tornando-o adequado para lidar com grandes volumes de dados de log. Loki armazena logs em formato compactado e indexado, permitindo consulta e filtragem eficientes. Integra-se perfeitamente com outras ferramentas e plataformas comumente usadas em ecossistemas de observabilidade.
+
+2. Grafana: Grafana é uma plataforma popular de código aberto para visualização de dados de séries temporais. Ele fornece uma interface flexível e intuitiva para criar painéis, tabelas e gráficos para monitorar e analisar diversas métricas, incluindo dados de log. Grafana oferece suporte a inúmeras fontes de dados, incluindo Loki, permitindo aos usuários explorar e visualizar dados de log junto com outras métricas de maneira unificada. Ele também oferece recursos avançados como alertas, anotações e modelos.
+
+---
+
+3. Grafana Tempo é uma ferramenta open source de rastreamento distribuído (distributed tracing) desenvolvida pela Grafana Labs. Ele permite coletar, armazenar e consultar traces — ou seja, o histórico detalhado de uma requisição à medida que ela percorre diversos serviços e componentes em um sistema distribuído.
+O Tempo mostra o caminho que uma requisição percorre dentro de sua aplicação — do início ao fim — permitindo identificar gargalos, falhas e latências em microserviços.
+
+1. Prometheus é uma ferramenta open source de monitoramento e alerta, desenvolvida originalmente pelo SoundCloud e atualmente mantida pela Cloud Native Computing Foundation (CNCF), a mesma organização do Kubernetes e do OpenTelemetry.
+Seu principal objetivo é coletar, armazenar e consultar métricas de sistemas e serviços em tempo real, de forma eficiente e escalável. Prometheus é amplamente utilizado em ambientes cloud-native, microserviços e arquiteturas distribuídas, devido à sua facilidade de integração com o Kubernetes e ao suporte nativo ao modelo pull-based de coleta de métricas.
+
+
+
+
+
+
+
+
 
