@@ -1,19 +1,24 @@
 {
   "name": "slidev-workspace-starter",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A workspace for Slidev presentations",
   "scripts": {
     "export-og": "slidev-workspace export-og",
     "preview": "slidev-workspace preview",
     "build": "slidev-workspace build"
   },
   "dependencies": {
-    "slidev-workspace": "^0.7.1"
+    "slidev-workspace": "^0.7.2"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "slidev",
+    "workspace",
+    "presentation",
+    "slides",
+    "slidev-workspace"
+  ],
+  "author": "Leo Chiu",
+  "license": "MIT",
   "devDependencies": {
     "playwright-chromium": "^1.56.1"
   }
