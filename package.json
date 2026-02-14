@@ -20,6 +20,7 @@
   "author": "Leo Chiu",
   "license": "MIT",
   "devDependencies": {
+    "@unocss/preset-mini": "^66.6.0",
     "playwright-chromium": "^1.56.1"
   }
 }

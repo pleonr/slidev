@@ -26,3 +26,25 @@ This starter helps you manage multiple **Slidev** presentations in a single mono
 ## 📦 Demo
 
 Check out the live demo: https://leochiu-a.github.io/slidev-workspace-starter/
+
+
+  321  git pull
+  322  git status
+  323  git remote -v
+  324  git remote add upstream
+  325  git remote add upstream https://github.com/leochiu-a/slidev-workspace-starter
+  326  git fetch upstream
+  327  git merge upstream/main
+  328  git push origin main
+  329  pnpm install
+  330  npm --version
+  331  mise ls
+  332  git push origin main
+  333  npm install -g pnpm@latest-10
+  334  pnpm install
+  335  rm -rf node_modules
+  336  ls
+  337  rm -f package-lock.json yarn.lock
+  338  npm install
+  339  pnpm install
+  340  history

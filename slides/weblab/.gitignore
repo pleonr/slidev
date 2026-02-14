@@ -5,5 +5,3 @@ dist
 .vite-inspect
 .remote-assets
 components.d.ts
-_gh-pages
-temp
