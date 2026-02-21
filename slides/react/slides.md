@@ -2,7 +2,7 @@
 src: ../cover/cover.md
 theme: default
 image: /side-logo.png
-title: React
+title: API's
 author: Pablo Leon Rodrigues
 class: text-center
 drawings:
@@ -16,7 +16,7 @@ export:
   withClicks: false
 seoMeta:
   ogTitle: React
-  ogDescription: Support material for classes
+  ogDescription: Support material for classes, TEDSII, WebMob
 routerMode: hash
 ---
 

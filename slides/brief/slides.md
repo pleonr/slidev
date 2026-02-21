@@ -35,7 +35,6 @@ routerMode: hash
 - Estudar, Trabalhos
 
 ---
-
 layout: image-right
 image: /abaco.jpg
 ---
@@ -56,14 +55,15 @@ layout: two-cols
 
 - Pascaline: Em 1642, Blaise Pascal criou a "primeira máquina mecânica" para adições e subtrações, funcionava por meio de rodas e engrenagens para representar quantidades variáveis.
 
-<img class="m-auto -z-5 bottom-0 right-0 max-w-full max-h-full absolute" style="background-color: white" src="/pascaline.jpg"/>
+![](/pascaline.jpg)
 
 ::right::
 
 
 - Máquina Diferencial: Inventada por Charles Babbage em 1822 na Inglaterra. Deveria resolver polinômios e logaritmos, entretanto não teve sua construção concluída.
 
-<img class="m-auto -z-5 bottom-0 right-0 max-w-70 max-h-full" style="background-color: white" src="/differential.jpg"/>
+![](/differential.jpg)
+
 
 
 ---
