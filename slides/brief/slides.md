@@ -25,16 +25,6 @@ routerMode: hash
 <Toc columns="2" maxDepth="3"></Toc>
 
 ---
-
-- Olá, problema para lembrar nomes
-- Chamada no fim da aula, cuidado com faltas
-- Cuidados na universidade, principalmente o trevo
-- Aproveitar o campus, biblioteca, centro de convivência, eventos
-- IA, pode usar mas com bom senso
-- Videos IA
-- Estudar, Trabalhos
-
----
 layout: image-right
 image: /abaco.jpg
 ---
