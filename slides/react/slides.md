@@ -2,7 +2,7 @@
 src: ../cover/cover.md
 theme: default
 image: /side-logo.png
-title: API's
+title: React
 author: Pablo Leon Rodrigues
 class: text-center
 drawings:
