@@ -16,7 +16,7 @@ export:
   withClicks: false
 seoMeta:
   ogTitle: React
-  ogDescription: Support material for classes, TEDSII, WebMob
+  ogDescription: Support material for classes, TEDSII, WebMob, Ubiquitous
 routerMode: hash
 ---
 
