@@ -35,10 +35,11 @@ A computação é o campo de estudo que abrange o processamento, armazenamento e
 
 ### Pré-História Ábaco{style="color: lightgreen;"}
 
-o primeiro dispositivo de cálculo. Surgiu no Oriente Médio em 3.500 a.C., foi a "primeira máquina" inventada pelo homem para facilitar a contagem de valores e efetuava operações de adição e subtração.
+o primeiro dispositivo de cálculo. Surgiu no Oriente Médio entre 3.500 e  2.500 a.C., foi a "primeira máquina" inventada pelo homem para facilitar a contagem de valores e efetuava operações de adição e subtração.
 
 ---
-layout: two-cols
+layout: image-right
+image: /BlaisePascal.jpg
 ---
 
 ### Era mecânica{style="color: lightgreen;"}
@@ -47,14 +48,21 @@ layout: two-cols
 
 ![](/pascaline.jpg)
 
-::right::
+<!--
+Calculadora pascal, Linguagem Pascal... Pascal é uma linguagem de programação estruturada e imperativa, fortemente tipada. 1970.
+Blaise Pascal was a French mathematician, physicist, inventor, philosopher, and Catholic writer.
+-->
 
+---
+layout: image-left
+image: /CharlesBabbage.jpg
+---
 
 - Máquina Diferencial: Inventada por Charles Babbage em 1822 na Inglaterra. Deveria resolver polinômios e logaritmos, entretanto não teve sua construção concluída.
 
 ![](/differential.jpg)
 
-
+- Máquina Análitica: A Máquina Analítica, projetada por Charles Babbage em 1837, foi o primeiro conceito de um computador mecânico universal de uso geral, programável e movido a vapor.
 
 ---
 layout: image-right
@@ -72,6 +80,10 @@ O método desenvolvido continha o algoritmo para calcular os números de Bernoul
 - Conceito precursor de estruturas condicionais
 - A relação entre qualquer elemento que pudesse ser representado por símbolos
 - Uma máquina de propósito, de uso geral, pois tem a capacidade de ser reprogramada.
+
+<!--
+Augusta Ada Byron King, Condessa de Lovelace (nascida Byron, 10 de dezembro de 1815 — 27 de novembro de 1852) Pintura de 1840
+-->
 
 ---
 layout: two-cols
@@ -99,6 +111,29 @@ Em 1854 o inglês George Boole publica “An Investigation of the Laws of Though
 - 2,5 metros de altura, 16 metros de comprimento
 
 <img class="m-auto -z-5 bottom-0 right-0 max-w-100 max-h-full" style="background-color: white" src="/mark.jpg"/>
+
+<!--
+O Harvard Mark I (1944) uma máquina eletromecânica.
+A história do "bug" (erro de software) popularizou-se em 9 de setembro de 1947, quando a pioneira da computação Grace Hopper encontrou uma mariposa real presa nos relés do computador Harvard Mark II, causando falhas. O inseto foi colado no diário de bordo com a nota "primeiro caso real de um bug encontrado", consolidando o termo debugging.
+Grace Hopper pioneira da computação.
+-->
+
+---
+layout: image-right
+image: /rele.webp
+---
+
+### Relé Eletromecânico
+
+Um relé eletromecânico é um dispositivo de comutação composto por uma bobina, núcleo magnético e contatos físicos que abrem ou fecham circuitos quando a bobina é energizada.
+
+O relé eletromecânico foi fundamental nos primórdios da computação (anos 1930-1940), atuando como o primeiro "interruptor" lógico (ligado/desligado).
+
+<!--
+o problema do relé é a limitação de desempenho. A valvula é pelo menos 300x mais rápida que o relé
+Elétrico: O componente eletrico só reage a passagem de eletrecidade.
+Eletrônico: O componente eletronico controla e regula a quantidade de energia elétrica com a propria eletricidade.
+-->
 
 ---
 layout: image-right
@@ -167,7 +202,7 @@ Foi marcada pelo surgimento da válvula eletrônica cuja principal função era 
 <img class="m-auto -z-5 bottom-0 right-0 max-w-full max-h-full" style="background-color: white" src="/valvula.png"/>
 
 <!--
-Válvulas, baixo tempo de vida últil, frágeis, gigantes.
+Válvulas, baixo tempo de vida últil, frágeis, gigantes. aquecimento, filamento queimava
 -->
 
 ---
@@ -195,6 +230,10 @@ Primeiro computador comercial
 - Tendência à  miniaturização
 - Circuitos integrados
 - Novos sistemas operacionais
+
+<!--
+Transistores são componentes semicondutores fundamentais da eletrônica moderna que funcionam como interruptores ou amplificadores de corrente elétrica. Criados em 1947 para substituir válvulas, eles controlam o fluxo de elétrons em computadores e smartphones, permitindo a lógica binária (0 e 1). São feitos principalmente de silício.
+-->
 
 ---
 layout: two-cols
