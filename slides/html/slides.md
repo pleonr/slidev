@@ -162,8 +162,8 @@ tipo de relacionamento estabelecido, que deve considerar um conjunto de opções
 documento e há diferenças entre uma opção e outra.
 
 ---
-layout: iframe-right
-url: /index-page.html
+layout: image-right
+image: /index-page.png
 ---
 
 ```html
@@ -186,8 +186,8 @@ HTML - Encadeamento (nesting)
 -->
 
 ---
-layout: iframe-right
-url: /tags1.html
+layout: image-right
+image: /tags1.png
 ---
 
 - `<p>`: Utilizado para criar um parágrafo
@@ -200,8 +200,8 @@ maior será a relevância do conteúdo
 documento
 
 ---
-layout: iframe-right
-url: /tags2.html
+layout: image-right
+image: /tags2.png
 ---
 
 - `<sup>`: Adiciona conteúdo sobrescrito
@@ -215,8 +215,8 @@ A tag, em si, não adiciona semântica ao conteúdo
 
 
 ---
-layout: iframe-right
-url: /tags3.html
+layout: image-right
+image: /tags3.png
 ---
 
 - `<q>`: Demarca citações curtas, apresentadas em meio a outro conteúdo.
@@ -227,8 +227,8 @@ Não devemos utilizar para envolver nomes de autores, somente o título da obra.
 
 
 ---
-layout: iframe-right
-url: /tags4.html
+layout: image-right
+image: /tags4.png
 ---
 
 No HTML5 temos a possibilidade de utilizar seis níveis de títulos. Para isso, temos disponíveis as tags
@@ -236,8 +236,8 @@ No HTML5 temos a possibilidade de utilizar seis níveis de títulos. Para isso, 
 aumenta, a relevância do título diminui. Veja um exemplo de documento contendo quatro níveis de títulos.
 
 ---
-layout: iframe-right
-url: /tags5.html
+layout: image-right
+image: /tags5.png
 ---
 
 As listas são utilizadas para elencar itens de forma ordenada ou não. Para cada caso, temos a disposição uma
@@ -362,8 +362,8 @@ Os atributos `rowspan` e `colspan`, ao aplicar rowspan, indicamos que uma célul
 de linhas informada, enquanto que colspan indica a quantidade de colunas.
 
 ---
-layout: iframe-right
-url: /table.html
+layout: image-right
+image: /table.png
 ---
 
 ```html
@@ -386,8 +386,8 @@ url: /table.html
 ```
 
 ---
-layout: iframe-left
-url: /table2.html
+layout: image-left
+image: /table2.png
 ---
 
 ```html
@@ -406,8 +406,8 @@ url: /table2.html
 </table>
 ```
 ---
-layout: iframe-left
-url: /table3.html
+layout: image-left
+image: /table3.png
 ---
 
 ```html
@@ -452,8 +452,8 @@ relacionados.
 - `<main>`: Especifica o trecho do documento que contém o conteúdo principal.
 
 ---
-layout: iframe
-url: /page_content.html
+layout: image
+image: /page_content.png
 ---
 
 
@@ -462,8 +462,8 @@ url: /page_content.html
 <img class="m-auto -z-5 left-0 top-0 right-0 bottom-0 max-w-full max-h-full absolute" src="/semantic.png"/>
 
 ---
-layout: iframe-right
-url: /forms.html
+layout: image-right
+image: /forms.png
 ---
 
 ## Forms
