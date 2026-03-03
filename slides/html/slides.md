@@ -224,6 +224,7 @@ Não devemos utilizar para envolver nomes de autores, somente o título da obra.
 - `<blockquote>`: Demarca citações longas.
 - `<cite>`: Utilizado para especificar o título de um trabalho (livro, programa de computador, artigo, etc.).
 Não devemos utilizar para envolver nomes de autores, somente o título da obra.
+- `<abbr>`: Utilizado em abreviações `<p>The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.</p>`
 
 
 ---
