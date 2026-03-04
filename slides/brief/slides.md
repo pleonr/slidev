@@ -379,6 +379,18 @@ Exemplo: **13 (decimal) → ? (binário)**
 **Resposta:** 1101 (binário)
 
 ---
+layout: image
+image: 102.webp
+backgroundSize: contain
+---
+
+---
+layout: image
+image: 210.webp
+backgroundSize: contain
+---
+
+---
 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 left-0 max-w-full max-h-full" src="/binary.png"/>
 
