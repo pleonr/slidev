@@ -269,6 +269,35 @@ layout: two-cols
 ---
 
 ```js
+// Name Export | Name Import
+export const name = 'value'
+import { name } from '...'
+
+// Default Export | Default Import
+export default 'value'
+import anyName from '...'
+
+// Rename Export | NameImport
+export { name as newName }
+import { newName } from '...'
+
+// Name + Default | Import All
+export const name = 'value'
+export default 'value'
+import * as anyName from '...'
+```
+
+::right::
+
+https://www.samanthaming.com
+
+![](/modules.png)
+
+---
+layout: two-cols
+---
+
+```js
 import express from "express";
 
 const app = express();
