@@ -53,8 +53,9 @@ Podemos classificar os recursos da linguagem em diferentes módulos, cada qual c
 - User Interface
 
 ---
-layout: iframe-right
-url: /style.html
+layout: image-right
+image: /css.png
+background-size: contain
 ---
 
 ```html
@@ -824,8 +825,9 @@ Opções `none`, `capitalize`, `uppercase`, `lowercase`
 
 
 ---
-layout: iframe-right
-url: /google-fonts.html
+layout: image-right
+image: /google-fonts.png
+background-size: contain
 ---
 
 ### Google Fonts
@@ -897,8 +899,9 @@ layout: two-cols
 ```
 
 ---
-layout: iframe
-url: /tables.html
+layout: image
+background-size: contain
+image: /tables.png
 ---
 
 ---
