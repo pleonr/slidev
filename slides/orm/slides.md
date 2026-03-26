@@ -81,6 +81,27 @@ O Arquivo pom.xml, POM significa Project Object Model. É um arquivo XML onde vo
 - Repositório Remoto: Onde o Maven busca as bibliotecas na internet.
 - Repositório Local (Pasta .m2): Quando o Maven baixa um JAR, ele guarda no seu computador. Se você criar 10 projetos que usam o mesmo Driver JDBC, o Maven baixa apenas uma vez e compartilha com todos.
 
+
+---
+layout: image
+image: /maven.png
+backgroundSize: contain
+---
+
+
+---
+layout: image
+image: /conventions.png
+backgroundSize: contain
+---
+
+
+---
+layout: image
+image: /m2.png
+backgroundSize: contain
+---
+
 ---
 
 |Instrução| Ação|
@@ -124,6 +145,13 @@ Se o Maven reclamar de versão do Java, vá em:
 File > Settings (ou Ctrl + Alt + S) > Build, Execution, Deployment > Build Tools > Maven > Importing.
 Verifique se o JDK for importer é o mesmo que você está usando no projeto.
 -->
+
+
+---
+layout: image
+image: /pom.png
+backgroundSize: contain
+---
 
 ---
 
