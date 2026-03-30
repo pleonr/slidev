@@ -771,28 +771,56 @@ linguagem de programação, trabalhando com objetos que representam seus dados.
 ![](/typeorm.png)
 
 ---
-layout: two-cols
-hideInToc: true
+layout: image
+image: /diferenca.png
+backgroundSize: contain
 ---
 
-## Prós
+---
+layout: image
+image: /mismatch.png
+backgroundSize: contain
+---
 
-- **Desenvolvimento rápido**: ao usar objetos e métodos em vez de escrever SQL bruto.
-- **Código mais simples**: o código se torna mais limpo e fácil de entender.
-- **Independência do banco de dados**: como o ORM cuida da tradução entre objetos e SQL, seu código se torna menos
-dependente do banco de dados específico que está sendo usado. Isso facilita a troca de bancos de dados no futuro.
-- **Erros reduzidos**: ORMs podem ajudar a evitar erros que podem ocorrer ao escrever consultas SQL complexas manualmente.
+---
+layout: image
+image: /traducao.png
+backgroundSize: contain
+---
 
-::right::
+---
+layout: image
+image: /paradoxo.png
+backgroundSize: contain
+---
 
-## Cons
+---
 
-- **Curva de aprendizado**: Há uma curva de aprendizado envolvida na compreensão de como usar um ORM de maneira eficaz.
-Embora simplifiquem a interação com o banco de dados, eles introduzem uma nova camada de complexidade
-à sua base de código.
-- **Sobrecarga de desempenho**: a camada ORM pode adicionar alguma sobrecarga em comparação com consultas SQL otimizadas
-e escritas à mão.
-- **Controle limitado**: os ORMs podem não fornecer acesso a todas as funcionalidades de um banco de dados específico.
+## TypeOrm
+
+TypeORM é uma biblioteca ORM que utiliza JavaScript ou TypeScript. Ele preenche a lacuna entre o mundo orientado
+a objetos do seu código e o formato estruturado dos bancos de dados relacionais.
+
+Você define classes em seu código, decoradas com anotações especiais, para representar suas
+tabelas de banco de dados. Essas classes são chamadas de “entidades” em TypeORM. As propriedades da classe são mapeadas
+para as colunas na tabela do banco de dados. TypeORM essencialmente cria um mapeamento entre seus objetos de código
+e o esquema do banco de dados.
+
+- @Entity(): Define uma classe como uma entidade do banco de dados. Cada instância dessa classe representará uma linha em uma tabela do banco de dados.
+- @PrimaryGeneratedColumn(): Marca uma propriedade como a chave primária
+- @Column(): Define uma coluna na tabela correspondente à entidade.
+
+```typescript
+@Column({ type: "varchar", length: 100, unique: true })
+email: string;
+```
+
+---
+layout: image
+image: /type.png
+backgroundSize: contain
+---
+
 
 ---
 
@@ -818,455 +846,293 @@ export class User {
 ```
 
 ---
+layout: image
+image: /mapeamento.png
+backgroundSize: contain
+---
 
+---
+layout: image
+image: /onetoone.png
+backgroundSize: contain
+---
 
-## TypeOrm
+---
+layout: image
+image: /onetomany.png
+backgroundSize: contain
+---
 
-TypeORM é uma biblioteca ORM que utiliza JavaScript ou TypeScript. Ele preenche a lacuna entre o mundo orientado
-a objetos do seu código e o formato estruturado dos bancos de dados relacionais.
+---
+layout: image
+image: /manytomany.png
+backgroundSize: contain
+---
 
-Você define classes em seu código, decoradas com anotações especiais, para representar suas
-tabelas de banco de dados. Essas classes são chamadas de “entidades” em TypeORM. As propriedades da classe são mapeadas
-para as colunas na tabela do banco de dados. TypeORM essencialmente cria um mapeamento entre seus objetos de código
-e o esquema do banco de dados.
-
-- @Entity(): Define uma classe como uma entidade do banco de dados. Cada instância dessa classe representará uma linha em uma tabela do banco de dados.
-- @PrimaryGeneratedColumn(): Marca uma propriedade como a chave primária
-- @Column(): Define uma coluna na tabela correspondente à entidade.
-
-```typescript
-@Column({ type: "varchar", length: 100, unique: true })
-email: string;
-```
-
+---
+layout: image
+image: /fetchtypes.png
+backgroundSize: contain
+---
 
 ---
 
-- Suporte TypeScript: TypeORM foi desenvolvido com TypeScript em mente, permitindo que você aproveite a segurança de
-tipo para suas entidades e interações de banco de dados.
-- Suporte a vários bancos de dados: TypeORM funciona com uma variedade de bancos de dados relacionais populares,
-incluindo MySQL, PostgreSQL, SQL Server entre outros.
-- Construtor de consultas: TypeORM fornece um construtor de consultas que permite construir consultas complexas de
-banco de dados de forma programática, oferecendo uma alternativa ao SQL bruto.
-- Padrão de repositório: TypeORM suporta o padrão de repositório, onde cada entidade pode ter sua própria classe de
-repositório encapsulando a lógica de acesso a dados.
-- Migrações: TypeORM ajuda a gerenciar alterações no esquema do banco de dados ao longo do tempo por meio de um
-sistema de migrações.
+## Eager Loading
+
+No Eager Loading, os dados relacionados são buscados automaticamente junto com a entidade principal na mesma consulta (geralmente usando um JOIN).
+
+```js
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+  @Column()
+  name: string;
+  // Sempre que você buscar um User
+  // os Posts virão junto
+  @OneToMany(() => Post, (post)
+    => post.user, { eager: true })
+  posts: Post[];
+}
+```
+
+```js
+const user = await userRepository.findOneBy({ id: 1 });
+console.log(user.posts); // Os posts já estão aqui, sem precisar de novo 'await'
+```
+
+---
+
+## Lazy Loading
+
+No Lazy Loading, os dados relacionados não são buscados inicialmente. Eles só são consultados no banco de dados no momento exato em que você tenta acessá-los no código.
+
+```js
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  // O tipo deve ser Promise<Post[]>
+  @OneToMany(() => Post, (post)
+    => post.user)
+  posts: Promise<Post[]>;
+}
+```
+
+```js
+const user = await userRepository.findOneBy({ id: 1 });
+// O campo 'posts' ainda está vazio (uma Promise pendente)
+const posts = await user.posts; // Só agora o TypeORM faz o SELECT no banco
+console.log(posts);
+```
 
 ---
 layout: two-cols
 ---
 
-```js
-npm init -y
-npm install express typeorm reflect-metadata pg dotenv
-```
 
-```
-meu-projeto/
-├─ src/
-│  ├─ entity/
-│  │  └─ User.js
-│  ├─ data-source.js
-│  └─ server.js
-├─ .env
-└─ package.json
-```
+### Eager Loading
+
+<br>
+
+- **Vantagem**: Conveniência. Você não precisa se preocupar em pedir as relações.
+
+- **Desvantagem**: Pode causar lentidão se a tabela for enorme. Você sempre trará os dados, mesmo que só precise do nome do usuário.
 
 ::right::
 
-```
-//.env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASS=postgres
-DB_NAME=teste_typeorm
-PORT=3000
-```
+### Lazy Loading
+
+<br>
+
+- **Vantagem**: Economia de recursos iniciais. Você só gasta processamento com o que realmente usar.
+
+- **Desvantagem**: Pode levar ao Problema do N+1 se você acessar a Promise dentro de um loop, pois cada acesso disparará uma nova consulta ao banco.
 
 ---
+layout: image
+image: /arquitetura.png
+backgroundSize: contain
+---
 
-```
-import "reflect-metadata";
-import dotenv from "dotenv";
-import { DataSource } from "typeorm";
-import User from "./entity/User.js";
+<!--
+Padrões de Projeto: Data Mapper vs. Active Record
 
-dotenv.config();
+O TypeORM é único porque suporta ambos. Discutir isso é vital para arquitetura de software:
 
-export const AppDataSource = new DataSource({
-  type: "postgres",
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+    Active Record: A lógica de banco de dados fica dentro do modelo (ex: User.save()). Mais simples para projetos pequenos.
 
-  entities: [User],
-
-  // somente em desenvolvimento
-  synchronize: true,
-
-  logging: true,
-});
-```
+    Data Mapper: A lógica de banco fica em repositórios (ex: userRepository.save(user)). Mais escalável e fácil de testar.
+-->
 
 
 ---
 
-```typescript
-// controller do usuário
-import {Request, Response} from "express"
-import {AppDataSource} from "../data-source"
-import {Usuario} from "../models/usuario"
-import dotenv from "dotenv"
+## SQL Injection
 
-dotenv.config()
+O SQL Injection (SQLi) é uma das vulnerabilidades mais antigas e perigosas da web. Ela ocorre quando um invasor consegue "injetar" comandos SQL maliciosos dentro de uma consulta através de campos de entrada (como um formulário de login ou uma URL).
 
-export const addUsuario = async (req: Request, res: Response) => {
-    try {
-        const username: string = req.body.email
-        if (!username) {
-            return res.status(400).json({ error: 'email é obrigatório' })
-        }
-        const usuario: Usuario[] = AppDataSource.getRepository(Usuario).create(req.body)
-        const results: Usuario[] = await AppDataSource.getRepository(Usuario).save(usuario)
-        return res.status(200).send(results)
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao inserir Usuario' })
-    }
-}
+O erro clássico é usar interpolação de strings (template literals) para montar a query. Isso faz com que o banco de dados não consiga distinguir o que é "dado" e o que é "comando".
+
+```js
+// NUNCA FAÇA ISSO!
+const emailFornecido = "admin@email.com' OR '1'='1";
+
+const user = await userRepository.query(
+    `SELECT * FROM users WHERE email = '${emailFornecido}'`
+);
 ```
 
 ---
 
-```typescript
-export const getUsuarios = async (req: Request, res: Response) => {
-    try {
-        const results: Usuario[] = await AppDataSource.getRepository(Usuario).find()
-        return res.status(200).send(results)
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao inserir Usuario' })
-    }
-}
-```
+O que acontece no Banco de Dados:
+A query final enviada seria:
+`SELECT * FROM users WHERE email = 'admin@email.com' OR '1'='1'`
+
+Como `'1'='1'` é sempre verdadeiro, o invasor conseguiria logar como o primeiro usuário da tabela (geralmente o admin) sem saber a senha. Se ele enviasse `; DROP TABLE users;`, você poderia perder todos os seus dados.
+
+
+---
+layout: image
+image: /sqlinjection.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /sqlinjection2.png
+backgroundSize: contain
+---
 
 ---
 
-```typescript
-export const updateUsuario = async (req: Request, res: Response) => {
-    try {
-        const id: number = +req.params.id
-        if (!id) {
-            return res.status(400).json({ error: 'id não encontrado' })
-        }
-        const usuario: Usuario = await AppDataSource.getRepository(Usuario).findOneBy({ id: id })
-        if (!usuario) {
-            return res.status(400).json({ error: 'usuário inválido' })
-        }
+### Query Builder e Parâmetros
 
-        AppDataSource.getRepository(Usuario).merge(usuario, req.body)
-        const results: Usuario = await AppDataSource.getRepository(Usuario).save(usuario)
-        return res.status(200).send(results)
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao atualizar Usuario' })
-    }
-}
+O TypeORM (e a maioria dos ORMs modernos) resolve isso usando Prepared Statements (ou declarações preparadas). Em vez de concatenar a string, você envia a query com um "espaço reservado" (placeholder) e os dados separadamente.
+Usando o Query Builder (Seguro)
+
+O Query Builder sanitiza automaticamente as entradas quando você usa a sintaxe de objeto `:variavel`.
+
+```js
+const user = await userRepository.createQueryBuilder("user")
+    .where("user.email = :email", { email: emailFornecido })
+    .getOne();
 ```
+
+O driver do banco de dados recebe o comando SQL e o valor de emailFornecido como pacotes distintos. O banco entende que o conteúdo de emailFornecido é apenas texto, e não parte do comando SQL. Mesmo que o texto contenha `OR '1'='1'`, ele será buscado literalmente como parte do e-mail, resultando em "nenhum usuário encontrado" em vez de um vazamento de dados.
 
 ---
 
-```typescript
-export const deleteUsuario = async (req: Request, res: Response) => {
-    try {
-        const id: number = +req.params.id
-        if (!id) {
-            return res.status(400).json({error: 'usuário não encontrado'})
-        }
-        const results = await AppDataSource.getRepository(Usuario).delete(id)
-        return res.status(204).send(results)
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao deletar Usuario' })
-    }
-}
+## Problema N+1
 
-```
+O Problema do N+1 é um dos erros de performance mais comuns (e perigosos) ao usar ORMs. Ele acontece quando o código faz uma consulta inicial para buscar uma lista de registros (o "1") e, em seguida, executa uma nova consulta para cada um desses registros para buscar seus relacionamentos (o "N").
+
+Cenário: Você está em uma mesa com 10 amigos e todos pedem uma cerveja diferente.
+
+> O Garçom N+1: Ele vai até a mesa, anota que são 10 pessoas (1 consulta). Depois, ele vai ao bar, pega a cerveja do primeiro amigo e volta. Vai ao bar, pega a do segundo e volta... Ele faz isso 10 vezes (N consultas). No total, ele fez 11 viagens.
+
+> O Garçom Eficiente (Eager Loading): Ele anota os 10 pedidos, vai ao bar uma única vez, coloca tudo em uma bandeja e traz para a mesa. Ele fez 1 viagem apenas.
 
 ---
-
-```typescript
-export const getUsuario = async (req: Request, res: Response) => {
-    try {
-        const id: number = +req.params.id
-        if (!id) {
-            return res.status(400).json({error: 'usuário não encontrado'})
-        }
-        const results = await AppDataSource.getRepository(Usuario).findOneBy({id: id})
-        return res.status(200).send(results)
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar Usuario' })
-    }
-}
-```
-
+layout: image
+image: /n1.png
+backgroundSize: contain
 ---
 
-## Mapeamento de Relações
-
-Usamos as seguintes anotações para definir os relacionamentos entre entidades.
-
-- `@OneToOne()`: Um para um.
-- `@ManyToOne()`: Muitos para um.
-- `@OneToMany()`: Um para muitos.
-- `@ManyToMany()`: Muitos para muitos.
-
-```typescript
-@OneToMany(() => Partida, (partida) => partida.campeonato)
-partidas: Partida[];
-```
-
-Também usamos o `@JoinColumn()` junto com @OneToOne() ou @ManyToOne() para indicar que
-essa coluna deve armazenar a chave estrangeira da outra entidade.
-
-```typescript
-@ManyToOne(() => Campeonato)
-@JoinColumn({ name: "campeonato_id" })
-campeonato: Campeonato;
-```
-
-<!--__dirname+"/entity/**/*.{js,ts}"-->
-
+---
+layout: image
+image: /n1lazy.png
+backgroundSize: contain
 ---
 
-# Diagrama ER (visão geral)
-
-- **User 1—N Playlist**: um usuário pode ter muitas playlists.
-- **User 1—N Music**: um usuário (uploader) pode enviar muitas músicas.
-- **Playlist N—N Music**: uma playlist contém muitas músicas e vice-versa.
-  - Implementado com **entidade de junção** `PlaylistMusic` (ordem & data de adição).
-
-> O arquivo `.dbml` acompanha este material (importe no dbdiagram.io).
-
+---
+layout: image
+image: /n1desastre.png
+backgroundSize: contain
 ---
 
-# DBML (dbdiagram) — trecho
-
-```text
-Table users {
-  id serial [pk]
-  email text [not null, unique]
-  name  text [not null]
-}
-
-Table musics {
-  id serial [pk]
-  title text [not null]
-  duration int [not null]
-  uploader_id int [ref: > users.id]
-}
-
-Table playlists {
-  id serial [pk]
-  name text [not null]
-  owner_id int [not null, ref: > users.id]
-}
-
-Table playlists_musics {
-  id serial [pk]
-  playlist_id int [not null, ref: > playlists.id]
-  music_id int [not null, ref: > musics.id]
-  position int [not null]
-  added_at timestamptz [not null, default: `now()`]
-
-  indexes {
-    (playlist_id, music_id) [unique]
-  }
-}
-```
-
+---
+layout: image
+image: /n1eager.png
+backgroundSize: contain
 ---
 
-# Por que estes relacionamentos?
-
-- **User→Playlist (1:N)**: um **owner** administra a playlist.
-- **User→Music (1:N)**: um **uploader** (autor/dono) pode ter diversas músicas.
-- **Playlist↔Music (N:N)**: playlists **misturam** músicas de várias fontes.
-- **Entidade de junção (`PlaylistMusic`)**: precisamos de **ordem** e **metadados** (ex.: `position`, `added_at`).
-
+---
+layout: image
+image: /n1avancado.png
+backgroundSize: contain
 ---
 
-# TypeORM: Entidade User (1:N → Playlist/Music)
-
-```ts
-// src/entities/User.ts
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Index } from 'typeorm';
-import { Playlist } from './Playlist';
-import { Music } from './Music';
-
-@Entity({ name: 'users' })
-export class User {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
-  @Index({ unique: true })
-  @Column({ type: 'text', unique: true })
-  email!: string;
-
-  @Column({ type: 'text' })
-  name!: string;
-
-  @OneToMany(() => Playlist, (p) => p.owner)
-  playlists!: Playlist[];
-
-  @OneToMany(() => Music, (m) => m.uploader)
-  musics!: Music[];
-}
-```
-
-> Lado **OneToMany** é *inverse side* (a FK fica em `Playlist.owner` e `Music.uploader`).
-
+---
+layout: two-cols
+hideInToc: true
 ---
 
-# TypeORM: Entidade Playlist (N:1 owner, 1:N items)
+## Prós
 
-```ts
-// src/entities/Playlist.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { User } from './User';
-import { PlaylistMusic } from './PlaylistMusic';
+- **Desenvolvimento rápido**: ao usar objetos e métodos em vez de escrever SQL bruto.
+- **Código mais simples**: o código se torna mais limpo e fácil de entender.
+- **Independência do banco de dados**: como o ORM cuida da tradução entre objetos e SQL, seu código se torna menos
+dependente do banco de dados específico que está sendo usado. Isso facilita a troca de bancos de dados no futuro.
+- **Erros reduzidos**: ORMs podem ajudar a evitar erros que podem ocorrer ao escrever consultas SQL complexas manualmente.
 
-@Entity({ name: 'playlists' })
-export class Playlist {
-  @PrimaryGeneratedColumn()
-  id!: number;
+::right::
 
-  @Column({ type: 'text' })
-  name!: string;
+## Cons
 
-  @ManyToOne(() => User, (u) => u.playlists, { onDelete: 'CASCADE' })
-  owner!: User;
+- **Curva de aprendizado**: Há uma curva de aprendizado envolvida na compreensão de como usar um ORM de maneira eficaz.
+Embora simplifiquem a interação com o banco de dados, eles introduzem uma nova camada de complexidade
+à sua base de código.
+- **Sobrecarga de desempenho**: a camada ORM pode adicionar alguma sobrecarga em comparação com consultas SQL otimizadas
+e escritas à mão.
+- **Controle limitado**: os ORMs podem não fornecer acesso a todas as funcionalidades de um banco de dados específico.
 
-  @OneToMany(() => PlaylistMusic, (pm) => pm.playlist, {
-    cascade: ['insert', 'update'],
-    orphanedRowAction: 'delete',
-  })
-  items!: PlaylistMusic[];
-}
-```
 
-**Por que `orphanedRowAction: 'delete'`?**
-Ao atualizar `items`, linhas órfãs em `playlists_musics` são removidas automaticamente.
 
----
 
-# TypeORM: Entidade Music (N:1 uploader, 1:N playlists)
 
-```ts
-// src/entities/Music.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
-import { User } from './User';
-import { PlaylistMusic } from './PlaylistMusic';
 
-@Entity({ name: 'musics' })
-export class Music {
-  @PrimaryGeneratedColumn()
-  id!: number;
 
-  @Column({ type: 'text' })
-  title!: string;
 
-  @Column({ type: 'int' })
-  duration!: number; // seconds
 
-  @ManyToOne(() => User, (u) => u.musics, { onDelete: 'SET NULL', nullable: true })
-  uploader!: User | null;
 
-  @OneToMany(() => PlaylistMusic, (pm) => pm.music)
-  playlists!: PlaylistMusic[];
-}
-```
 
-**`SET NULL`** mantém a música mesmo se o uploader for removido.
 
----
 
-# TypeORM: Entidade de junção (N:N) PlaylistMusic
 
-```ts
-// src/entities/PlaylistMusic.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique, Index } from 'typeorm';
-import { Playlist } from './Playlist';
-import { Music } from './Music';
 
-@Entity({ name: 'playlists_musics' })
-@Unique('UQ_playlist_music_unique', ['playlist', 'music'])
-export class PlaylistMusic {
-  @PrimaryGeneratedColumn()
-  id!: number;
 
-  @ManyToOne(() => Playlist, (p) => p.items, { onDelete: 'CASCADE' })
-  @Index()
-  playlist!: Playlist;
 
-  @ManyToOne(() => Music, (m) => m.playlists, { onDelete: 'CASCADE' })
-  @Index()
-  music!: Music;
 
-  @Column({ type: 'int' })
-  position!: number;
 
-  @Column({ type: 'timestamptz', default: () => 'now()' })
-  added_at!: Date;
-}
-```
 
-> **Por que não `@ManyToMany` direto?** Precisamos de **campos extras** (ordem, data). A entidade de junção é a forma correta.
 
----
 
-# Criando uma playlist com músicas (exemplo)
 
-```ts
-const userRepo = AppDataSource.getRepository(User);
-const musicRepo = AppDataSource.getRepository(Music);
-const playlistRepo = AppDataSource.getRepository(Playlist);
 
-const owner = await userRepo.findOneByOrFail({ id: 1 });
-const musics = await musicRepo.findBy([{ id: 10 }, { id: 20 }, { id: 30 }]);
 
-const playlist = playlistRepo.create({
-  name: 'Favoritas',
-  owner,
-  items: musics.map((m, idx) => ({ music: m, position: idx + 1 })),
-});
 
-await playlistRepo.save(playlist);
-```
 
----
 
-# Carregando relações (find + relations)
 
-```ts
-const playlist = await playlistRepo.findOne({
-  where: { id: 1 },
-  relations: { owner: true, items: { music: true } },
-  order: { items: { position: 'ASC' } },
-});
-```
 
----
 
-# Carregando relações (QueryBuilder)
 
-```ts
-const results = await playlistRepo
-  .createQueryBuilder('pl')
-  .leftJoinAndSelect('pl.owner', 'owner')
-  .leftJoinAndSelect('pl.items', 'items')
-  .leftJoinAndSelect('items.music', 'music')
-  .where('owner.id = :ownerId', { ownerId: 1 })
-  .orderBy('items.position', 'ASC')
-  .getMany();
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
