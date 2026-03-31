@@ -53,6 +53,13 @@ Podemos classificar os recursos da linguagem em diferentes módulos, cada qual c
 - User Interface
 
 ---
+layout: image
+image: /estrutura.png
+background-size: contain
+---
+
+
+---
 layout: image-right
 image: /css.png
 background-size: contain
@@ -90,6 +97,12 @@ podemos escrever o seguinte trecho de código:
 A propriedade chama-se text-align e seu valor foi configurado para justify, o qual indica que o texto deve ser
 justificado. Ao final, é necessário colocar `;`. Um mesmo elemento pode receber diversas configurações de estilo
 através do uso de diferentes propriedades.
+
+---
+layout: image
+image: /anatomia.png
+background-size: contain
+---
 
 ---
 
@@ -330,6 +343,13 @@ a[target="_blank"] {
 | `[attribute^=value]`         | `a[href^="https"]`     | Seleciona todos os elementos `<a>` com um valor de atributo href começando com "https"                                            |
 | `[attribute$=value]`         | `a[href$=".pdf"]`      | Seleciona todos os elementos `<a>` com um valor de atributo href terminando com ".pdf"                                            |
 | `[attribute*=value]`         | `a[href*="w3schools"]` | Seleciona todos os elementos `<a>` com um valor de atributo href contendo a substring "w3schools"                                 |
+
+---
+layout: image
+image: /pinceis.png
+background-size: contain
+---
+
 
 ---
 layout: two-cols
