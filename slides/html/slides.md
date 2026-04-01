@@ -276,6 +276,13 @@ ser apresentado (contexto do navegador).
 - `_top`: Abre o recurso no contexto de navegação mais elevado da página.
 
 ---
+layout: image
+image: /hyperlink.png
+background-size: contain
+---
+
+
+---
 layout: two-cols
 ---
 
@@ -305,6 +312,43 @@ Não apenas recursos obtidos via protocolo HTTP podem ser informados no atributo
   </body>
 </html>
 ```
+
+---
+layout: image
+image: /caminhos.png
+background-size: contain
+---
+
+---
+layout: image
+image: /target.png
+background-size: contain
+---
+
+---
+layout: image
+image: /ancora.png
+background-size: contain
+---
+
+---
+layout: image
+image: /download.png
+background-size: contain
+---
+
+---
+layout: image
+image: /comunicacao.png
+background-size: contain
+---
+
+---
+layout: image
+image: /envelop.png
+background-size: contain
+---
+
 
 ---
 
