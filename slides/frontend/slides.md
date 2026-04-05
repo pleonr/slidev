@@ -2,7 +2,7 @@
 src: ../cover/cover.md
 theme: default
 image: /side-logo.png
-title: React
+title: Frontend
 author: Pablo Leon Rodrigues
 class: text-center
 drawings:
@@ -15,7 +15,7 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogTitle: React
+  ogTitle: Frontend
   ogDescription: Support material for classes TEDS II
 routerMode: hash
 ---
