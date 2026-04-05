@@ -16,11 +16,12 @@ export:
   withClicks: false
 seoMeta:
   ogTitle: React
-  ogDescription: Support material for classes, TEDSII, WebMob, Ubiquitous
+  ogDescription: Support material for classes TEDS II
 routerMode: hash
 ---
 
 ---
+
 
 <Toc columns="2" maxDepth="3"></Toc>
 
