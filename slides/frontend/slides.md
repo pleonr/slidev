@@ -2,7 +2,7 @@
 src: ../cover/cover.md
 theme: default
 image: /side-logo.png
-title: Frontend
+title: React
 author: Pablo Leon Rodrigues
 class: text-center
 drawings:
@@ -15,10 +15,11 @@ export:
   format: pdf
   withClicks: false
 seoMeta:
-  ogTitle: Frontend
-  ogDescription: Support material for classes TEDS II
+  ogTitle: React
+  ogDescription: Support material for classes
 routerMode: hash
 ---
+
 
 ---
 
@@ -54,9 +55,9 @@ aplicativos da web e APIs.
 
 
 ---
-
-![](/pern.jpg)
-
+layout: image
+image: /pern.jpg
+background-size: contain
 ---
 
 ### Prós
@@ -80,6 +81,25 @@ para desenvolvedores que não estão familiarizados com JavaScript no back-end.
 recursos avançados.
 - Considerações de segurança: como acontece com qualquer desenvolvimento web, a segurança precisa ser cuidadosamente
 considerada. Porém, o mesmo pode ser dito para qualquer outro stack.
+
+---
+layout: image
+image: /architecture.png
+background-size: contain
+---
+
+---
+layout: image
+image: /spa.png
+background-size: contain
+---
+
+---
+layout: image
+image: /spaapp.png
+background-size: contain
+---
+
 
 ---
 layout: two-cols
@@ -168,6 +188,12 @@ image: /virtualdoomreact.webp
 ---
 
 ---
+layout: image
+image: /atualizacao.png
+background-size: contain
+---
+
+---
 layout: two-cols
 ---
 
@@ -199,12 +225,12 @@ const background = 'red'
 Para começar a falar do react vamos usar um boilerplate
 
 ```bash
-npx create-react-app my-app --template typescript
+npm create vite@latest meu-app
 ```
 
-Isso vai criar um projeto básico usando typescript e react.
+Isso vai criar um projeto básico usando react.
 
-```tsx
+```jsx
 function MyButton() {
   return (
     <button>I'm a button</button>
@@ -220,7 +246,7 @@ layout: two-cols
 
 O JSX permite colocar linguagem de marcação em JavaScript. As chaves `{}` permitem que você “escape” para o JavaScript para que você possa incorporar alguma variável do seu código.
 
-```tsx
+```jsx
 const user = {
   name: 'Hedy Lamarr',
   imageUrl: 'https://i.imgur.com/yXOvdOSs.jpg',
@@ -230,7 +256,7 @@ const user = {
 
 ::right::
 
-```tsx
+```jsx
 <h1>{user.name}</h1>
 <img
   className="avatar"
@@ -249,7 +275,7 @@ const user = {
 
 No React, não há sintaxe especial para as condições de escrita. Em vez disso, você usará as mesmas técnicas que usa ao escrever código JavaScript regular. Por exemplo, você pode usar uma instrução IF para incluir condicionalmente JSX:
 
-```tsx
+```jsx
 let content;
 let isLoggedIn = false;
 
@@ -269,7 +295,7 @@ return (
 
 Se você preferir um código mais compacto, pode usar o condicional `?`. Ao contrário de um `if`, ele funciona dentro do JSX:
 
-```tsx
+```jsx
 <>
   {isLoggedIn ? (
     <h1>olá</h1>
@@ -504,6 +530,21 @@ Quando o componente é chamado novamente ele criando nova árvore virtual. O Rea
 
 
 ---
+layout: image
+image: /atualizacao.png
+background-size: contain
+---
+
+
+---
+layout: image
+image: /csrssr.png
+background-size: contain
+---
+
+
+
+---
 layout: two-cols
 ---
 
@@ -643,6 +684,18 @@ return (
 Isso garante que a IU reflita os valores de estado mais recentes.
 
 ---
+layout: image
+image: /useState.png
+background-size: contain
+---
+
+---
+layout: image
+image: /state.png
+background-size: contain
+---
+
+---
 layout: two-cols
 ---
 
@@ -690,6 +743,25 @@ o efeito será executado após cada renderização.
 Ao executar, por padrão o `effect` vai rodar depois do render inicial e depois de cada update subsequente. Esse
 padrão pode ser alterado usando a um `array` de dependências. Se o array estiver vazio essa função só vai executar uma
 vez, se tiver um valor(es), toda vez que esse valor for alterado a função vai ser executada.
+
+---
+layout: image
+image: /useEffect.png
+background-size: contain
+---
+
+---
+layout: image
+image: /useEffectanatomy.png
+background-size: contain
+---
+
+---
+layout: image
+image: /useEffectDependency.png
+background-size: contain
+---
+
 
 ---
 
