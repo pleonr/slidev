@@ -404,6 +404,24 @@ p::first-letter {
 | `::selection`     | `p::selection`             | Seleciona a parte de um elemento que é selecionado por um usuário  |
 
 ---
+layout: image
+image: /pseudo.png
+background-size: contain
+---
+
+---
+layout: image
+image: /pseudodois.png
+background-size: contain
+---
+
+---
+layout: image
+image: /pseudotres.png
+background-size: contain
+---
+
+---
 
 ### Pseudo-Classes
 
@@ -458,6 +476,12 @@ O estilo definido com `id` possuí prioridade, seguido pela `classe` e por últi
 * Estilo definido com `elemento` `body { background-color: red; }`
 
 ---
+layout: image
+image: /size.png
+background-size: contain
+---
+
+---
 
 ## Unidades de medida absolutas
 
@@ -493,6 +517,18 @@ se ajustam de acordo com o tamanho da tela, garantindo uma experiência consiste
 
 Deste modo, ao usar medidas relativas, é possível manter proporções consistentes entre elementos em diferentes partes
 do layout, pois eles são dimensionados proporcionalmente em relação ao ambiente de exibição.
+
+---
+layout: image
+image: /sizedois.png
+background-size: contain
+---
+
+---
+layout: image
+image: /sizerem.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -540,6 +576,30 @@ Referem-se à menor ou maior dimensão da janela de visualização do navegador 
 width: 50vmin;
 height: 80vmax;
 ```
+
+---
+layout: image
+image: /sizech.png
+background-size: contain
+---
+
+---
+layout: image
+image: /sizeclamp.png
+background-size: contain
+---
+
+---
+layout: image
+image: /sizeclampdois.png
+background-size: contain
+---
+
+---
+layout: image
+image: /sizefinal.png
+background-size: contain
+---
 
 ---
 
@@ -677,6 +737,13 @@ No CSS existem cinco `font-family`, que o navegador pode utilizar para renderiza
 - Fantasy fontes são fontes decorativas e divertidas.
 
 ---
+layout: image
+image: /font-family.png
+background-size: contain
+---
+
+
+---
 
 | Serif          | <span style="font-family:'Times New Roman',serif">Times New Roman</span><br><span style="font-family:Georgia,serif">Georgia</span><br><span style="font-family:Garamond,serif">Garamond</span>                 |
 |----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -724,6 +791,11 @@ p.thick {
   font-weight: bold;
 }
 ```
+---
+layout: image
+image: /pseudoquatro.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -764,6 +836,12 @@ h1 {
 <span style="font-size: 16px">16px</span><br><br>
 <span style="font-size: 2rem">2rem</span><br><br>
 <span style="font-size: 2em">2em</span><br>
+
+---
+layout: image
+image: /text-lettering.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -812,6 +890,12 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
 </p>
 
 ---
+layout: image
+image: /text-decoration.png
+background-size: contain
+---
+
+---
 layout: two-cols
 ---
 
@@ -843,6 +927,50 @@ Opções `none`, `capitalize`, `uppercase`, `lowercase`
 <p style="text-transform: uppercase;">Texto Texto Texto</p>
 <p style="text-transform: lowercase;">Texto Texto Texto</p>
 
+---
+layout: image
+image: /font-face.png
+background-size: contain
+---
+
+<!--
+@font-face {
+  font-family: 'MyFont';
+  src: url('myfont-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('myfont-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('myfont-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+https://css-tricks.com/
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    src: url('fonts/inter-v11-latin-regular.woff2') format('woff2'),
+         url('fonts/inter-v11-latin-regular.woff') format('woff');
+  }5
+-->
+
+---
+layout: image
+image: /font-formats.png
+background-size: contain
+---
 
 ---
 layout: image-right
@@ -852,8 +980,7 @@ background-size: contain
 
 ### Google Fonts
 
-Se não quiser usar nenhuma das fontes padrão em HTML, você pode usar o Google Fonts. Eles são de uso gratuito e
-têm mais de 1000 fontes para você escolher.
+Se não quiser usar nenhuma das fontes padrão em HTML, você pode usar o Google Fonts. Eles são de uso gratuito e têm mais de 1000 fontes para você escolher.
 
 ```html
 <link rel="stylesheet" href="
@@ -867,6 +994,25 @@ body {
 ```
 
 https://fonts.googleapis.com/css?family=Sofia
+
+---
+layout: image
+image: /text-shadow.png
+background-size: contain
+---
+
+---
+layout: image
+image: /text-receitaum.png
+background-size: contain
+---
+
+---
+layout: image
+image: /text-receitadois.png
+background-size: contain
+---
+
 
 ---
 layout: two-cols
@@ -1478,3 +1624,5 @@ https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 https://www.w3schools.com/css/css_website_layout.asp
 
 https://www.alura.com.br/artigos/css-guia-do-flexbox
+
+https://css-tricks.com/

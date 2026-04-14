@@ -246,6 +246,23 @@ tag diferente: se o objetivo é utilizar uma lista ordenada, então utilizaremos
 lista não ordenada, então devemos usar `<ul>`. Quando os elementos da lista, para ambos os casos, utilizamos a tag
 `<li>`.
 
+<!--
+reversed
+This Boolean attribute specifies that the list's items are in reverse order. Items will be numbered from high to low.
+
+start
+An integer to start counting from for the list items. Always an Arabic numeral (1, 2, 3, etc.), even when the numbering type is letters or Roman numerals. For example, to start numbering elements from the letter "d" or the Roman numeral "iv," use start="4".
+
+type
+Sets the numbering type:
+
+a for lowercase letters
+A for uppercase letters
+i for lowercase Roman numerals
+I for uppercase Roman numerals
+1 for numbers (default)
+-->
+
 ---
 layout: two-cols
 ---
@@ -604,6 +621,6 @@ https://www.w3.org/
 
 https://www.w3schools.com/
 
-https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
+https://developer.mozilla.org/en-US/docs/Web/HTML
 
 https://www.w3schools.com/html/html_form_input_types.asp
