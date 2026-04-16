@@ -1333,7 +1333,7 @@ public abstract class Forma {
 
 ---
 
-#### Métodos acessores e modificadores (*Getters* e *Setters*)
+#### Métodos de acesso e modificadores (*Getters* e *Setters*)
 
 São métodos usados para **encapsular atributos privados**, permitindo **controle de acesso**.
 
@@ -1376,9 +1376,211 @@ Uso:
 Conta c = new Conta("12345-6", 2500.00);
 ```
 
+<!--
+Sobrecarga de métodos
+-->
+
 ---
 
-#### Métodos e o polimorfismo
+### Identidade vs. Igualdade
+
+Em Java, existe uma distinção crucial entre ser o mesmo objeto e ser um objeto equivalente. Para dominar esse conceito, você precisa diferenciar o operador ` == ` do método `.equals()`.
+
+- Identidade `==`: Verifica se duas referências apontam para o mesmo endereço de memória. É como perguntar: "Estes dois nomes se referem à mesma pessoa física?"
+- Igualdade `.equals()`: Verifica se o conteúdo dos objetos é logicamente equivalente. É como perguntar: "Estas duas pessoas diferentes possuem o mesmo CPF e nome?"
+
+
+```java
+String s1 = new String("Java");
+String s2 = new String("Java");
+
+System.out.println(s1 == s2);      // false (são objetos diferentes na memória)
+System.out.println(s1.equals(s2)); // true (o conteúdo textual é o mesmo)
+```
+
+---
+layout: image
+image: /identity.png
+background-size: contain
+---
+
+---
+layout: image
+image: /equals.png
+background-size: contain
+---
+
+---
+
+####  hashCode()
+
+A identidade também está ligada ao método `hashCode()`. Por padrão (na classe `Object`), o hash code é derivado do endereço de memória do objeto.
+
+No entanto, quando você sobrescreve .equals(), deve obrigatoriamente sobrescrever hashCode(). Se dois objetos são iguais pelo método equals, eles devem gerar o mesmo hash code. Caso contrário, você "quebrará" o comportamento das Collections.
+
+A forma como o Java lida com a identidade muda drasticamente dependendo do tipo de lista ou conjunto que você usa:
+Listas (`ArrayList`, `LinkedList`)
+
+As listas geralmente usam o método `.equals()` para operações como `contains()` ou `remove()`. Elas percorrem os elementos e comparam o conteúdo.
+
+<!--
+ Conjuntos e Mapas (HashSet, HashMap)
+
+Aqui a performance entra em jogo. Para decidir se um objeto já existe no Set ou qual é a sua posição no Map, o Java faz um processo em duas etapas:
+
+    Calcula o hashCode(): Se os hashes forem diferentes, o Java assume que são objetos diferentes (identidades distintas).
+
+    Chama o .equals(): Se os hashes forem iguais (colisão), ele usa o equals para confirmar se são realmente o mesmo objeto "logicamente".
+ -->
+
+---
+layout: image
+image: /hash.png
+background-size: contain
+---
+
+---
+
+### Exceptions
+
+o tratamento de exceções é o mecanismo que impede que seu programa "quebre" diante de situações inesperadas (como um arquivo inexistente ou uma divisão por zero). É a arte de prever o caos e dar a ele um destino controlado.
+
+Tudo começa com a classe Throwable. Dela derivam dois grandes ramos:
+
+- Error: Problemas graves na JVM (ex: OutOfMemoryError). Você geralmente não tenta capturar isso.
+- Exception: Onde nós trabalhamos. Elas se dividem em:
+    - Checked (Verificadas): O compilador obriga você a tratar (ex: IOException).
+    - Unchecked (Não verificadas): Erros de lógica que estendem RuntimeException (ex: NullPointerException).
+
+---
+layout: image
+image: /exception.png
+background-size: contain
+---
+
+---
+layout: image
+image: /falhas.png
+background-size: contain
+---
+
+---
+layout: image
+image: /resiliencia.png
+background-size: contain
+---
+
+---
+
+#### try-catch-finally
+
+Para lidar com uma exceção, envolvemos o código "perigoso" em um bloco de tentativa e erro.
+
+```java
+try {
+    int resultado = 10 / 0; // Isso lança ArithmeticException
+} catch (ArithmeticException e) {
+    System.err.println("Erro: Não é possível dividir por zero!");
+} catch (Exception e) {
+    System.err.println("Erro genérico: " + e.getMessage());
+} finally {
+    System.out.println("Este bloco sempre executa (limpeza de recursos).");
+}
+```
+
+---
+
+#### throw vs throws
+
+Essas duas palavras confundem muito, mas têm funções distintas:
+- `throw` (no singular): É um comando de ação. Você lança uma instância de exceção naquele exato momento.
+
+- `throws` (no plural): É uma cláusula na assinatura do método. Ela avisa: "Cuidado, este método pode lançar tal exceção".
+
+```java
+public void validarIdade(int idade) throws IllegalArgumentException {
+    if (idade < 18) {
+        throw new IllegalArgumentException("Menor de idade não permitido.");
+    }
+}
+```
+
+---
+
+Às vezes, as exceções do Java não descrevem bem o erro do seu negócio.
+Para criar a sua, basta estender Exception (para checked) ou RuntimeException (para unchecked).
+
+Exemplo: `SaldoInsuficienteException`
+
+```java
+public class SaldoInsuficienteException extends Exception {
+    private double saldoAtual;
+    private double valorTentado;
+
+    public SaldoInsuficienteException(double saldoAtual, double valorTentado) {
+        super("Saldo insuficiente: você tem R$" + saldoAtual
+                + " mas tentou sacar R$" + valorTentado);
+        this.saldoAtual = saldoAtual;
+        this.valorTentado = valorTentado;
+    }
+
+    public double getSaldoAtual() { return saldoAtual; }
+}
+```
+
+<!--
+Como o Java enxerga isso (Hierarquia)
+Quando você chama o super, a informação sobe os degraus da escada:
+    - Sua SaldoInsuficienteException chama...
+    - O construtor de Exception, que chama...
+    - O construtor de Throwable, que finalmente guarda a mensagem e o estado da memória (stack trace).
+ -->
+
+---
+
+```java
+public class ContaCorrente {
+    private double saldo;
+    public void sacar(double valor) throws SaldoInsuficienteException {
+        if (valor > this.saldo) {
+            // Se a regra de negócio falhar, "jogamos" a exceção para quem chamou
+            throw new SaldoInsuficienteException(this.saldo, valor);
+        }
+        this.saldo -= valor;
+        System.out.println("Saque realizado com sucesso!");
+    }
+    public void depositar(double valor) {
+        this.saldo += valor;
+    }
+}
+```
+
+---
+
+```java
+public class SistemaBancario {
+    public static void main(String[] args) {
+        ContaCorrente conta = new ContaCorrente();
+        conta.depositar(100.0);
+        try {
+            // Tentativa perigosa
+            conta.sacar(250.0);
+        } catch (SaldoInsuficienteException e) {
+            // Tratamento específico: aqui você decide o que mostrar ao usuário
+            System.err.println("ALERTA: " + e.getMessage());
+            System.out.println("Dica: Deposite pelo menos R$" +
+                 (250.0 - e.getSaldoAtual()) + " para completar.");
+        } catch (Exception e) {
+            // Tratamento genérico para outros erros inesperados
+            System.err.println("Erro inesperado: " + e.getMessage());
+        }
+    }
+}
+```
+
+---
+
+<!-- #### Métodos e o polimorfismo
 
 Em POO, métodos podem ser **sobrescritos** (redefinidos) por subclasses, o que permite **polimorfismo**, ou seja, diferentes comportamentos para o mesmo nome de método.
 
@@ -1396,6 +1598,7 @@ public class ContaPoupanca extends Conta {
     }
 }
 ```
+-->
 
 ---
 
@@ -1408,6 +1611,8 @@ public class ContaPoupanca extends Conta {
 | Usar `private` para lógica interna | Reduz acoplamento |
 | Validar parâmetros de entrada | Evita erros |
 | Retornar valores claros | Facilita depuração |
+
+---
 
 ```mermaid
 classDiagram
