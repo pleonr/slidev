@@ -916,6 +916,13 @@ useEffect(() => {
 ```
 
 ---
+layout: image
+image: /fetchaxios.png
+background-size: contain
+---
+
+
+---
 layout: two-cols
 ---
 
@@ -956,6 +963,18 @@ axios({
 - `axios.post(url[, data[, config]])`
 - `axios.put(url[, data[, config]])`
 - `axios.patch(url[, data[, config]])`
+
+---
+layout: image
+image: /isolamentorede.png
+background-size: contain
+---
+
+---
+layout: image
+image: /instancia.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -999,6 +1018,37 @@ argumento será chamado.
   request: {}
 }
 ```
+
+---
+layout: image
+image: /crud.png
+background-size: contain
+---
+
+---
+
+### CORS?
+
+CORS é uma lib que funciona como um middleware, ele nos permite "relaxar" a segurança aplicada a uma API.
+
+Isso é feito contornando os cabeçalhos, que especificam quais podem acessar a API.
+
+> Cross-Origin Resource SharingAccess-Control-Allow-Originorigins
+
+Em outras palavras, o CORS é um recurso de segurança do navegador que restringe solicitações HTTP de origem cruzada com outros servidores e específica quais domínios acessam seus recursos.
+
+---
+layout: image
+image: /bloqueio.png
+background-size: contain
+---
+
+---
+layout: image
+image: /cors.png
+background-size: contain
+---
+
 
 ---
 layout: two-cols
