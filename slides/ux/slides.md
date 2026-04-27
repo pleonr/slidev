@@ -362,17 +362,79 @@ image: /leis.png
 background-size: contain
 ---
 
+---
+layout: image
+image: /figmapenpot.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma1.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma2.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma3.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma4.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma5.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma6.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma6.png
+background-size: contain
+---
 
 
+---
+layout: image
+image: /figma7.png
+background-size: contain
+---
+
+---
+layout: image
+image: /figma8.png
+background-size: contain
+---
 
 
+---
+layout: image
+image: /penpot1.png
+background-size: contain
+---
 
-
-
-
-
-
-
+---
+layout: image
+image: /penpot2.png
+background-size: contain
+---
 
 
 ---
