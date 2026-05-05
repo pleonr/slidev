@@ -1093,69 +1093,98 @@ estilo da borda (sólida, tracejada, pontilhada), espessura e cor.
 da página. As margens permitem melhor organização e capacidade de resposta nos layouts.
 
 ---
-layout: iframe-right
-url: /box-model.html
+layout: image
+image: /boxmodel.png
+background-size: contain
 ---
 
+---
+
+### Margin (Margem)
+A margem é o espaço externo ao redor do elemento, separando-o de outros elementos vizinhos.
+
 ```css
-div {
-    width: 320px;
-    height: 50px;
-    padding: 10px;
-    border: 5px solid gray;
-    margin: 0;
+.caixa-margem {
+  /* Define todos os lados individualmente */
+  margin-top: 20px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+
+  /* Atalho (Shorthand) */
+  /* Ordem: Cima | Direita | Baixo | Esquerda */
+  margin: 20px 10px 20px 10px;
+
+  /* Centralizar horizontalmente (requer largura definida) */
+  margin: 0 auto;
 }
 ```
 
-O modelo de caixa CSS é essencialmente uma caixa que envolve cada elemento HTML. Consiste em: bordas, preenchimento,
-margens e o conteúdo real.
-
----
-layout: two-cols
 ---
 
-A largura total de um elemento(tew) usamos
+### Border (Borda)
+A borda fica entre a margem e o preenchimento. Você pode configurar a largura, o estilo e a cor.
 
-$$
-tew = \begin{cases}
-width \\
-+ leftPadding \\
-+ rightPadding \\
-+ leftBorder \\
-+ rightBorder
-\end{cases}
-$$
+```css
+.caixa-borda {
+  /* Configuração completa em uma linha */
+  /* Espessura | Estilo | Cor */
+  border: 2px solid #3498db;
 
-```
-  320px (width of content area)
-+ 20px (left padding + right padding)
-+ 10px (left border + right border)
-= 350px (total element width)
-```
-::right::
+  /* Bordas arredondadas */
+  border-radius: 8px;
 
-Para calcular a altura total do elemento(tel) usamos
-
-$$
-tel = \begin{cases}
-height \\
-+ topPadding \\
-+ bottomPadding \\
-+ topBorder \\
-+ bottomBorder
-\end{cases}
-$$
-
-```
-  50px (height of content area)
-+ 20px (top padding + bottom padding)
-+ 10px (top border + bottom border)
-= 80px (total height)
+  /* Estilizar apenas um lado */
+  border-left: 5px solid red;
+}
 ```
 
 ---
-layout: iframe-right
-url: /pos-static.html
+
+### Padding (Preenchimento)
+O padding é o espaço interno, entre o conteúdo do elemento e sua borda. Ele aumenta a área clicável e dá "respiro" ao texto.
+
+```css
+.caixa-padding {
+  /* Define todos os lados com o mesmo valor */
+  padding: 15px;
+
+  /* Atalho para eixos */
+  /* Vertical (Cima/Baixo) | Horizontal (Lados) */
+  padding: 10px 20px;
+}
+```
+
+---
+layout: image
+image: /boxmodel.png
+background-size: contain
+---
+
+---
+layout: image
+image: /boxmodel1.png
+background-size: contain
+---
+
+---
+layout: image
+image: /boxmodel2.png
+background-size: contain
+---
+
+---
+layout: image
+image: /boxmodel3.png
+background-size: contain
+---
+
+---
+layout: image
+image: /boxmodel4.png
+background-size: contain
+---
+
 ---
 
 ## Posicionamento
@@ -1176,8 +1205,11 @@ div.static {
 ```
 
 ---
-layout: iframe-right
-url: /pos-relative.html
+layout: image
+image: /pstatic.png
+background-size: contain
+---
+
 ---
 
 ### **Relativo** - *relative*
@@ -1195,8 +1227,11 @@ div.relative {
 ```
 
 ---
-layout: iframe-right
-url: /pos-absolute.html
+layout: image
+image: /prelative.png
+background-size: contain
+---
+
 ---
 
 ### **Absoluto** - *absolute*
@@ -1218,8 +1253,17 @@ div.absolute {
 ```
 
 ---
-layout: iframe-right
-url: /pos-fixed.html
+layout: image
+image: /pabsolute.png
+background-size: contain
+---
+
+---
+layout: image
+image: /psimbiose.png
+background-size: contain
+---
+
 ---
 
 ### **Fixo** - *fixed*
@@ -1240,8 +1284,12 @@ div.fixed {
 ```
 
 ---
-layout: iframe-right
-url: /pos-stick.html
+layout: image
+image: /pfixed.png
+background-size: contain
+---
+
+
 ---
 
 ### **Grudento** - *stick*:
@@ -1263,6 +1311,24 @@ div.sticky {
 ```
 
 ---
+layout: image
+image: /psticky.png
+background-size: contain
+---
+
+---
+layout: image
+image: /pzindex.png
+background-size: contain
+---
+
+---
+layout: image
+image: /pcenter.png
+background-size: contain
+---
+
+---
 
 ## Display
 
@@ -1276,6 +1342,13 @@ A propriedade `display` especifica como o comportamento exibição do elemento. 
 | `flex`:      | Exibe um elemento como um flex container em nível de bloco                                                                |
 | `grid`:      | Exibe um elemento como um bloco- contêiner de grade de nível                                                              |
 | `none`:      | Remove o elemento completamente do DOM                                                                                    |
+
+---
+layout: image
+image: /flexbox.png
+background-size: contain
+---
+
 
 ---
 
@@ -1298,16 +1371,15 @@ verticalmente.
 - Espaçamento: Gerencie a distribuição do espaço entre os elementos, permitindo espaços uniformes ou alocação flexível.
 
 ---
-layout: two-cols
+layout: image
+image: /flexbox1.png
+background-size: contain
+---
+
 ---
 
 Para pensar no flex-box, podemos imaginar que num contêiner os elementos vão ser posicionados
 em eixos `cross` e `main`.
-
-![](/flex-box.png)
-
-
-::right::
 
 Um elemento que recebe a propriedade `display: flex;` é chamado de `flex container`. E pode receber várias outras
 definições.
@@ -1319,6 +1391,13 @@ Dentre elas temos:
 A direção onde os elementos vão ser alinhados é a `row` da esquerda para a direita e de cima
 para baixo, mas podemos alterar o comportamento para `column` utilizando a propriedade <br>
 `flex-direction: column;`
+
+
+---
+layout: image
+image: /flexbox2.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -1361,6 +1440,18 @@ container. O valor padrão é `row nowrap`.
         | column wrap;
   }
 ```
+
+---
+layout: image
+image: /flexbox21.png
+background-size: contain
+---
+
+---
+layout: image
+image: /flexbox3.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -1414,6 +1505,13 @@ Alinha os elementos deixando espaços iguais entre eles main axis.
     <div class="flex-box-item" style="background-color: #40B3DF;">2</div>
     <div class="flex-box-item" style="background-color: #EE872A;">3</div>
 </div>
+
+
+---
+layout: image
+image: /flexbox4.png
+background-size: contain
+---
 
 ---
 layout: two-cols
@@ -1502,6 +1600,18 @@ E também podemos alinhar os elementos dentro do container na direção do `cros
 - baseline: ítens são alinhados de acordo com suas baselines.
 
 ---
+layout: image
+image: /flexbox5.png
+background-size: contain
+---
+
+---
+layout: image
+image: /flexbox6.png
+background-size: contain
+---
+
+---
 layout: two-cols
 ---
 
@@ -1565,6 +1675,12 @@ Usado para particionar o container e utilizar o espaço entre os elementos.
 </div>
 
 ---
+layout: image
+image: /flexbox7.png
+background-size: contain
+---
+
+---
 layout: two-cols
 ---
 
@@ -1594,6 +1710,17 @@ Modifica a ordem onde um elemento vai aparecer, recebendo uma unidade como parâ
 
 A utilização dessa propriedade não é recomendada, pois altera a ordem de renderização de forma arbitrária
 
+---
+layout: image
+image: /flexbox8.png
+background-size: contain
+---
+
+---
+layout: image
+image: /flexboxcenter.png
+background-size: contain
+---
 
 ---
 
