@@ -38,7 +38,7 @@ jobs:
         run: rm -rf dist && mkdir dist
 
       - name: Approve pnpm builds
-        run: pnpm approve-builds
+        run: pnpm approve-builds esbuild playwright-chromium
 
       - name: Build all slides and preview app as index
         run: |
