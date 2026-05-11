@@ -2,8 +2,11 @@ packages:
   - slides/*
 
 catalog:
-  vue: ^3.5.13
-  "@slidev/cli": ^52.11.0
-  "@slidev/theme-default": latest
-  "@slidev/theme-seriph": latest
+  '@slidev/cli': ^52.11.0
+  '@slidev/theme-default': latest
+  '@slidev/theme-seriph': latest
   slidev-theme-dracula: ^0.2.0
+  vue: ^3.5.13
+
+ignoredBuiltDependencies:
+  - playwright-chromium
