@@ -31,14 +31,14 @@ jobs:
       - name: Install dependencies
         run: nci
 
+      - name: Approve pnpm builds
+        run: pnpm approve-builds esbuild playwright-chromium
+
       - name: Install Playwright browsers
         run: npx playwright install chromium
 
       - name: Prepare deploy folder
         run: rm -rf dist && mkdir dist
-
-      - name: Approve pnpm builds
-        run: pnpm approve-builds esbuild playwright-chromium
 
       - name: Build all slides and preview app as index
         run: |
