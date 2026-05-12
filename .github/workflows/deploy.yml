@@ -28,17 +28,8 @@ jobs:
       - name: Setup @antfu/ni
         run: npm i -g @antfu/ni
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Approve pnpm builds
-        run: pnpm approve-builds esbuild playwright-chromium vue-demi
-
       - name: Install dependencies
-        run: pnpm install
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
+        run: nci
 
       - name: Prepare deploy folder
         run: rm -rf dist && mkdir dist
