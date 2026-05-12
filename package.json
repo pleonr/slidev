@@ -18,5 +18,15 @@
     "slidev-workspace"
   ],
   "author": "Leo Chiu",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "playwright-chromium": "^1.56.1"
+  },
+  "pnpm": {
+    "neverBuiltDependencies": [
+      "esbuild",
+      "playwright-chromium",
+      "vue-demi"
+    ]
+  }
 }
