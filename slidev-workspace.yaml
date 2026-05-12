@@ -3,3 +3,7 @@ baseUrl: /slidev
 hero:
   title: Prof. Leon slides
   description: Material de apoio para disciplinas ministradas
+
+sidebar:
+  title: "Slides"
+  githubUrl: "https://github.com/pleonr/slidev"

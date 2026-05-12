@@ -2,7 +2,7 @@ packages:
   - slides/*
 
 catalog:
-  '@slidev/cli': ^52.11.0
+  '@slidev/cli': ^52.15.2
   '@slidev/theme-default': latest
   '@slidev/theme-seriph': latest
   slidev-theme-dracula: ^0.2.0

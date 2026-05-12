@@ -167,7 +167,9 @@ Esses padrões separam responsabilidades em camadas distintas, facilitando teste
 
 
 ---
-layout: two-cols
+layout: image-right
+image: /Sir-Maurice-Vincent-Wilkes.webp
+backgroundSize: contain
 ---
 
 ## API's
@@ -177,15 +179,10 @@ Uma API(*Application programming interface*) é uma forma de comunicação entre
 Em 1940 os cientistas britânicos Maurice Wilkes e David Wheeler trabalhavam em um sistema de catálogo de bibliotecas
 de notas, que eram perfuradas para montar um sistema(*punched cards*). Hoje em dia tal organização seria chamada de API.
 
-![](/punchcards.jpg)
-
-::right::
-
-![](/Sir-Maurice-Vincent-Wilkes.webp)
-
-
 ---
-layout: two-cols
+layout: image-right
+image: /CarlRoy.png
+backgroundSize: contain
 ---
 
 Porém, foi em 1990 que o termo API foi definido como "*um conjunto de serviços disponíveis para um programador executar
@@ -195,10 +192,6 @@ Em 2000 a dissertação de Roy Fielding "Estilos arquitetônicos e o design de a
 na Universidade Comunitária de Irvine delineou a transferência de estado representacional (REST) e descreveu a
 ideia de uma "interface de programação de aplicativos baseada em rede" que Fielding contrastou com a tradicional
 "baseada em biblioteca" APIs.
-
-::right::
-
-![](/CarlRoy.png)
 
 ---
 
@@ -435,8 +428,10 @@ seguem para criar APIs bem estruturadas e eficientes.
 
 
 ---
-
-<img class="m-auto -z-5 left-0 top-0 right-0 bottom-0 max-w-full max-h-full absolute" src="/restapi.png"/>
+layout: image
+image: /restapi.png
+backgroundSize: contain
+---
 
 
 ---
@@ -460,8 +455,11 @@ Maintainability: Clear separation of concerns makes APIs easier to update and ma
 -->
 
 ---
+layout: image
+image: /apisPrinciples.webp
+backgroundSize: contain
+---
 
-<img class="m-auto -z-5 left-0 top-0 right-0 bottom-0 max-w-full max-h-full absolute" src="/apisPrinciples.webp"/>
 
 
 ---
@@ -578,8 +576,11 @@ enviada de um aplicativo de software para outro aplicativo de software que avali
 responde devolvendo alguma informação conforme o endpoint e método utilizado.
 
 ---
+layout: image
+image: /httpverbs.jpg
+backgroundSize: contain
+---
 
-<img class="m-auto -z-5 left-0 top-0 right-0 bottom-0 max-w-full max-h-full absolute" src="/httpverbs.jpg"/>
 
 
 ---
@@ -626,8 +627,10 @@ Ao retornar uma response para uma requisição retornamos um [HTTP](https://http
 | 503 Server Unavailable    | Server side error. Usually due to a platform hosting, overload and maintenance issue.     |
 
 ---
-
-<img class="m-auto -z-5 left-0 top-0 right-0 bottom-0 max-w-full max-h-full absolute" src="/httpstatuscode.png"/>
+layout: image
+image: /httpstatuscode.png
+backgroundSize: contain
+---
 
 ---
 layout: two-cols
@@ -669,7 +672,9 @@ Quais os contras?
 
 
 ---
-layout: two-cols
+layout: image-right
+image: /openapi.png
+backgroundSize: contain
 ---
 
 ### OpenAPI
@@ -683,11 +688,6 @@ PUT, etc.) para cada endpoint.
 - Parâmetros: especifica os dados que podem ser enviados ou recebidos da API
 - Respostas: especifica as respostas para cada operação, códigos de status e estruturas de dados.
 - Segurança: autenticação e autorização
-
-::right::
-
-<img class="m-auto -z-5 bottom-0 max-w-full max-h-full absolute" src="/openapi.png"/>
-
 
 
 
