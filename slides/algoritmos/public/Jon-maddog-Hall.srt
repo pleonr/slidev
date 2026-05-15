@@ -1,0 +1,91 @@
+1
+00:00:00,290 --> 00:00:04,170
+quando comecei a programar, há quase
+
+2
+00:00:04,170 --> 00:00:07,350
+cinquenta anos atrás, eu estava estudando
+
+3
+00:00:07,350 --> 00:00:10,010
+para ser estudante de engenharia elétrica
+
+4
+00:00:10,010 --> 00:00:14,420
+mas um dia quase fui eletrocutado por
+
+5
+00:00:14,420 --> 00:00:18,570
+13.600 volts e 800 amperes e eu
+
+6
+00:00:18,570 --> 00:00:20,910
+decidi que talvez outra coisa fosse
+
+7
+00:00:20,910 --> 00:00:24,180
+mais segura, havia uma correspondência
+
+8
+00:00:24,180 --> 00:00:26,189
+curso que fiz para a empresa em que eu estava
+
+9
+00:00:26,189 --> 00:00:28,800
+trabalhando e a correspondência
+
+10
+00:00:28,800 --> 00:00:32,309
+o curso me ensinou a programar na IBM
+
+11
+00:00:32,309 --> 00:00:36,570
+computador 1130 em Fortran com cartões e
+
+12
+00:00:36,570 --> 00:00:40,290
+Isso mudou minha vida, me permitiu
+
+13
+00:00:40,290 --> 00:00:45,149
+ver como era programar e ver
+
+14
+00:00:45,149 --> 00:00:46,980
+que eu realmente podia controlar uma máquina
+
+15
+00:00:46,980 --> 00:00:52,129
+com lógica pura era uma luta
+
+16
+00:00:52,129 --> 00:00:55,170
+algo impressionante para mim, foi melhor
+
+17
+00:00:55,170 --> 00:00:57,840
+do que drogas, porque drogas levam tempo para
+
+18
+00:00:57,840 --> 00:01:00,930
+agir e isso foi instantâneo, ninguém
+
+19
+00:01:00,930 --> 00:01:03,629
+teve que me dizer que eu fiz um bom trabalho
+
+20
+00:01:03,629 --> 00:01:06,390
+sabia que tinha feito um bom trabalho e é por isso que
+
+21
+00:01:06,390 --> 00:01:09,360
+a programação sempre me fascinou
+
+22
+00:01:09,360 --> 00:01:12,900
+nos últimos 50 anos, meu nome é John Hall
+
+23
+00:01:12,900 --> 00:01:18,049
+John mad dog Hall e este é o cs50
