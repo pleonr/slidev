@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: nci
 
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Prepare deploy folder
         run: rm -rf dist && mkdir dist
 
