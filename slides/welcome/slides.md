@@ -10,10 +10,6 @@ drawings:
 transition: slide-left
 mdc: true
 selectable: true
-download: true
-export:
-  format: pdf
-  withClicks: false
 seoMeta:
   ogTitle: Welcome
   ogDescription: Bem vindos a UPF
