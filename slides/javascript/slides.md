@@ -582,6 +582,12 @@ const func2 = (x, y) => {
 
 ```
 
+---
+layout: image
+image: /functions.png
+backgroundSize: contain
+---
+
 
 ---
 
@@ -667,6 +673,21 @@ do `document`, podemos usar as funções.
 
   `document.getElementsByTagName(name)`
 
+
+---
+layout: image
+image: /dom.png
+backgroundSize: contain
+---
+
+
+---
+layout: image
+image: /seletor.png
+backgroundSize: contain
+---
+
+
 ---
 layout: two-cols
 ---
@@ -694,6 +715,31 @@ layout: two-cols
   - document.appendChild(element)
 - Remover elemento `html`
   - `document.replaceChild(new, old)`
+
+
+---
+layout: image
+image: /expandir.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /remover.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /estilos.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /estilos2.png
+backgroundSize: contain
+---
 
 ---
 
@@ -793,6 +839,29 @@ const x = document.querySelectorAll("p.intro");
 <h2>The onload Attribute</h2>
 ```
 
+
+<!--
+
+| **Categoria**  	| **Evento**       	| **Momento em que é disparado**                                  	| **Snippet de Exemplo**                                                         	|
+|----------------	|------------------	|-----------------------------------------------------------------	|--------------------------------------------------------------------------------	|
+| **Mouse**      	| click            	| Quando o usuário clica sobre o elemento.                        	| `botao.addEventListener('click', () => console.log('Clicou!'));`                	|
+|                	| dblclick         	| Quando o usuário dá um duplo clique rápido.                     	| `imagem.addEventListener('dblclick', () => abrirModal());`                       	|
+|                	| mouseenter       	| Quando o ponteiro do mouse entra na área do elemento.           	| `card.addEventListener('mouseenter', () => card.classList.add('foco'));`         	|
+|                	| mouseleave       	| Quando o ponteiro do mouse sai da área do elemento.             	| `card.addEventListener('mouseleave', () => card.classList.remove('foco'));`      	|
+| **Teclado**    	| keydown          	| Quando uma tecla é pressionada.                                 	| `window.addEventListener('keydown', (e) => console.log(e.key));`                 	|
+|                	| keyup            	| Quando o usuário solta uma tecla.                               	| `campoTexto.addEventListener('keyup', () => validarForcaSenha());`               	|
+| **Formulário** 	| submit           	| Quando um formulário (`<form>`) é enviado.                       	| `form.addEventListener('submit', (e) => e.preventDefault());`                    	|
+|                	| change           	| Quando o valor muda e o campo perde o foco (ou muda um select). 	| `selectPais.addEventListener('change', (e) => carregarCidades(e.target.value));` 	|
+|                	| input            	| Quando o valor é alterado (dispara a cada caractere digitado).  	| `busca.addEventListener('input', (e) => filtrarLista(e.target.value));`          	|
+|                	| focus            	| Quando o elemento ganha o foco.                                 	| `input.addEventListener('focus', () => mostrarDica());`                          	|
+|                	| blur             	| Quando o elemento perde o foco.                                 	| `inputEmail.addEventListener('blur', () => checarEmailValido());`                	|
+| **Janela**     	| DOMContentLoaded 	| Quando o HTML foi totalmente carregado e analisado.             	| `document.addEventListener('DOMContentLoaded', () => iniciarApp());`             	|
+|                	| resize           	| Quando o tamanho da janela do navegador muda.                   	| `window.addEventListener('resize', () => recalcularLayout());`                   	|
+|                	| scroll           	| Quando o usuário rola a página ou um elemento.                  	| `window.addEventListener('scroll', () => controlarBotaoTopo());`                 	|
+
+-->
+
+
 ---
 
 ### event listner
@@ -816,6 +885,24 @@ window.addEventListener("resize", function(){
 
 element.removeEventListener("mousemove", myFunction);
 ```
+
+---
+layout: image
+image: /event.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /event2.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /event3.png
+backgroundSize: contain
+---
 
 
 ---
