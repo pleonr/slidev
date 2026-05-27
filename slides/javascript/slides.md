@@ -48,6 +48,42 @@ to delete files on the local machine that are private to any user.
 -->
 
 ---
+layout: image-right
+image: /brendaneich.png
+backgroundSize: contain
+---
+
+Brendan Eich foi contratado pela Netscape em 1995.
+
+A missão era absurda, criar uma linguagem para web em poucos dias. E ele fez, em 10 dias. Sim. ...
+
+O JavaScript inicial foi criado em aproximadamente 10 dias, em maio de 1995, isso explica várias decisões estranhas da linguagem.
+
+Na época, a linguagem Java estava extremamente popular. A Netscape fez uma parceria com a empresa Sun Microsystems (dona do Java).
+
+Então mudaram o nome de Mocha para LiveScript para, JavaScript
+
+Por marketing, a ideia era “Aproveitar a fama do Java.”
+
+<!--
+Fun fact: JavaScript foi considerado “linguagem de brinquedo”
+Nos anos 90 e começo dos 2000, muitos programadores achavam JavaScript ruim.
+Era visto como: “linguagem para fazer botão piscando”
+Pouca gente levava a sério.
+-->
+
+---
+
+Segundo a lei de [Atwood](https://blog.codinghorror.com/the-principle-of-least-power)
+
+
+<img src="/atwoodslaw.jpg" class="m-auto rounded " />
+
+<!--
+Jeff Atwood - Programador, co-fundador do stack-overflow, soltou essa frase em 2007
+-->
+
+---
 layout: two-cols
 ---
 
@@ -100,6 +136,49 @@ ajuda de APIs e interfaces.
 ---
 layout: image
 image: /javascript1.png
+backgroundSize: contain
+---
+
+
+---
+layout: image
+image: /consolelog.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /comunicacao.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /alert.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /confirm.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /prompt.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /typeof.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /fluxo.png
 backgroundSize: contain
 ---
 
