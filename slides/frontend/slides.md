@@ -1495,6 +1495,58 @@ seed().then(() => {
 ```
 
 ---
+layout: image
+image: /testes0.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /custoatraso.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /smartpipelines.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /tests.png
+backgroundSize: contain
+---
+
+
+---
+layout: image
+image: /testes1.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /testes2.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /testes3.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /engenhariaqualidade.png
+backgroundSize: contain
+---
+
+
+
+
+---
 layout: two-cols
 ---
 

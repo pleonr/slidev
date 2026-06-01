@@ -1157,12 +1157,6 @@ O padding é o espaço interno, entre o conteúdo do elemento e sua borda. Ele a
 
 ---
 layout: image
-image: /boxmodel.png
-background-size: contain
----
-
----
-layout: image
 image: /boxmodel1.png
 background-size: contain
 ---
@@ -1719,6 +1713,12 @@ background-size: contain
 ---
 layout: image
 image: /flexboxcenter.png
+background-size: contain
+---
+
+---
+layout: image
+image: /flexbox-games.png
 background-size: contain
 ---
 
