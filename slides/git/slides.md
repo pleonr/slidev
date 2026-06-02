@@ -276,6 +276,18 @@ image: /github-bitbucket-gitlab.png
 background-size: contain
 ---
 
+---
+layout: image
+image: /servidorweb.png
+backgroundSize: contain
+---
+
+---
+layout: image
+image: /hospedagem.png
+backgroundSize: contain
+---
+
 
 ---
 layout: two-cols
@@ -283,7 +295,7 @@ layout: two-cols
 
 ## Github Pages
 
-O [GitHubPages](https://pages.github.com/) são páginas públicas hospedadas e publicadas através do GitHub.
+O [GitHubPages](https://pages.github.com/) é um serviço de hospedagem de páginas estáticas publicadas através do GitHub.
 Ele permite que qualquer usuário hospede uma página web para um repositório ou usuário gratuitamente.
 
 ### Crie um repositório
@@ -298,17 +310,23 @@ então certifique-se de acertar.
 ![](/githubpages-1.png)
 
 ---
+layout: image
+image: /githubpages.png
+backgroundSize: contain
+---
+
+
+---
 
 ### Clonar o repositório
 
-Vamos clonar esse repositório criado e trabalhar nele...
+Vamos criar esse repositório e trabalhar nele..., o nome do repositório deve ser `sua_matricula.github.io`
 
 ```shell
 git clone https://github.com/65375/65375.github.io
 ```
 
-Dentro dele vamos começar a criar a página que queremos. Adicionando HTML, CSS, Javascript e tudo que trabalhamos
-durante o semestre. Não esqueça de commitar...
+Dentro dele vamos começar a criar a página que queremos. Adicionando HTML, CSS, Javascript e tudo que trabalhamos durante o semestre. Não esqueça de commitar...
 
 ```shell
 git add .
