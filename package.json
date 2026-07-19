@@ -20,7 +20,7 @@
   "author": "Leo Chiu",
   "license": "MIT",
   "devDependencies": {
-    "playwright-chromium": "^1.56.1"
+    "playwright-chromium": "^1.61.1"
   },
   "pnpm": {
     "neverBuiltDependencies": [
