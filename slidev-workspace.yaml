@@ -1,5 +1,21 @@
 baseUrl: /slidev
 
+# drafts — not deployed; kept in slides/ but skipped by dev/build/preview/export-og.
+# this list replaces the tool's defaults, so node_modules/.git stay listed too.
+exclude:
+  - node_modules
+  - .git
+  - algoritmos
+  - auth
+  - brief
+  - frontend
+  - nodejs
+  - orm
+  - pagamentos
+  - poo
+  - solid
+  - ux
+
 hero:
   title: Prof. Leon slides
   description: Material de apoio para disciplinas ministradas

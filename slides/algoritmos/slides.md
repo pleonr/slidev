@@ -18,7 +18,6 @@ seoMeta:
   ogTitle: Algoritmos
   ogDescription: Support material for classes WebLab, DevWeb
 routerMode: hash
-comark: true
 # duration of the presentation
 #duration: 35min
 ---

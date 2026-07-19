@@ -11,8 +11,6 @@ transition: slide-left
 mdc: true
 selectable: true
 download: true
-# enable Comark Syntax: https://comark.dev/syntax/markdown
-#comark: true
 # duration of the presentation
 #duration: 35min
 export:
