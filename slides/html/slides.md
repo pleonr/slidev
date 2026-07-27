@@ -267,7 +267,7 @@ I for uppercase Roman numerals
 layout: two-cols
 ---
 
-## Hiperlynks
+## Hiperlinks
 
 A capacidade da linguagem HTML de expressar relacionamentos entre documentos certamente é um dos fatores-chave para o
 sucesso da web. Os hiperlinks, como chamamos estas ligações, constituem vias que ligam um documento a outro, contido
