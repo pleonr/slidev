@@ -7,7 +7,6 @@ exclude:
   - .git
   - algoritmos
   - auth
-  - brief
   - frontend
   - nodejs
   - orm
