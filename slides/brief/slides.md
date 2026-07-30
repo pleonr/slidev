@@ -195,7 +195,7 @@ Foi marcada pelo surgimento da válvula eletrônica cuja principal função era 
   Começou a ser desenvolvido durante a Segunda Guerra Mundial em 1943 para calcular trajetória de mísseis em 30 segundos
   - 18.000 válvulas
   - 70.000 resistores e 10.000 capacitores
-  - Consumo de 1.500Kw 1.400 m2 e 30 toneladas
+  - Consumo de 1.500Kw 140-170 m2 e 30 toneladas
 
 ::right::
 
