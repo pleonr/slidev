@@ -25,414 +25,72 @@ routerMode: hash
 <Toc columns="2" maxDepth="3"></Toc>
 
 ---
-layout: image-right
-image: /abaco.jpg
+layout: two-cols
 ---
 
-## Breve História da Computação
+## Internet x Web
 
-A computação é o campo de estudo que abrange o processamento, armazenamento e transmissão de informações por meio de dispositivos...
+É comum confundir os dois termos, mas eles não são sinônimos: a Web é apenas um dos serviços que rodam sobre a Internet, assim como email ou compartilhamento de arquivos.
 
-### Pré-História Ábaco{style="color: lightgreen;"}
+### Internet
 
-o primeiro dispositivo de cálculo. Surgiu no Oriente Médio entre 3.500 e  2.500 a.C., foi a "primeira máquina" inventada pelo homem para facilitar a contagem de valores e efetuava operações de adição e subtração.
+- **Infraestrutura**: rede física e lógica que conecta computadores no mundo todo.
+- Cabos, roteadores, satélites, protocolos como **TCP/IP**.
+- Existe desde 1969 (ARPANET), décadas antes da Web.
 
----
-layout: image-right
-image: /BlaisePascal.jpg
----
+::right::
 
-### Era mecânica{style="color: lightgreen;"}
+### Web (WWW)
 
-- Pascaline: Em 1642, Blaise Pascal criou a "primeira máquina mecânica" para adições e subtrações, funcionava por meio de rodas e engrenagens para representar quantidades variáveis.
-
-![](/pascaline.jpg)
+- **Serviço/aplicação** que roda por cima da Internet.
+- Conjunto de documentos e recursos conectados por hiperlinks, acessados via **HTTP** e exibidos em um *browser*.
+- Criada em 1989 por Tim Berners-Lee, no CERN.
 
 <!--
-Calculadora pascal, Linguagem Pascal... Pascal é uma linguagem de programação estruturada e imperativa, fortemente tipada. 1970.
-Blaise Pascal was a French mathematician, physicist, inventor, philosopher, and Catholic writer.
+Analogia: a Internet é como o sistema rodoviário, a Web é um tipo de tráfego que passa por essas estradas (assim como email, streaming e jogos online são outros tipos de tráfego).
 -->
 
 ---
 layout: image-left
-image: /CharlesBabbage.jpg
----
-
-- Máquina Diferencial: Inventada por Charles Babbage em 1822 na Inglaterra. Deveria resolver polinômios e logaritmos, entretanto não teve sua construção concluída.
-
-![](/differential.jpg)
-
-- Máquina Análitica: A Máquina Analítica, projetada por Charles Babbage em 1837, foi o primeiro conceito de um computador mecânico universal de uso geral, programável e movido a vapor.
-
----
-layout: image-right
-image: /adalovelace.png
-alt: Retrato de Ada, condessa de Lovelace, 1840
----
-
-### Ada Lovelace
-
-Ada apresentou conceitos que transcendem o período e até mesmo a aplicação na máquina analítica.
-O método desenvolvido continha o algoritmo para calcular os números de Bernoulli e organizava em grupos várias operações que poderiam ser repetidas ou reutilizadas com o suporte de cartões perfurados.
-
-- A ideia de loop
-- A ideia de sub-rotinas
-- Conceito precursor de estruturas condicionais
-- A relação entre qualquer elemento que pudesse ser representado por símbolos
-- Uma máquina de propósito, de uso geral, pois tem a capacidade de ser reprogramada.
-
-<!--
-Augusta Ada Byron King, Condessa de Lovelace (nascida Byron, 10 de dezembro de 1815 — 27 de novembro de 1852) Pintura de 1840
--->
-
----
-layout: two-cols
----
-
-### Lógica Booleana
-Em 1854 o inglês George Boole publica “An Investigation of the Laws of Thought”, que estabelece os princípios binários que mais tarde seriam usados como base para o estudo da lógica matemática e para operações internas dos computadores.
-
-### Máquina de tabulação
-
-- Proposta pelo estatístico Herman Holleritch
-- Automaticação do processo de tabulação do censo americano que demoravam 10 anos
-- Redução drástica para 6 semanas
-- 1896 Tabulating Machine Company
-- 1914 International Business Machines Corporation (IBM)
-
-::right::
-
-### Harvard Mark I
-
-- Primeiro computador a utilizar relés eletromecânicos, Agosto 7, 1944
-- Contruído pela IBM e Marinha Americana
-- 5 toneladas
-- 15 anos em serviço
-- 2,5 metros de altura, 16 metros de comprimento
-
-<img class="m-auto -z-5 bottom-0 right-0 max-w-100 max-h-full" style="background-color: white" src="/mark.jpg"/>
-
-<!--
-O Harvard Mark I (1944) uma máquina eletromecânica.
-A história do "bug" (erro de software) popularizou-se em 9 de setembro de 1947, quando a pioneira da computação Grace Hopper encontrou uma mariposa real presa nos relés do computador Harvard Mark II, causando falhas. O inseto foi colado no diário de bordo com a nota "primeiro caso real de um bug encontrado", consolidando o termo debugging.
-Grace Hopper pioneira da computação.
--->
-
----
-layout: image-right
-image: /rele.webp
----
-
-### Relé Eletromecânico
-
-Um relé eletromecânico é um dispositivo de comutação composto por uma bobina, núcleo magnético e contatos físicos que abrem ou fecham circuitos quando a bobina é energizada.
-
-O relé eletromecânico foi fundamental nos primórdios da computação (anos 1930-1940), atuando como o primeiro "interruptor" lógico (ligado/desligado).
-
-<!--
-o problema do relé é a limitação de desempenho. A valvula é pelo menos 300x mais rápida que o relé
-Elétrico: O componente eletrico só reage a passagem de eletrecidade.
-Eletrônico: O componente eletronico controla e regula a quantidade de energia elétrica com a propria eletricidade.
--->
-
----
-layout: image-right
-image: /AlanTuring.png
----
-
-### Alan Turing
-
-Conhecido e reverênciado como um dos pais da computação moderna.
-
-A Máquina de Turing
-- Proposta em 1936 como um modelo teórico para computação.
-- Demonstrou que certos problemas matemáticos podem ser resolvidos de forma automatizada.
-- Base para o desenvolvimento dos computadores modernos.
-
-<!--
-- Matemático, lógico e cientista da computação britânico.
-- Nascido em 23 de junho de 1912 e falecido em 7 de junho de 1954.
-- Considerado um dos pais da ciência da computação.
-- Contribuiu significativamente para a quebra do código Enigma durante a Segunda Guerra Mundial.
-
-## O Teste de Turing
-
-- Proposto em 1950 como um critério para determinar a eficiência de uma inteligência artificial.
-- Se um computador pode enganar um humano para acreditar que ele também é humano, então ele passa no teste.
-- Marco importante para o campo da IA e aprendizado de máquina.
-
-## O Legado de Alan Turing
-
-- Influenciou profundamente o desenvolvimento da computação moderna.
-- Seu trabalho é a base para a inteligência artificial e a ciência da computação.
-- Foi postumamente homenageado com um pedido de desculpas oficial do governo britânico.
-- Prêmio **Turing Award**, considerado o "Nobel da Computação", nomeado em sua homenagem.
--->
-
----
-layout: two-cols
----
-
-<img class="m-auto -z-5 bottom-0 right-0 max-w-80 max-h-full" style="background-color: white" src="/imitation1.jpg"/>
-
-::right::
-
-<img class="m-auto -z-5 bottom-0 right-0 max-w-90 max-h-full" style="background-color: white" src="/imitation2.jpg"/>
-
-
-
----
-layout: two-cols
----
-
-## Era eletrônica
-
-### Primeira geração de computadores 1943-1955...
-
-Foi marcada pelo surgimento da válvula eletrônica cuja principal função era regular a carga de eletrecidade fornecida. O sucessor da Válvula é o transistor.
-
-- Desenvolvimento do ENIAC(*Electronic Numerical Integrator and Computer*)
-  Começou a ser desenvolvido durante a Segunda Guerra Mundial em 1943 para calcular trajetória de mísseis em 30 segundos
-  - 18.000 válvulas
-  - 70.000 resistores e 10.000 capacitores
-  - Consumo de 1.500Kw 140-170 m2 e 30 toneladas
-
-::right::
-
-<img class="m-auto -z-5 bottom-0 right-0 max-w-full max-h-full" style="background-color: white" src="/valvula.png"/>
-
-<!--
-Válvulas, baixo tempo de vida últil, frágeis, gigantes. aquecimento, filamento queimava
--->
-
----
-layout: two-cols
----
-
-### UNIVAC
-
-Primeiro computador comercial
-
-- 5000 válvulas
-- 0,5 milissegundo = adição
-- 2 milissegundo = multiplicação
-- Entrada e saída de dados através de banda magnética
-
-::right::
-
-### Era eletrônica (segunda geração 1955-1964)
-- Utilização do transístor ao invés das válvulas
-- Memórias feitas de núcleo de ferrite
-- Linguagens de programação de alto nível
-- Sistemas Operacionais multitarefa
-
-### Terceira geração (1964-1975)
-- Tendência à  miniaturização
-- Circuitos integrados
-- Novos sistemas operacionais
-
-<!--
-Transistores são componentes semicondutores fundamentais da eletrônica moderna que funcionam como interruptores ou amplificadores de corrente elétrica. Criados em 1947 para substituir válvulas, eles controlam o fluxo de elétrons em computadores e smartphones, permitindo a lógica binária (0 e 1). São feitos principalmente de silício.
--->
-
----
-layout: two-cols
----
-
-### Quarta geração (desde 1975)
-- Tecnologia de integração de larga escala
-- Processamento paralelo
-- Computadores pessoais ...
-
-<img class="m-auto -z-5 bottom-10 left-30 max-w-full max-h-80 absolute" style="background-color: white" src="/pirates.jpg"/>
-
-::right::
-
-#### Primeiro computador pessoal
-- ALTAIR (1975)
-- Preço: U$375,00
-- Processador: Intel 8080 (8 bits, rodando a 2 MHz)
-- Memória: 256 bytes (podendo ser expandida para até 64 KB)
-- Entrada/Saída: Interruptores e LEDs no painel frontal
-
-<img class="m-auto -z-5 bottom-20 right-30 max-w-full max-h-full absolute" style="background-color: white" src="/altair.png"/>
-
----
-layout: two-cols
----
-
-## Hardware
-
-É a parte mecânica e física de um sistema computacional, com seus componentes eletrônicos e peças.
-
-- É tangível
-- É físico
-
-::right::
-
-## Software
-
-São conjuntos de procedimentos básicos que fazem que o computador seja útil executando alguma função.  A essas “ordens” preestabelecidas chamamos também de programas.
-
-- Não é tangível
-- Sistema
-- Código
-
-<!--
-tangível
-adjetivo de dois gêneros
-1. que se pode tanger, tocar; sensível, tocável.
-2. que se percebe pelo tato; corpóreo, palpável.
-
-Posso arremessar?
-Software xinga, Hardware chuta
--->
-
----
-layout: two-cols
----
-
-## Medidas de dados
-
-| medida | representa o mesmo que|
-|-----------------|-------------------------------------|
-|  			Bit 		           |  			0 ou 1 			- menor unidade de dado 		    |
-|  			Byte 		          |  			conjunto de 			8 bits ou 1 			caractere 		 |
-|  			Kilobyte (Kb) 		 |  			$2^{10}$ ou 1024 			bytes 		                 |
-|  			Megabyte (Mb) 		 |  			$2^{10}$ 			ou 1024 			Kilobyte 		              |
-|  			Gigabyte (Gb) 		 |  			$2^{10}$ 			ou 1024 			Megabyte 		              |
-|  			Terabyte (Tb) 		 |  			$2^{10}$ 			ou 1024 			Gigabyte 		              |
-
-::right::
-
-<img class="m-auto -z-5 bottom-0 right-0 left-0 max-w-full max-h-full" src="/hobbit.jpg"/>
-
----
-layout: two-cols
----
-
-## Sistema Binário e Conversão Binária
-
-O sistema binário é utilizado para fazer a conversão de sinais elétricos em informação.
-
-- 0 Desligado e 1 Ligado
-- Um sistema numérico que usa apenas **0** e **1**.
-- Base **2**, ao contrário do sistema decimal (base 10) e hexa-decimal (base 16).
-- Usado em **computadores** e **eletrônica digital**.
-- Endereçamento de memória.
-- Codificação áudio e vídeo.
-- Protocolos de comunicação digital.
-- Linguagem dos computadores*
-
-::right::
-
-| binário | base 2 | base 16 | binário | base 2 | base 16 |
-|:---------:|:--------:|:---------:|:---------:|:--------:|:---------:|
-| 0000    |      0 |       0 | 1000    |      8 |       8 |
-| 0001    |      1 |       1 | 1001    |      9 |       9 |
-| 0010    |      2 |       2 | 1010    |     10 | A       |
-| 0011    |      3 |       3 | 1011    |     11 | B       |
-| 0100    |      4 |       4 | 1100    |     12 | C       |
-| 0101    |      5 |       5 | 1101    |     13 | D       |
-| 0110    |      6 |       6 | 1110    |     14 | E       |
-| 0111    |      7 |       7 | 1111    |     15 | F       |
-
----
-layout: two-cols
----
-
-## Representação de Números Binários
-
-- Cada **bit** pode ter valor **0** ou **1**.
-- Grupos de bits formam **bytes**.
-- 1010 (binário) representa um número no sistema decimal.
-
-#### Conversão de Binário para Decimal
-
-1. Multiplicar cada bit por 2 elevado à sua posição.
-2. Somar os valores.
-
-Exemplo: **1010 (binário) → ? (decimal)**
-
-$$(1 \times 2^3) + (0 \times 2^2) + (1 \times 2^1)$$
-$$ + (0 \times 2^0) = 8 + 0 + 2 + 0 = 10$$
-
-::right::
-
-#### Conversão de Decimal para Binário
-
-1. Dividir o número decimal por **2**.
-2. Anotar o **resto**.
-3. Repetir até o quociente ser **0**.
-4. Ler os restos de baixo para cima.
-
-Exemplo: **13 (decimal) → ? (binário)**
-
-13 ÷ 2 = 6, **resto 1**
-
-6 ÷ 2 = 3, **resto 0**
-
-3 ÷ 2 = 1, **resto 1**
-
-1 ÷ 2 = 0, **resto 1**
-
-**Resposta:** 1101 (binário)
-
----
-layout: image
-image: 102.webp
+image: prensa.jpeg
 backgroundSize: contain
 ---
 
+## História da Web
+
+A história do conhecimento humano também é a história de como ele se espalha: a escrita libertou o saber da memória oral, a prensa de Gutenberg (1440) tornou os livros baratos o bastante para copiar em massa, e as bibliotecas públicas organizaram esse acervo para qualquer leitor acessar.
+
+A Web repete esse mesmo movimento em escala digital, ao conectar documentos por hiperlinks acessíveis de qualquer computador na Internet, ela reduziu a praticamente zero o custo de copiar, distribuir e encontrar informação, comprimindo em poucas décadas uma democratização do conhecimento que antes levava séculos.
+
+
 ---
-layout: image
-image: 210.webp
+layout: image-right
+image: /VannevarBush.png
 backgroundSize: contain
 ---
 
+### Ligações associativas
+
+Em *"As We May Think"* (1945), **Vannevar Bush** propôs o **Memex**, um dispositivo capaz de armazenar documentos conectados por "*trilhas associativas*": em vez de navegar por um índice fixo e hierárquico, o leitor saltaria de um documento a outro seguindo relações de sentido, o mesmo princípio por trás do hyperlink que usamos hoje.
+
+
+
+---
+layout: image-right
+image: /TedNelson.jpg
+backgroundSize: contain
 ---
 
-<img class="m-auto -z-5 bottom-0 top-0 right-0 left-0 max-w-full max-h-full" src="/binary.png"/>
+### Texto não-linear
 
----
-layout: two-cols
----
+Um livro impõe uma leitura linear, página após página. Em 1963, **Ted Nelson** cunhou o termo *hypertext* para descrever texto organizado em rede, onde qualquer trecho pode referenciar outro, permitindo caminhos de leitura não-lineares. Ele tentou concretizar essa ideia no projeto **Xanadu**, décadas antes da Web existir.
 
-## Adição Binária
 
-- Segue as mesmas regras da adição decimal, mas com apenas **0** e **1**.
-- Regras principais:
-  - 0 + 0 = 0
-  - 0 + 1 = 1
-  - 1 + 0 = 1
-  - 1 + 1 = 10 (**vai 1 para a próxima coluna**)
-
-Exemplo:
-```
-   1010
- + 0111
- --------
-  10001
-```
-
-::right::
-
-## Subtração Binária
-
-- Semelhante à subtração decimal, mas com **empréstimos**.
-- Regras principais:
-  - 0 - 0 = 0
-  - 1 - 0 = 1
-  - 1 - 1 = 0
-  - 0 - 1 = 1 (**empresta 1 da próxima casa**)
-
-Exemplo:
-```
-   1010
- -  0111
- --------
-    0011
-```
+<!--
+Vannevar Bush não chegou a construir o Memex, era um conceito teórico publicado na revista The Atlantic.
+Ted Nelson também cunhou o termo "hipermídia". O projeto Xanadu começou em 1960 e continuou em desenvolvimento por décadas.
+Esses dois trabalhos são frequentemente citados como os precursores conceituais do que Tim Berners-Lee implementou de fato em 1989.
+-->
 
 ---
 layout: image-right
@@ -459,6 +117,8 @@ HTTP - Hypertext Transfer Protocol 1989 at CERN Tim Berners-Lee
 HTML - 1989 publicado 1991
 
 ARPA - Atual DARPA(*Defense Advanced Research Projects Agency*)
+
+Tim Berners-Lee combinou essas ideias com a infraestrutura da Internet já existente (**TCP/IP**) e definiu três peças técnicas para torná-las realidade em escala global: **URI** (endereçar um recurso), **HTTP** (transportá-lo) e **HTML** (marcar os links dentro dele).
 -->
 ---
 
@@ -539,137 +199,8 @@ stateDiagram-v2
     DNS --> Browser
     Browser --> [*]
 ```
----
-layout: two-cols
----
-
-## TCP
-TCP(*Transmission Control Protocol*, Protocolo de Controle de Transmissão) é um protocolo de comunicação que permite que programas aplicativos e dispositivos de computação troquem mensagens
-em uma rede. Ele foi projetado para enviar pacotes (de dados) pela Internet e garantir a entrega bem-sucedida
-de dados e mensagens pela rede.
-
-## IP
-IP(*Internet Protocol*, Protocolo de internet) é responsável por fazer o roteamento dos pacotes de dados pela Internet com base em seus endereços IP.
-
-::right::
-
-## Handshake
-
-- Com o endereço IP em mãos, o navegador tenta iniciar uma conexão TCP com o servidor web nesse endereço.
-  - Também conhecida como *Three-way handshake* ou SYN-SYN-ACK o *TCP Handshake* é a comunicação necessária para
-    estabelecer a sessão TCP.
-
----
-layout: two-cols
----
-
-O TCP Handshake é um mecanismo projetado para que duas entidades (no nosso caso, o cliente e o servidor) que
-desejam passar informações entre si possam negociar os parâmetros da conexão antes de transmitir os dados.
-
-- O navegador envia uma mensagem `SYNC` para o servidor solicitando SYNchronization
-(*synchronization means the connection*)
-- O servidor responde com uma mensagem `SYN + ACK` (*SYNChronization and ACKnowledgement*)
-- O cliente então finaliza enviando uma mensagem `ACK` (*ACKnowledgement*)
-
-::right::
-
-<br>
-
-```mermaid
-sequenceDiagram
-    Cliente->>+Servidor: SYN
-    Servidor-->>+Cliente: SYN + ACK
-    Cliente->>+Servidor: ACK
-
-```
 
 <!--
-A comunicação através de HTTPS é um pouco diferente...
--->
-
-
----
-
-## HTTP
-O *Hypertext Transfer Protocol*([HTTP](https://www.rfc-editor.org/rfc/rfc9110.html){style="color: lightblue;"}) é um protocolo que define como é feita a comunicação entre cliente e servidor.
-Conceitos-chave:
-
-- *Methods* : Definem o que o servidor deve fazer com o request, sendo:
-  - GET para recuperar informação
-  - POST/PUT para enviar dados
-  - DELETE remover dados
-- URL: caminho do site ou aplicativo desejado
-- *Headers* : Fornecem informação adicional sobre os dados sendo enviados,
-  preferências de linguagem, cookies
-
-
-<!--
-Internet protocol suite
-- Application layer
-  - DHCP, DNS, FTP, HTTP, HTTPS, IMAP, IRC, LDAP, SMTP, SNMP, SSH, Telnet, TLS/SSL, ...
-- Transport layer
-  - TCP, UDP, DCCP, ...
-- Internet layer
-  - IP, ICMP, IPsec, ...
--Link layer
-  - ARP, Tunnels, PPP, MAC, ...
--->
-
----
-
-
-## Request & Response
-
-### General
-```html {all|1|2|3|4|5|all} twoslash
-Request URL: https://leon.dev.br/
-Request Method: GET
-Status Code: 200 OK
-Remote Address: 185.199.108.153:443
-Referrer Policy: strict-origin-when-cross-origin
-```
-
-### Request Headers
-```html {all||6-9|all} twoslash
-Sec-Ch-Ua: "Not A(Brand";v="99", "Google Chrome";
-    v="121", "Chromium";v="121"
-Sec-Ch-Ua-Mobile: ?1
-Sec-Ch-Ua-Platform: "Android"
-Upgrade-Insecure-Requests: 1
-User-Agent: Mozilla/5.0 (Linux; Android 6.0;
-    Nexus 5 Build/MRA58N) AppleWebKit/537.36
-    (KHTML, like Gecko) Chrome/121.0.0.0 Mobile
-    Safari/537.36
-```
-
----
-
-### Response Headers
-```html {all} twoslash
-Accept-Ranges: bytes
-Access-Control-Allow-Origin: *
-Age: 0
-Cache-Control: max-age=600
-Content-Encoding: gzip
-Content-Length: 3553
-Content-Type: text/html; charset=utf-8
-Date: Tue, 13 Feb 2024 22:30:23 GMT
-Expires: Tue, 13 Feb 2024 22:40:23 GMT
-Last-Modified: Sun, 04 Feb 2024 13:52:33 GMT
-Server: GitHub.com
-Vary: Accept-Encoding
-X-Fastly-Request-Id:
-    9faddf5d2c8006c085438f7c68a7cbf80a3d4fe7
-X-Github-Request-Id:
-    CF3A:65E93:116AA8:142208:65CB93E8
-X-Served-By: cache-gru-sbgr1930075-GRU
-X-Timer: S1707863423.250750,VS0,VE143
-```
-<!--
-Referrer Policy pode ser utilizado para rastrear informações de navegação
--->
-
----
 
 ## Status Code
 
@@ -686,9 +217,6 @@ O [Status Code](https://datatracker.ietf.org/doc/html/rfc7231){style="color: lig
 - 4xx - Erro no cliente
 - 5xx - Erro no servidor
 
----
-layout: two-cols
----
 
 ### [200](https://httpstatusdogs.com/200-ok) - Retorno com sucesso em um HTTP request
 ![](https://httpstatusdogs.com/img/200.jpg)
@@ -696,7 +224,7 @@ layout: two-cols
 ### [404](https://httpstatusdogs.com/404-not-found) - O *resource* solicitado não foi encontrado
 ![](https://httpstatusdogs.com/img/404.jpg)
 
-<!--
+
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
 http://httpstatus.com.br/
 https://httpstatusdogs.com/
