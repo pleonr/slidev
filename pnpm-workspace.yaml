@@ -8,7 +8,6 @@ packages:
   - '!slides/orm'
   - '!slides/pagamentos'
   - '!slides/poo'
-  - '!slides/solid'
   - '!slides/ux'
 
 catalog:
