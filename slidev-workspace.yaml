@@ -8,7 +8,6 @@ exclude:
   - algoritmos
   - auth
   - frontend
-  - nodejs
   - orm
   - pagamentos
   - poo

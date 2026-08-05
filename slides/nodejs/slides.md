@@ -313,6 +313,184 @@ app.listen(port, () => {})
 ```
 
 ---
+
+## Passagem de Parâmetros em APIs
+
+Existem diversas formas de enviar dados para uma API, cada uma indicada para um tipo de informação:
+
+- **Route/Named Params**: identificam um recurso específico na URL (`/usuarios/:id`)
+- **Query Params**: filtros, paginação, ordenação (`?page=1&limit=10`)
+- **Body Params**: dados enviados no corpo da requisição para criar/atualizar um recurso
+- **Header Params**: metadados da requisição, como autenticação e versionamento
+
+A escolha de onde colocar cada parâmetro segue convenções REST e impacta legibilidade, cache e segurança da API.
+
+---
+layout: two-cols
+---
+
+## Route Params (Named Params)
+
+São parâmetros definidos diretamente na URL da rota, geralmente utilizados para identificar um recurso específico.
+No Express, são declarados com `:` e acessados através de `req.params`.
+
+```js
+app.get('/usuarios/:id', (req, res) => {
+  const id = req.params.id;
+  res.json({ usuarioId: id });
+});
+```
+
+Também é possível ter múltiplos parâmetros na mesma rota:
+
+```js
+app.get('/usuarios/:userId/pedidos/:pedidoId',
+  (req, res) => {
+    const { userId, pedidoId } = req.params;
+    res.json({ userId, pedidoId });
+});
+```
+
+::right::
+
+`Requisição`
+```text
+GET /usuarios/42
+```
+
+`req.params`
+```json
+{
+  "id": "42"
+}
+```
+
+<!--
+req.params sempre traz os valores como string, mesmo que a rota use :id numérico.
+-->
+
+---
+layout: two-cols
+---
+
+## Query Params
+
+São parâmetros enviados após o `?` na URL, geralmente utilizados para filtros, paginação, ordenação ou buscas.
+São opcionais e acessados através de `req.query`.
+
+```js
+app.get('/usuarios', (req, res) => {
+  const { search, page, limit } = req.query;
+  res.json({ search, page, limit });
+});
+```
+
+::right::
+
+`Requisição`
+```text
+GET /usuarios?search=pablo&page=2&limit=10
+```
+
+`req.query`
+```json
+{
+  "search": "pablo",
+  "page": "2",
+  "limit": "10"
+}
+```
+
+<!--
+Assim como req.params, os valores de query chegam sempre como string (ou undefined se não enviados).
+-->
+
+---
+layout: two-cols
+---
+
+## Body Params
+
+São dados enviados no corpo da requisição, geralmente utilizados em métodos como `POST`, `PUT` e `PATCH` para
+criar ou atualizar um recurso. Requerem o middleware `express.json()` e são acessados através de `req.body`.
+
+```js {all|1|all}
+app.use(express.json());
+
+app.post('/usuarios', (req, res) => {
+  const { nome, email } = req.body;
+  res.status(201).json({ nome, email });
+});
+```
+
+::right::
+
+`Requisição`
+```text
+POST /usuarios
+Content-Type: application/json
+
+{
+  "nome": "Pablo",
+  "email": "pablo@email.com"
+}
+```
+
+`req.body`
+```json
+{
+  "nome": "Pablo",
+  "email": "pablo@email.com"
+}
+```
+
+---
+layout: two-cols
+---
+
+## Header Params
+
+São enviados nos cabeçalhos HTTP da requisição, geralmente utilizados para autenticação, versionamento de API ou
+outros metadados. São acessados através de `req.headers` ou `req.header()`.
+
+```js
+app.get('/perfil', (req, res) => {
+  const token = req.headers['authorization'];
+  const apiVersion = req.header('x-api-version');
+
+  res.json({ token, apiVersion });
+});
+```
+
+::right::
+
+`Requisição`
+```text
+GET /perfil
+Authorization: Bearer abc123
+X-Api-Version: 1.0
+```
+
+`req.headers`
+```json
+{
+  "authorization": "Bearer abc123",
+  "x-api-version": "1.0"
+}
+```
+
+---
+
+## Resumo
+
+| Tipo | Onde vai | Acesso no Express | Uso comum |
+|---|---|---|---|
+| Route Params | URL (`/usuarios/:id`) | `req.params` | Identificar um recurso |
+| Query Params | URL (`?chave=valor`) | `req.query` | Filtros, paginação, busca |
+| Body Params | Corpo da requisição | `req.body` | Criar ou atualizar dados |
+| Header Params | Cabeçalho HTTP | `req.headers` | Autenticação, metadados |
+
+---
 layout: two-cols
 ---
 
