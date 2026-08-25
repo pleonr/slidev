@@ -9,6 +9,11 @@ packages:
   - '!slides/poo'
   - '!slides/ux'
 
+allowBuilds:
+  esbuild: false
+  playwright-chromium: false
+  vue-demi: false
+
 catalog:
   '@slidev/cli': ^52.18.0
   '@slidev/theme-default': ^0.25.0
