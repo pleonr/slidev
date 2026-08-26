@@ -4,7 +4,6 @@ packages:
   - '!slides/algoritmos'
   - '!slides/auth'
   - '!slides/frontend'
-  - '!slides/orm'
   - '!slides/pagamentos'
   - '!slides/poo'
   - '!slides/ux'
