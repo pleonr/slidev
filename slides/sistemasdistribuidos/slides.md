@@ -1599,6 +1599,45 @@ dig www.cst.com.ac.uk
 Certificado de algum site https
 
 ---
+
+### Exemplo: `dig` e Registros CAA de Certificado
+
+O registro DNS `CAA` (Certification Authority Authorization) declara quais Autoridades Certificadoras têm permissão para emitir certificados TLS para um domínio.
+
+```bash
+dig CAA www.cst.com.ac.uk +short
+```
+
+Output:
+
+```bash
+❯ dig CAA www.cst.com.ac.uk +short
+0 issue "letsencrypt.org"
+0 issuewild ";"
+```
+
+- `issue`: CA autorizada a emitir certificados para o domínio.
+- `issuewild`: CA autorizada a emitir certificados wildcard (`;` = nenhuma permitida).
+- O próprio certificado TLS (obtido via `openssl s_client`, por exemplo) carrega os campos `notBefore` e `notAfter`, que definem sua janela de validade.
+
+---
+
+### Relevância para Relógios em Sistemas Distribuídos
+
+A validação de um certificado depende diretamente do **relógio local** de quem o verifica, não apenas do conteúdo do DNS/certificado:
+
+- Um certificado só é aceito se `notBefore <= relógio local <= notAfter`.
+- Respostas DNS (e assinaturas DNSSEC, quando usadas) também carregam TTLs e janelas de expiração validadas contra o tempo do sistema.
+
+Se o relógio de um nó estiver dessincronizado (clock skew):
+
+- **Relógio atrasado**: certificados já expirados ainda parecem válidos.
+- **Relógio adiantado**: certificados válidos podem ser rejeitados como "ainda não válidos" ou "expirados".
+- Falhas silenciosas em handshakes TLS são um sintoma comum de dispositivos (IoT, servidores) com relógio incorreto, RTC descarregado, ausência de NTP, boot sem sincronização.
+
+Reforça por que protocolos de sincronização de tempo (NTP, próximos slides) são críticos não só para ordenação de eventos, mas também para **segurança**.
+
+---
 layout: two-cols
 ---
 
@@ -1653,6 +1692,48 @@ Todo ano em 30 Junho e 31 Dezembro em 23:59:59: UTC(Universal Time Coordinated),
 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/leapsecond.jpg"/>
 
+<!--
+em 2022 a Conferência Geral de Pesos e Medidas (CGPM) votou para abolir os leap seconds até 2035, justamente pelos problemas recorrentes que causam em infraestrutura crítica. Vale mencionar como fechamento do tópico.
+-->
+
+---
+
+O núcleo do problema: leap seconds violam a premissa de que o tempo é monotônico, ou seja, que o relógio sempre avança, nunca repete ou volta. Muito código (locks com timeout, ordenação de eventos, hrtimer, medições de duração via now() - start) assume isso implicitamente.
+
+Existem duas estratégias de implementação, e ambas trazem problemas diferentes:
+
+1. "Step" (o padrão POSIX/NTP clássico)
+O relógio repete o segundo 23:59:59 duas vezes. Consequência: dois eventos distintos podem receber o mesmo timestamp, ou pior, um evento B pode receber timestamp menor que um evento A que ocorreu antes, quebra a causalidade em qualquer coisa que compare timestamps para ordenar (bancos de dados distribuídos, logs, replicação).
+
+2. "Leap smear" (usado por Google, Amazon, Azure)
+Em vez de saltar, o NTP interno "estica" o segundo extra ao longo de uma janela (tipicamente 20h, das 14h à 10h do dia seguinte UTC), fazendo o relógio andar ~11,5 μs/s mais devagar até absorver o segundo. Isso mantém a monotonicidade, mas cria um problema diferente: máquinas dentro do smear e máquinas fora dele (fora do datacenter da Google, por ex.) discordam sobre a hora por até 1 segundo durante a janela, o que é péssimo se você está comparando certificados TLS ou timestamps entre sistemas que usam smear diferente (Google aplica diferente da Amazon, por exemplo).
+
+---
+
+### Exemplo Real: o "[Leap Second Bug](https://www.wired.com/2012/07/leap-second-bug-wreaks-havoc-with-java-linux/)" de 2012 no Linux
+
+Na virada de 30/06 para 01/07/2012, uma interação entre o **hrtimer** e o **futex** (fast userspace mutex) do kernel Linux virou um dos bugs mais famosos ligados a leap second:
+
+- Ao processar o segundo repetido, threads em espera num `futex_wait` eram acordadas incorretamente e voltavam a dormir imediatamente, um loop de wake/sleep que nunca terminava.
+- Resultado: milhares de processos presos em **spin-loop a 100% de CPU**, sem fazer trabalho real. Os servidores continuavam respondendo a ping (pareciam "vivos"), mas com a CPU saturada eram incapazes de processar requisições, um tipo de falha muito mais difícil de detectar do que um crash direto.
+
+**Impacto real:**
+- Reddit, Mozilla, LinkedIn, Yelp, StumbleUpon e FourSquare tiveram interrupções.
+- O sistema de check-in/reservas da Qantas parou, voos ficaram no chão por horas (o mesmo incidente do slide "Sherlock Holmes").
+- Correção de emergência usada por muitos times: reiniciar o servidor, ou forçar `date -s "$(date)"` para resetar o estado interno do relógio do kernel. Esse incidente foi um dos motivadores por trás do **leap smear** do Google, criado justamente para nunca mais expor o kernel a um segundo repetido.
+
+---
+
+### Contextualizando: o Bug do Milênio (Y2K)
+
+Para economizar memória (cara nos anos 60-90), muitos sistemas armazenavam o ano com **apenas 2 dígitos** (`99` em vez de `1999`).
+
+- Na virada para o ano 2000, `99 + 1` viraria `00` — que muitos sistemas interpretariam como **1900**, não 2000.
+- Risco: cálculos de idade, juros, validade de contratos e datas de vencimento ficariam errados; sistemas de folha de pagamento, bancos, aviação e usinas nucleares dependiam dessas datas.
+
+Diferente do leap second bug (uma falha inesperada de kernel), o Y2K foi um **risco conhecido com anos de antecedência** — gerou um dos maiores esforços de correção de software da história: estimativas apontam **US$300-600 bilhões** gastos globalmente revisando e corrigindo código legado (muito em COBOL) antes de 31/12/1999.
+
+Resultado: poucas falhas graves ocorreram na virada — debate até hoje se foi porque o risco era exagerado, ou porque a correção massiva realmente funcionou.
 
 ---
 layout: two-cols-header
@@ -1674,7 +1755,7 @@ Para reduzir os problemas causados pelo desvio de relógios e melhorar a coorden
 ### **Protocolos de Sincronização de Tempo**
 
 - Protocolo de Tempo de Rede (NTP - Network Time Protocol): amplamente utilizado na Internet para sincronizar relógios com precisão de milissegundos.
-- Protocolo de Tempo de Christian: baseia-se na comunicação com um servidor confiável que fornece a hora correta.
+- Protocolo de Tempo de Cristian: baseia-se na comunicação com um servidor confiável que fornece a hora correta.
 - Protocolo de Tempo de Berkeley: usado quando não há uma fonte externa confiável, sincronizando os relógios baseando-se na média dos tempos dos computadores da rede.
 
 
@@ -1704,6 +1785,20 @@ layout: two-cols
   - Execução concorrente de outras atividades
 - Qualquer solução válida para sistemas assíncronos pode ser aplicada em ambientes síncronos
 - Problemas podem surgir em sistemas de tempo real (ex.: transmissão multimídia)
+
+---
+
+### Por que Relógios Físicos Não Bastam para Ordenar Eventos
+
+Em sistemas distribuídos, precisamos frequentemente responder: **"o evento A aconteceu antes do evento B?"**, essencial para depuração, consistência de dados replicados, controle de concorrência e detecção de causa-efeito.
+
+A resposta óbvia seria comparar o timestamp físico de cada evento. Mas, como já vimos, relógios físicos:
+- Nunca estão perfeitamente sincronizados, mesmo com NTP/Cristian/Berkeley sempre resta um erro residual (drift, latência assimétrica de rede).
+- Podem andar para trás ou repetir instantes (leap seconds, ajustes/step do NTP).
+
+Isso quebra a causalidade na prática: o processo P1 envia uma mensagem no instante físico t=10; o processo P2, com relógio adiantado, marca a chegada como t=8. Comparando os timestamps brutos, a mensagem parece ter sido **recebida antes de ter sido enviada**.
+
+Precisamos de uma noção de ordem baseada na relação causal real entre eventos (quem enviou o quê, para quem), independente da precisão de qualquer relógio físico. É exatamente esse o problema que os **relógios lógicos de Lamport** resolvem.
 
 ---
 
@@ -1741,6 +1836,47 @@ O algoritmo de Lamport é utilizado em diversos contextos, como:
 - Sistemas de replicação distribuída, como o Google Spanner.
 - Blockchain e consistência eventual em sistemas distribuídos.
 
+<!--
+a relatividade prova, na física real, que não existe um relógio de referência absoluto e universal — só existe tempo relativo a um observador. É literalmente a mesma raiz de problema que motivou Lamport a abandonar timestamps físicos e criar relógios lógicos: sem um "agora" global, a única coisa realmente confiável é a relação causal (happened-before) entre eventos, não o valor absoluto do relógio.
+
+Curiosidade prática real: o GPS precisa corrigir os relógios dos satélites por ambos os efeitos (restrita: satélite se move rápido, relógio atrasa ~7μs/dia; geral: satélite está mais longe da gravidade da Terra, relógio adianta ~45μs/dia) — se não corrigisse, o GPS acumularia ~10km de erro por dia.
+-->
+
+---
+layout: two-cols
+---
+
+### Diagrama de Ordenação de Eventos
+
+```mermaid
+sequenceDiagram
+    participant P1
+    participant P2
+
+    Note over P1: C1 = 1 (evento local)
+    P1->>P2: mensagem (ts=2)
+    Note over P2: C2 = max(0,2)+1 = 3
+    Note over P2: C2 = 4 (evento local)
+    P2->>P1: mensagem (ts=5)
+    Note over P1: C1 = max(2,5)+1 = 6
+```
+
+::right::
+
+### A Lógica da Ordenação
+
+Três regras simples garantem a ordem causal:
+
+1. **Evento local**: incrementa o relógio antes de executar.
+   `C = C + 1`
+2. **Envio de mensagem**: incrementa o relógio e anexa o valor à mensagem.
+   `C = C + 1` → envia `ts = C`
+3. **Recepção de mensagem**: adota o maior valor entre o relógio local e o recebido, depois incrementa.
+   `C = max(C_local, ts_recebido) + 1`
+
+Consequência: se A → B (A causou B), então `C(A) < C(B)` sempre.
+
+O inverso não vale: `C(A) < C(B)` **não garante** que A → B, eventos sem relação causal podem receber timestamps em qualquer ordem. É uma **ordem parcial**, não total.
 
 ---
 
@@ -1822,11 +1958,43 @@ Processo 1 recebeu mensagem. Novo relógio: 6
   - Erros (errors): estados internos incorretos causados por falhas.
   - Defeitos (failures): quando o serviço entregue diverge do especificado (o usuário percebe).
 - Meios (como enfrentamos)
-  - Prevenção de falhas: evitar que falhas entrem no sistema (revisões, padrões, verificação).
-  - Tolerância a falhas: o sistema continua correto apesar de falhas (redundância, deteção/recuperação).
+  - Prevenção de falhas: evitar que falhas entrem no sistema (revisões, padrões, verificação). Ex.: assinaturas digitais impedindo forjar mensagens (ver "Resultado Formal" nos Generais Bizantinos).
+  - Tolerância a falhas: o sistema continua correto apesar de falhas (redundância, deteção/recuperação). Ex.: quóruns e replicação em Paxos, relógios vetoriais para detectar conflitos concorrentes.
   - Remoção de falhas: encontrar e corrigir falhas já presentes (testes, depuração, correções).
-  - Previsão de falhas: entender probabilidade/impacto (métricas como MTTF/MTTR, análise e modelagem).
+  - Previsão de falhas: entender probabilidade/impacto (métricas como MTTF/MTTR, análise e modelagem — ver slide "MTTF, MTTR e a Fórmula de Disponibilidade").
 
+(Taxonomia de **Avižienis, Laprie, Randell & Landwehr, "Basic Concepts and Taxonomy of Dependable and Secure Computing", 2004** — referência clássica da área.)
+
+---
+
+### A Árvore da Dependabilidade
+
+```mermaid
+graph TD
+    D[Dependabilidade] --> AT[Atributos]
+    D --> AM[Ameaças]
+    D --> ME[Meios]
+
+    AT --> AT1[Disponibilidade]
+    AT --> AT2[Confiabilidade]
+    AT --> AT3[Segurança - safety]
+    AT --> AT4[Integridade]
+    AT --> AT5[Manutenibilidade]
+    AT --> AT6[Confidencialidade]
+
+    AM --> AM1[Falhas - faults]
+    AM --> AM2[Erros - errors]
+    AM --> AM3[Defeitos - failures]
+
+    ME --> ME1[Prevenção]
+    ME --> ME2[Tolerância]
+    ME --> ME3[Remoção]
+    ME --> ME4[Previsão]
+```
+
+A relação entre os três ramos é sequencial: as **Ameaças** são o que pode dar errado, os **Meios** são como o sistema se defende disso, e os **Atributos** são o que se ganha (ou perde) como resultado — é o que se mede para saber se um sistema é, de fato, confiável.
+
+---
 
 ## Modelos de Falhas
 
@@ -1891,6 +2059,46 @@ O problema surge porque nenhum dos generais pode ter certeza absoluta de que sua
 #### Problema dos dois Generais
 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/two-generals.png"/>
+
+---
+layout: two-cols
+---
+
+#### Tentando Resolver com Confirmações
+
+```mermaid
+sequenceDiagram
+    participant A as General A
+    participant B as General B
+
+    A->>B: "Atacar às 6h" (tentativa 1)
+    Note over B: mensageiro capturado ❌
+    A->>B: "Atacar às 6h" (tentativa 2)
+    B-->>A: "Confirmo"
+    Note over A: confirmação capturada ❌
+    A->>B: "Atacar às 6h" (tentativa 3)
+    B-->>A: "Confirmo"
+    A->>B: "Recebi sua confirmação"
+    Note over B: esse ACK também pode ser capturado...
+```
+
+::right::
+
+#### Por que Adicionar Confirmações Não Resolve
+
+1. A envia a ordem de ataque. Se o mensageiro for capturado, B nunca ataca, e A não sabe disso.
+2. B recebe e manda de volta uma confirmação. Se ela for capturada, A não sabe se B recebeu, e não ataca sozinho (senão perde sozinho).
+3. Para ter certeza, A precisaria confirmar que recebeu a confirmação. Mas essa nova mensagem também pode ser capturada, e assim por diante, **infinitamente**.
+
+Cada nova camada de confirmação só empurra a incerteza para a mensagem seguinte, nunca a elimina.
+
+---
+
+#### Isso não é falta de engenhosidade, é uma prova matemática
+
+**Prova por indução**: para qualquer protocolo com um número finito de `N` mensagens, o **último** mensageiro enviado sempre pode ser capturado, sem que quem o enviou saiba disso. Remover essa última mensagem reduz o protocolo para `N-1`, que sofre exatamente do mesmo problema. Repetindo o argumento até `N=0`, fica claro que nenhum protocolo finito garante certeza absoluta.
+
+Esse resultado está ligado ao conceito de **conhecimento comum (common knowledge)** em sistemas distribuídos: não basta A saber que B sabe; A precisa saber que B sabe que A sabe, que B sabe que A sabe que B sabe... indefinidamente, para que os dois possam agir simultaneamente com confiança total. Numa rede não confiável (mensagens podem se perder), esse conhecimento comum **nunca** é atingível, por isso o problema é considerado matematicamente impossível de resolver com 100% de certeza, não apenas "difícil na prática".
 
 ---
 
@@ -1969,6 +2177,47 @@ O desafio está no fato de que:
 - O consenso precisa ser alcançado mesmo na presença dessas falhas.
 - O problema dos generais bizantinos demonstra que, sem um protocolo adequado, é impossível alcançar um consenso confiável em um sistema distribuído quando há agentes maliciosos.
 
+---
+layout: two-cols
+---
+
+#### Por que 3 Generais com 1 Traidor Não Bastam
+
+```mermaid
+sequenceDiagram
+    participant C as Comandante (traidor)
+    participant L1 as Tenente 1
+    participant L2 as Tenente 2
+
+    C->>L1: "Atacar"
+    C->>L2: "Recuar"
+    L1->>L2: "Comandante mandou Atacar"
+    L2->>L1: "Comandante mandou Recuar"
+```
+
+#### O Dilema do Tenente 1
+
+- O Comandante (traidor) manda ordens diferentes para cada Tenente.
+- Os Tenentes trocam entre si o que receberam, mas ninguém consegue **provar** o que o Comandante realmente disse (mensagem oral, sem assinatura).
+
+::right::
+
+
+- Tenente 1 recebeu "Atacar" direto do Comandante e "Recuar" via Tenente 2, mas não sabe se o Comandante mentiu ou se é o Tenente 2 quem está mentindo sobre o que recebeu.
+- Essa situação é **indistinguível**, do ponto de vista do Tenente 1, de um cenário onde o Comandante é leal (manda "Atacar" para os dois) e o traidor é o Tenente 2, inventando que ouviu "Recuar".
+- Como as duas situações parecem idênticas, não existe regra de decisão que garanta Tenente 1 e Tenente 2 sempre concordarem — **3 generais nunca bastam para tolerar 1 traidor** com mensagens orais.
+
+---
+
+#### Resultado Formal: Quantos Traidores um Sistema Aguenta?
+
+Lamport, Shostak e Pease (1982) provaram o resultado geral por trás do exemplo anterior:
+
+- **Mensagens orais (sem assinatura)**: consenso bizantino só é possível se `n ≥ 3f + 1`, onde `f` é o número de traidores. Com `f=1`, são necessários pelo menos **4 generais**, 3 nunca bastam, como no exemplo anterior.
+- **Mensagens assinadas (assinatura digital)**: se um traidor não consegue forjar a assinatura de um general leal, ele perde a capacidade de criar a ambiguidade do exemplo anterior, o Tenente 1 consegue provar exatamente o que o Comandante assinou. Nesse modelo, o consenso é possível com qualquer `n > f`, sem precisar do fator 3.
+- Na prática, sistemas como o **PBFT** combinam assinaturas com um modelo de rede parcialmente síncrona, e ainda assim mantêm o limite `n ≥ 3f+1`, porque provar quem está mentindo não resolve sozinho o problema de **quem está apenas lento** numa rede sem garantias de tempo, o mesmo dilema do Problema dos Dois Generais.
+
+Isso conecta diretamente com a mitigação de **Criptografia e Assinaturas Digitais** já citada: é exatamente essa técnica que reduz o número mínimo de nós necessários para tolerar traidores.
 
 ---
 
@@ -2042,7 +2291,7 @@ Acontecem quando um sistema distribuído síncrono não consegue respeitar os pr
 
 ---
 
-#### Modelo de Falhas de Christian
+#### Modelo de Falhas de Cristian
 
 É uma abordagem para caracterizar e detectar falhas em sistemas distribuídos baseada em premissas temporais. Nesse modelo, pressupõe-se que os processos podem falhar de forma definitiva (crash-stop) e que existe um limite superior conhecido para atrasos nas comunicações e respostas. Assim, se um processo não responder dentro desse tempo previamente estipulado, o sistema o considera como tendo falhado.
 
@@ -2072,7 +2321,7 @@ Acontecem quando um sistema distribuído síncrono não consegue respeitar os pr
 - Dependência de limites temporais: o modelo supõe que é possível definir um tempo máximo de resposta (timeout) baseado em características conhecidas da rede e do processamento. Se esse tempo for excedido, o processo é marcado como inoperante.
 - Detecção baseada em timeouts: essa estratégia permite que os sistemas distribuídos identifiquem e isolem falhas, facilitando a implementação de mecanismos de tolerância, mesmo que a determinação exata do “momento” da falha seja complexa em ambientes assíncronos.
 
-O modelo de falhas de Christian fornece uma base para projetar mecanismos de detecção de falhas em sistemas distribuídos, contando com a existência de limites temporais que permitam distinguir entre atrasos normais e a real inatividade de um processo.
+O modelo de falhas de Cristian fornece uma base para projetar mecanismos de detecção de falhas em sistemas distribuídos, contando com a existência de limites temporais que permitam distinguir entre atrasos normais e a real inatividade de um processo.
 
 ---
 
@@ -2082,7 +2331,7 @@ O modelo de falhas de Christian fornece uma base para projetar mecanismos de det
 
 ---
 
-## Comparação
+## Confiabilidade vs. Disponibilidade
 - **Confiabilidade:** foco em **não falhar** durante o período observado. MTTF
 - **Disponibilidade:** foco no **tempo total em operação** (importa reparar rápido). MTTF + MTTR
 - Um servidor pode ser **confiável** (falha raramente) mas ter baixa disponibilidade (reparo lento).
@@ -2090,7 +2339,78 @@ O modelo de falhas de Christian fornece uma base para projetar mecanismos de det
 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/metricas.png"/>
 
+---
 
+### MTTF, MTTR e a Fórmula de Disponibilidade
+
+- **MTTF (Mean Time To Failure)**: tempo médio até a primeira falha, quanto tempo o sistema roda sem falhar.
+- **MTTR (Mean Time To Repair)**: tempo médio para detectar, diagnosticar e reparar uma falha, restaurando o serviço.
+- **MTBF (Mean Time Between Failures)**: tempo médio entre falhas sucessivas num sistema reparável, `MTBF = MTTF + MTTR`.
+
+**Fórmula de disponibilidade:**
+
+`Disponibilidade (A) = MTTF / (MTTF + MTTR)`
+
+**Exemplo prático:**
+- Um servidor falha em média a cada 720h (MTTF = 720h) e leva 2h para ser reparado (MTTR = 2h).
+- `A = 720 / (720 + 2) = 720 / 722 ≈ 0,9972` → **99,72% de disponibilidade**.
+- Equivale a cerca de **24 horas de indisponibilidade por ano**.
+
+Reduzir o MTTR (reparar mais rápido, ex.: automação, redundância) costuma ser mais barato e eficaz do que tentar eliminar toda falha (aumentar o MTTF), o argumento central por trás de priorizar **tolerância a falhas** sobre **prevenção de falhas** pura.
+
+---
+
+### Quantos "Noves" de Disponibilidade?
+
+Padrão comum em SLAs (Service Level Agreements) de cloud: medir disponibilidade em "noves".
+
+| Disponibilidade | Apelido | Indisponibilidade/ano | Indisponibilidade/mês |
+|---|---|---|---|
+| 99% | "dois noves" | ~3,65 dias | ~7,3 horas |
+| 99,9% | "três noves" | ~8,76 horas | ~43,8 minutos |
+| 99,99% | "quatro noves" | ~52,6 minutos | ~4,4 minutos |
+| 99,999% | "cinco noves" | ~5,3 minutos | ~26 segundos |
+
+- Cada "nove" adicional custa exponencialmente mais (mais redundância, mais automação de recuperação, mais regiões).
+- SLAs reais de provedores cloud costumam prometer entre 99,9% e 99,99% para serviços individuais, voltamos a isso com números reais na seção de Cloud Computing.
+
+---
+
+### Falha Famosa: Boeing 737 MAX
+
+O sistema **MCAS** (Maneuvering Characteristics Augmentation System) foi criado para compensar a tendência de "cavalo de pau" para cima causada pelos motores maiores e reposicionados do 737 MAX. Ele dependia de um único **sensor de ângulo de ataque (AoA)** — sem comparar com o segundo sensor, já instalado na aeronave, sem cruzar dados.
+
+- Um sensor com leitura defeituosa disparava o MCAS repetidamente, forçando o nariz do avião para baixo, mesmo com os pilotos tentando corrigir manualmente.
+- **Lion Air 610** (out/2018) e **Ethiopian Airlines 302** (mar/2019): 346 mortes ao todo. Frota **suspensa globalmente** em março de 2019, por quase 20 meses.
+
+**O que foi corrigido:** MCAS passou a comparar os dois sensores AoA (se divergirem demais, se desativa), limitou-se a uma única ativação por evento, teve sua autoridade de comando reduzida, e o sistema passou a ser documentado e treinado explicitamente para os pilotos (antes nem constava no manual).
+
+**É suficiente?** Debate segue aberto: em jan/2024 um painel de porta se soltou em pleno voo num 737 MAX 9 (Alaska Airlines 1282), causa diferente (controle de qualidade na fabricação), mas reacendeu a dúvida sobre a cultura de segurança da Boeing como um todo, não só sobre o MCAS. Falha de sensor único é um clássico problema de **ausência de redundância** (atributo de Segurança/*safety* da árvore de dependabilidade).
+
+---
+
+### Falha Famosa: um Bug no glibc Encontrado com TLA+
+
+**TLA+** é a linguagem de especificação formal criada por **Leslie Lamport** (o mesmo por trás dos relógios lógicos e do Paxos vistos neste deck) para modelar algoritmos concorrentes e verificar exaustivamente todos os estados possíveis, não só os casos que um teste manual pensaria em cobrir.
+
+- O algoritmo de variáveis de condição (`pthread_cond_*`) usado internamente pela **glibc** continha um bug de concorrência: sob uma sequência de intercalação de threads muito específica e rara, um sinal de "acordar" podia ser perdido, deixando uma thread bloqueada **para sempre** esperando por um sinal que nunca mais chegaria.
+- Esse tipo de bug é quase impossível de reproduzir com testes tradicionais (a condição de corrida é raríssima), mas foi encontrado ao modelar o algoritmo em TLA+ e deixar o model checker explorar sistematicamente **todas** as intercalações possíveis.
+
+**Lição:** ferramentas de verificação formal (TLA+, TLC) não substituem testes, mas cobrem exatamente a classe de bug mais cara em sistemas concorrentes/distribuídos, aquela que depende de uma ordem de eventos específica demais para aparecer em produção com frequência, mas que eventualmente aparece.
+
+---
+
+### Falha Famosa: Knight Capital (2012)
+
+Em 1º de agosto de 2012, a Knight Capital implantou um novo software de negociação em 8 servidores, mas o processo de deploy falhou em atualizar **um** dos oito.
+
+- Nesse servidor "esquecido", uma flag antiga de um recurso de teste desativado (`Power Peg`) foi **reaproveitada** com outro significado pelo novo código. Nos 7 servidores atualizados, a flag ativava a função nova; no 8º, ainda rodando o código antigo, a mesma flag reativou o código morto de teste.
+- Ao abrir o mercado, esse servidor começou a disparar uma enxurrada de ordens de compra/venda não intencionais, reais, na bolsa de Nova York.
+- Levaram **45 minutos** para identificar e desligar o sistema — tempo suficiente para acumular **~US$440 milhões em prejuízo** e quase quebrar a empresa (foi vendida/incorporada logo depois).
+
+**Causas raiz:** deploy manual sem checklist confiável, código morto nunca removido (e reativado por engano), ausência de um "kill switch" para parar automação descontrolada, e monitoramento insuficiente para detectar a anomalia rapidamente.
+
+**Conexão direta com o slide de MTTF/MTTR:** o problema técnico durou segundos para começar, mas o **MTTR foi de 45 minutos** — o tempo de detecção e reação, não de correção do bug em si, foi o que transformou um erro de deploy num dos maiores desastres operacionais já documentados em finanças.
 
 ---
 layout: two-cols
@@ -3808,6 +4128,115 @@ O 3PC ainda não é 100% à prova de falhas, especialmente com falhas simultâne
 - Pouco usado na prática, sistemas modernos preferem usar:
   - Algoritmos baseados em consenso (como Raft ou Paxos)
   - Compensações (eventual consistency) em sistemas de alta disponibilidade
+
+---
+
+## Paxos: Consenso Tolerante a Falhas
+
+O 2PC/3PC dependem de um **coordenador único** — se ele falha, o sistema bloqueia ou fica incerto. Paxos ataca esse problema pela raiz.
+
+Proposto por **Leslie Lamport em 1989** (publicado em 1998 como "The Part-Time Parliament"), Paxos resolve **consenso distribuído** sem depender de um coordenador fixo e sem bloquear indefinidamente, desde que uma **maioria (quórum)** dos nós esteja disponível.
+
+Objetivo: um conjunto de nós concorda sobre um **único valor**, mesmo com nós falhando (crash) e mensagens sendo perdidas, atrasadas ou duplicadas.
+
+- Paxos assume falhas do tipo *crash* (nó para de responder), **não** falhas bizantinas (nó mentindo) — para isso existe o Paxos Bizantino, visto no slide de Byzantine Generals.
+
+---
+
+### Papéis no Paxos
+
+- **Proposer**: propõe um valor a ser escolhido e coordena a rodada de votação.
+- **Acceptor**: vota nas propostas recebidas; a decisão depende do voto da **maioria** dos Acceptors.
+- **Learner**: aprende/replica o valor já escolhido, sem participar da votação.
+
+Na prática, um mesmo nó costuma acumular os três papéis, e um único Proposer é eleito líder para evitar disputas constantes — otimização conhecida como **Multi-Paxos**.
+
+Quórum: com `N` Acceptors, o sistema tolera até `f = ⌊(N-1)/2⌋` falhas, pois toda decisão exige maioria (`⌊N/2⌋ + 1` votos).
+
+---
+
+### Fase 1: Prepare / Promise
+
+Cada proposta tem um número único e crescente `n` (ex.: `(contador, id_do_proposer)` para desempate).
+
+**1a. Prepare(n)** — o Proposer envia `Prepare(n)` para a maioria dos Acceptors.
+
+**1b. Promise(n, ...)** — cada Acceptor que recebe `Prepare(n)`:
+- Se `n` é maior que qualquer número já visto, **promete** não aceitar mais nenhuma proposta com número menor que `n`.
+- Responde com a maior proposta que **já aceitou** anteriormente, se houver (número + valor).
+- Caso contrário, ignora ou rejeita o pedido.
+
+Essa fase serve para o Proposer descobrir se algum valor já pode ter sido parcialmente aceito antes dele.
+
+---
+
+### Fase 2: Accept / Accepted
+
+**2a. Accept(n, v)** — se o Proposer recebeu `Promise` da maioria dos Acceptors:
+- Se algum Acceptor reportou um valor já aceito, o Proposer **é obrigado** a reusar o valor da proposta de maior número reportada — não pode escolher seu próprio valor livremente. É essa regra que garante a segurança do protocolo.
+- Caso contrário, é livre para propor seu próprio valor `v`.
+- Envia `Accept(n, v)` para a maioria dos Acceptors.
+
+**2b. Accepted(n, v)** — cada Acceptor aceita `(n, v)` se ainda não prometeu a um número maior que `n`.
+
+Quando a **maioria** aceita `(n, v)`, o valor `v` está **escolhido** — de forma irreversível, mesmo que nós ainda não saibam disso.
+
+---
+layout: two-cols
+---
+
+### Exemplo: uma Rodada de Paxos
+
+```mermaid
+sequenceDiagram
+    participant Prop as Proposer
+    participant A1
+    participant A2
+    participant A3
+
+    Prop->>A1: Prepare(n=1)
+    Prop->>A2: Prepare(n=1)
+    Prop->>A3: Prepare(n=1)
+    A1-->>Prop: Promise(1, sem valor prévio)
+    A2-->>Prop: Promise(1, sem valor prévio)
+    Note over Prop: maioria respondeu, pode propor v="X"
+    Prop->>A1: Accept(n=1, v="X")
+    Prop->>A2: Accept(n=1, v="X")
+    A1-->>Prop: Accepted(1, "X")
+    A2-->>Prop: Accepted(1, "X")
+    Note over Prop: maioria aceitou, "X" está escolhido
+```
+
+::right::
+
+### Lendo o Diagrama
+
+- Só A1 e A2 respondem — A3 pode estar lento ou fora do ar. Ainda é maioria (2 de 3), então o protocolo segue normalmente.
+- Nenhum Acceptor tinha valor previamente aceito, o Proposer fica livre para propor seu próprio valor `"X"`.
+- Assim que a maioria confirma `Accepted`, o valor `"X"` está **definitivamente escolhido** — mesmo que A3 nunca responda ou volte depois com outra proposta.
+
+---
+
+### Garantias e Limitações
+
+**Safety (segurança) — sempre garantido:**
+- Nunca dois valores diferentes são escolhidos.
+- Um valor já escolhido nunca é "desfeito", mesmo com falhas e mensagens perdidas depois.
+
+**Liveness (progresso) — não é garantido em teoria:**
+- Se dois Proposers competem ao mesmo tempo com números cada vez maiores (**"dueling proposers"**), o protocolo pode entrar em livelock — nenhuma proposta junta maioria antes de ser superada por outra.
+- Na prática, resolvido elegendo um **único líder estável** por período (Multi-Paxos), evitando disputas constantes entre Proposers.
+
+---
+
+### Paxos na Prática
+
+- **Multi-Paxos**: com um líder estável, a Fase 1 é reaproveitada para várias decisões seguidas — só a Fase 2 se repete a cada novo valor, reduzindo o overhead de duas fases por decisão.
+- Usado (ou variantes próximas) em sistemas reais:
+  - **Google Chubby** — serviço de lock distribuído, replica seu log via Paxos.
+  - **Google Spanner** — replica cada shard de dados usando Paxos.
+  - **Apache ZooKeeper** — usa ZAB (ZooKeeper Atomic Broadcast), inspirado em Paxos.
+- **Raft** (2014) surgiu como alternativa mais fácil de entender e implementar, com as mesmas garantias de Paxos — hoje é mais comum em sistemas novos (etcd, Consul, CockroachDB).
 
 ---
 
