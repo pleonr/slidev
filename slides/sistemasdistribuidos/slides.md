@@ -1654,6 +1654,7 @@ Relógios de quartzo utilizam oscilações de cristais de quartzo para manter a 
 <img class="m-auto -z-5 bottom-0 top-0 right-0 max-w-full max-h-full" style="background-color: white" src="/rossonadorquartzo.webp"/>
 
 
+
 ---
 layout: two-cols
 ---
@@ -1675,6 +1676,16 @@ Essa variação é chamada de drift, o drift refere-se à variação gradual da 
 - Uso de compensadores térmicos (TCXO - Temperature Compensated Crystal Oscillator).
 - Osciladores de quartzo controlados por fornos (OCXO - Oven Controlled Crystal Oscillator).
 - Ajustes periódicos via sincronização com sinais de referência externos, como GPS ou NTP.
+-->
+
+---
+
+
+<Youtube id="3jfgQF3jX7A" width="100%" height="100%"/>
+
+<!--
+atomic clock
+https://www.youtube.com/watch?v=p2BxAu6WZI8
 -->
 
 ---
