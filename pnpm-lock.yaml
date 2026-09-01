@@ -155,6 +155,21 @@ importers:
         specifier: 'catalog:'
         version: 3.5.40(typescript@6.0.3)
 
+  slides/microservicesMensageria:
+    dependencies:
+      '@slidev/cli':
+        specifier: 'catalog:'
+        version: 52.18.0(@nuxt/kit@3.21.10)(@types/markdown-it@14.1.2)(@types/node@22.20.1)(@vue/compiler-sfc@3.5.40)(cac@7.0.0)(esbuild@0.27.3)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.0)(playwright-chromium@1.62.0)(postcss@8.5.23)(rolldown@1.1.5)(rollup@4.57.1)(srvx@0.12.4)
+      '@slidev/theme-default':
+        specifier: 'catalog:'
+        version: 0.25.0
+      '@slidev/theme-seriph':
+        specifier: 'catalog:'
+        version: 0.25.0
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.40(typescript@6.0.3)
+
   slides/microservicos:
     dependencies:
       '@slidev/cli':
