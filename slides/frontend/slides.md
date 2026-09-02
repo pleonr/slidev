@@ -57,7 +57,9 @@ aplicativos da web e APIs.
 ---
 layout: image
 image: /pern.jpg
-background-size: contain
+backgroundSize: contain
+---
+
 ---
 
 ### Prós
@@ -73,7 +75,7 @@ gerenciamento de dados.
 
 ---
 
-### Cons
+### Contras
 
 - Complexidade: embora o uso de JavaScript em toda a pilha possa ser vantajoso, ele também pode adicionar complexidade
 para desenvolvedores que não estão familiarizados com JavaScript no back-end.
@@ -84,20 +86,14 @@ considerada. Porém, o mesmo pode ser dito para qualquer outro stack.
 
 ---
 layout: image
-image: /architecture.png
-background-size: contain
----
-
----
-layout: image
 image: /spa.png
-background-size: contain
+backgroundSize: contain
 ---
 
 ---
 layout: image
 image: /spaapp.png
-background-size: contain
+backgroundSize: contain
 ---
 
 
@@ -197,9 +193,9 @@ background-size: contain
 layout: two-cols
 ---
 
-### JSX (*tsx*)
+### JSX (*jsx*)
 
-JSX é um javascript usando que retorna markup(*mais ou menos*). Utilizamos `camelCase` para declarar atributos dentro do markup utilizado pelo JSX
+JSX é um javascript que retorna markup(*mais ou menos*). Utilizamos `camelCase` para declarar atributos dentro do markup utilizado pelo JSX
 
 <img class="m-auto -z-5 top-0 bottom-0 max-w-80" style="background-color: white" src="/naming-conventions.png"/>
 
@@ -228,7 +224,7 @@ Para começar a falar do react vamos usar um boilerplate
 npm create vite@latest meu-app
 ```
 
-Isso vai criar um projeto básico usando react.
+Durante o comando o Vite pergunta o framework (`React`) e a variante (`JavaScript`). Isso vai criar um projeto básico usando react, sem nenhuma configuração de servidor ou roteamento pré-definida.
 
 ```jsx
 function MyButton() {
@@ -237,6 +233,89 @@ function MyButton() {
   );
 }
 ```
+
+---
+layout: two-cols
+---
+
+### Build e a pasta `dist`
+
+Enquanto `npm run dev` sobe um servidor de desenvolvimento (que compila sob demanda, arquivo por arquivo, para recarregar rápido), `npm run build` gera a versão de **produção** do app.
+
+```bash
+npm run build
+```
+1. O Vite empacota (*bundle*) todo o código, resolvendo os `import`/`export` (ES Modules) e fazendo **tree-shaking** (remove código não usado).
+2. O código é **minificado** (nomes curtos, sem espaços/comentários) para reduzir o tamanho dos arquivos. Cada arquivo gerado recebe um **hash** no nome (ex: `index-a1b2c3.js`), usado para cache se o conteúdo mudar, o nome muda, e o navegador não usa uma versão em cache desatualizada.
+
+::right::
+
+```bash
+dist/
+├── index.html
+└── assets/
+    ├── index-a1b2c3.js
+    ├── index-d4e5f6.css
+    └── react-g7h8i9.svg
+```
+
+- O resultado é **100% estático**: só HTML, JS, CSS e assets. Não existe servidor Node rodando por trás.
+- Pode ser hospedado em qualquer serviço de arquivos estáticos (GitHub Pages, Netlify, Vercel, S3, um Nginx simples, etc).
+- O `index.html` gerado já aponta para os arquivos com hash em `assets/`, então basta servir a pasta `dist/` inteira.
+- `npm run preview` sobe um servidor local simples servindo essa pasta `dist/`, útil para conferir o build antes do deploy.
+
+---
+layout: two-cols
+---
+
+### Estrutura do projeto
+
+```bash
+meu-app/
+├── index.html
+├── package.json
+├── vite.config.js
+├── public/
+│   └── vite.svg
+└── src/
+    ├── main.jsx
+    ├── App.jsx
+    ├── App.css
+    ├── index.css
+    └── assets/
+        └── react.svg
+```
+
+O Vite gera um projeto enxuto: não existe pasta `pages` ou rotas automáticas, apenas os arquivos necessários para renderizar uma SPA.
+
+::right::
+
+- `index.html`: fica na **raiz** do projeto (não dentro de `public`), é o ponto de entrada real da aplicação. Contém a `<div id="root">` e o `<script type="module" src="/src/main.jsx">` que carrega o app — o atributo `type="module"` diz ao navegador para tratar o arquivo como um **ES Module** (permite `import`/`export` nativamente).
+- `src/main.jsx`: monta a árvore React na div `root` usando `createRoot`.
+- `src/App.jsx`: componente raiz da aplicação.
+- `vite.config.js`: configurações do Vite (plugins, aliases, porta do dev server, etc).
+- `public/`: arquivos estáticos copiados sem processamento (ex: favicon, imagens).
+
+
+---
+
+No `package.json` os scripts principais são:
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
+```
+
+- `dev`: sobe o servidor de desenvolvimento (padrão `http://localhost:5173`).
+- `build`: empacota e minifica o código, gerando os arquivos estáticos de produção em `dist/`.
+- `preview`: serve localmente o resultado do `build`, útil para validar antes do deploy.
+
+Como o Vite não tem servidor Node embutido (ele apenas gera HTML/CSS/JS estáticos), o resultado do `build` pode ser hospedado em qualquer serviço de arquivos estáticos (Netlify, Vercel, GitHub Pages, S3, etc).
 
 ---
 layout: two-cols
@@ -307,7 +386,7 @@ Se você preferir um código mais compacto, pode usar o condicional `?`. Ao cont
 
 Quando você não precisa do `else`, também pode usar uma sintaxe lógica e mais curta:
 
-```tsx
+```jsx
 <div>
   {isLoggedIn && <h1>olá</h1>}
 </div>
@@ -319,7 +398,7 @@ Quando você não precisa do `else`, também pode usar uma sintaxe lógica e mai
 
 Podemos responder a eventos declarando uma função...
 
-```tsx
+```jsx
 function MyButton() {
   function handleClick() {
     alert('You clicked me!');
@@ -333,7 +412,7 @@ function MyButton() {
 }
 ```
 
-Observe como `onClick={handleclick}` não tem parênteses no final! Você não precisa invocar a função, você só precisa indicar ela, o React fará a chamada para a função quando o evento for acionado.
+Observe como `onClick={handleClick}` não tem parênteses no final! Você não precisa invocar a função, você só precisa indicar ela, o React fará a chamada para a função quando o evento for acionado.
 
 ---
 
@@ -341,7 +420,7 @@ Observe como `onClick={handleclick}` não tem parênteses no final! Você não p
 
 Para renderizar listas podemos utilizar funcionalidades do javascript como `for` loop e a função `map` renderizar listas de componentes.
 
-```tsx
+```jsx
 const products = [
   { title: 'Cabbage', id: 1 },
   { title: 'Garlic', id: 2 },
@@ -359,57 +438,16 @@ return (
 );
 ```
 
-
-
 ---
 
-### Next.js
+A prop `key` avisa o React qual item da lista é qual entre renderizações, permitindo identificar itens que foram
+adicionados, removidos ou reordenados sem precisar recriar o componente inteiro.
 
-O react recomenda a utilização de frameworks para construção de app, vamos utilizar o [Next.js](https://nextjs.org/),
-desenvolvido pela [Vercel](https://vercel.com).
-
-O Nextjs, utiliza [Tailwind](https://tailwindcss.com/) css como padrão para folhas de estilo.
-
-Para instalar o Nextjs:
-
-```shell
-npm install -g nextjs
-npx create-next-app@latest
-```
-
-<br>
-
-![](/next-app.png)
-
-::right::
-
-![](/nextjsapp.png)
-
----
-layout: two-cols
----
-
-![](/nextnew.png)
-
-::right::
-
-- public: pasta para assets e recursos staticos
-- src/pages: cada arquivo aqui será interpretado como uma rota na aplicação
-- _app.tsx: Inicializa todas as páginas e permite personalizar o comportamento global.
-- _document.tsx: Personaliza o HTML e o body que é renderizado no servidor.
-- index.tsx: A página inicial da sua aplicação (rota /).
-- next.config.js	Arquivo de configuração Next.js
-- package.json	Dependências e scripts do projeto
-- .eslintrc.json	Arquivo de configuração ESLint
-- next-env.d.ts	Arquivo de configuração TypeScript para Next
-- tsconfig.json	Arquivo de configuração  TypeScript
-
-
----
-
-- `_app.tsx` é responsável por inicializar as páginas do Next, aqui podemos incluir layout global como header e footer ou wrappers que devem aparecer em todas as páginas e incluir CSS global definindo estilos que serão aplicados em toda a aplicação.
-
-- `_document.tsx` é utilizado para modificar a estrutura básica do documento HTML que é enviado ao cliente. Ele é carregado apenas no servidor, e você pode usá-lo para personalizar o HTML e o body da aplicação, usado inserir fontes ou scripts externos, adicionar links de fontes ou incluir scripts que precisam estar no documento HTML. E também para incluir metadados globais, como favicon, tags meta, etc.
+- Use um valor **estável e único** (ex: `id` vindo dos dados), nunca gerado durante o render (`Math.random()`, por exemplo).
+- **Evite usar o índice do array como key** quando a lista pode ser reordenada, filtrada ou ter itens inseridos/removidos:
+  o React associa o estado interno do componente à posição, o que pode misturar o estado entre itens diferentes.
+- Sem `key` (ou com uma key errada), o React não sabe reaproveitar os elementos existentes e pode re-renderizar mais do
+  que o necessário — ou pior, preservar estado no elemento errado.
 
 ---
 
@@ -430,7 +468,7 @@ Um componente é um bloco de código reutilizável e independente, que divide a 
 - `props` → Dados enviados ao componente (strings, numbers, objetos, funções, etc.).
 - `children` → Conteúdo JSX passado entre as tags do componente.
   - Exemplo:
-    ```tsx
+    ```jsx
     <Card>
       <p>Esse é o conteúdo interno (children)</p>
     </Card>
@@ -440,14 +478,8 @@ Um componente é um bloco de código reutilizável e independente, que divide a 
 
 ### Componente Button
 
-```tsx
-type ButtonProps = {
-  label: string
-  onClick: () => void
-  children?: React.ReactNode
-}
-
-export function Button({ label, onClick, children }: ButtonProps) {
+```jsx
+export function Button({ label, onClick, children }) {
   return (
     <button onClick={onClick}>
       {label} {children}
@@ -458,7 +490,7 @@ export function Button({ label, onClick, children }: ButtonProps) {
 
 Usando o componente
 
-```tsx
+```jsx
 <Button label="Salvar" onClick={() => alert("Salvo!")}>
   aqui vai o children
 </Button>
@@ -466,9 +498,95 @@ Usando o componente
 
 ---
 
+## Mão na massa
+
+Três exemplos curtos para copiar no `App.jsx` do projeto Vite criado no começo da aula. Testem, alterem os valores e
+vejam o resultado no navegador.
+
+Usam só o que já vimos até aqui: JSX, props, eventos e listas, sem hooks ainda.
+
+---
+layout: two-cols
+---
+
+#### 1. Cartão de saudação (props)
+
+```jsx
+function Saudacao({ nome }) {
+  return <h2>Olá, {nome}!</h2>
+}
+
+export default function App() {
+  return (
+    <div>
+      <Saudacao nome="Maria" />
+      <Saudacao nome="João" />
+    </div>
+  )
+}
+```
+
+::right::
+
+**Desafio:** adicione uma terceira `<Saudacao />` com o seu nome e crie uma prop `idade` opcional que aparece
+embaixo do "Olá".
+
+---
+layout: two-cols
+---
+
+#### 2. Lista de tarefas
+
+```jsx
+const tarefas = ['Estudar JSX', 
+'Criar um componente',
+ 'Testar props'
+ ]
+
+function ListaTarefas() {
+  return (
+    <ul>
+      {tarefas.map((tarefa) => (
+        <li key={tarefa}>{tarefa}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+::right::
+
+**Desafio:** troque o array `tarefas` por uma lista de objetos `{ id, texto }` e use `tarefa.id` como `key` em vez do
+texto.
+
+---
+layout: two-cols
+---
+
+#### 3. Botão com evento
+
+```jsx
+function BotaoCurtir() {
+  function handleClick() {
+    alert('Você curtiu!')
+  }
+
+  return <button 
+  onClick={handleClick}>Curtir
+  </button>
+}
+```
+
+::right::
+
+**Desafio:** crie um segundo botão `BotaoDescurtir` que mostra um alerta diferente, e renderize os dois lado a lado
+dentro do `App`.
+
+---
+
 ### CSS
 
-O Next pode adicionar por padrão o Tailwind, mas podemos usar outras bibliotecas. Vamos utilizar o [ReactBootstrap](https://react-bootstrap.netlify.app/).
+O Vite não instala nenhuma biblioteca de CSS por padrão, então precisamos adicionar manualmente. Vamos utilizar o [ReactBootstrap](https://react-bootstrap.netlify.app/).
 
 A instalação requer dois pacotes npm `react-bootstrap` e `bootstrap`.
 
@@ -477,18 +595,176 @@ npm install react-bootstrap
 npm install bootstrap
 ```
 
-E para utilizar o react bootstrap em todo o projeto chamamos precisamos invocar o css do bootstrap no app:
+E para utilizar o react bootstrap em todo o projeto chamamos precisamos invocar o css do bootstrap no ponto de entrada da aplicação:
 
-```typescript
-// _app.tsx
+```js
+// src/main.jsx
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "@/styles/globals.css"
+import './index.css'
+```
+
+---
+layout: two-cols
+---
+
+### Estilizando com `className`
+
+Assim como em HTML puro, também podemos escrever nosso próprio CSS e aplicar via `className` (lembrando: não é `class`, que é palavra reservada em JS).
+
+```css
+/* src/App.css */
+.card {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+}
+```
+::right::
+
+```jsx
+// src/App.jsx
+import './App.css'
+
+function App() {
+  return (
+    <div className="card">
+      Conteúdo do card
+    </div>
+  )
+}
+```
+---
+
+Também é possível aplicar estilo diretamente no elemento com a prop `style`, passando um **objeto** JavaScript (as chaves ficam em `camelCase`):
+
+```jsx
+function Aviso() {
+  return (
+    <div style={{ backgroundColor: 'yellow', padding: '8px' }}>
+      Atenção!
+    </div>
+  )
+}
+```
+
+- `className`: aponta para uma classe definida em um arquivo `.css` importado — melhor para estilos reutilizáveis.
+- `style`: útil para valores **dinâmicos**, calculados em tempo de execução (ex: cor que depende de uma prop ou state).
+
+---
+
+#### Usando componentes do ReactBootstrap
+
+Com o `react-bootstrap` instalado, em vez de montar as classes do Bootstrap manualmente (`className="btn btn-primary"`), usamos os componentes prontos da biblioteca:
+
+```jsx
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+
+function Exemplo() {
+  return (
+    <Card style={{ width: '18rem' }}>
+      <Card.Body>
+        <Card.Title>Título do card</Card.Title>
+        <Card.Text>Algum texto de exemplo dentro do card.</Card.Text>
+        <Button variant="primary">Confirmar</Button>
+      </Card.Body>
+    </Card>
+  )
+}
+```
+<!-- 
+Cada componente (`Button`, `Card`, `Navbar`, etc.) já vem com as classes e o comportamento do Bootstrap aplicados, e aceita props como `variant` para trocar o estilo (`primary`, `danger`, `outline-secondary`...). -->
+
+---
+
+### Navegação com a tag `a`
+
+Antes de conhecer o `react-router-dom`, vale lembrar como a navegação funciona nativamente no HTML: com a tag `<a>`.
+
+```html
+<a href="/partidas">Partidas</a>
+```
+
+- Ao clicar, o navegador faz uma **nova requisição HTTP** para a URL do `href`.
+- A página inteira é **descartada e recarregada** (reload completo), incluindo todo o JavaScript, CSS e estado da aplicação.
+- Numa SPA React isso é um problema: perdemos todo o estado em memória (ex: `useState`, dados já buscados) e o app React precisa iniciar do zero novamente.
+
+É justamente esse recarregamento que o roteamento client-side do React (via `react-router-dom`) evita.
+
+---
+
+### React Router
+
+O Vite/React sozinhos não têm roteamento embutido, diferente de frameworks como Next.js, aqui **nós** decidimos qual
+componente renderizar para cada URL.
+
+O [`react-router-dom`](https://reactrouter.com/en/main) é a biblioteca mais usada para isso em SPAs: ela sincroniza a
+URL do navegador com o que é renderizado na tela, sem recarregar a página inteira.
+
+- Trocar de "página" = trocar o componente renderizado, mantendo o app carregado (estado, dados em memória etc. não se perdem).
+- A navegação usa a History API do navegador (`pushState`), então os botões voltar/avançar do browser continuam funcionando.
+
+---
+
+#### Instalação e configuração
+
+```shell
+npm install react-router-dom
+```
+
+Envolvemos o componente raiz com `<BrowserRouter>` para habilitar o roteamento em toda a aplicação:
+
+```jsx
+// src/main.jsx
+import { BrowserRouter } from 'react-router-dom'
+
+createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+)
 ```
 
 ---
 
-```typescript
-import Link from 'next/link'
+Dentro do `App`, declaramos as rotas com `<Routes>` e `<Route>`:
+
+```jsx
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Partidas from './pages/Partidas'
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/partidas" element={<Partidas />} />
+    </Routes>
+  )
+}
+```
+
+---
+
+#### Navegando entre rotas
+
+Para criar links que trocam de rota sem recarregar a página, usamos o componente `Link` no lugar da tag `<a>`:
+
+```jsx
+import { Link } from 'react-router-dom'
+
+<Link to="/partidas">Partidas</Link>
+```
+
+- `<a href="...">` faz o navegador recarregar a página inteira (perde o estado do app).
+- `<Link to="...">` apenas atualiza a URL e troca o componente renderizado, mantendo a SPA "viva".
+
+A seguir, um exemplo de navbar usando `Link` junto com componentes do ReactBootstrap:
+
+---
+
+```jsx
+import { Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -496,11 +772,9 @@ const NavbarTop = () => {
   return (
     <Navbar bg="dark" data-bs-theme="dark" fixed="top">
       <Container>
-        <Navbar.Brand>
-          <Link href="/">Home</Link>
-        </Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link as={Link} href="/partidas" passHref>
+          <Nav.Link as={Link} to="/partidas">
             Partidas
           </Nav.Link>
         </Nav>
@@ -531,13 +805,6 @@ Quando o componente é chamado novamente ele criando nova árvore virtual. O Rea
 
 ---
 layout: image
-image: /atualizacao.png
-background-size: contain
----
-
-
----
-layout: image
 image: /csrssr.png
 background-size: contain
 ---
@@ -550,7 +817,10 @@ layout: two-cols
 
 ### SSR (Server-Side Rendering)
 
-- Como funciona: a página é renderizada no servidor a cada requisição via getServerSideProps.
+Recurso oferecido por meta-frameworks React (Next.js, Remix, Astro, etc). O nosso projeto Vite **não** faz isso — sem um
+desses frameworks, o React só roda no cliente. Fica aqui como comparação conceitual.
+
+- Como funciona: a página é renderizada no servidor a cada requisição, e o HTML já pronto é enviado ao browser.
 - Vantagens: HTML completo desde o primeiro byte (melhor SEO e Time-to-First-Byte previsível); dados sempre frescos.
 - Custos: mais carga no servidor; latência inclui fetch + render a cada request; cache exigirá camada externa (CDN/reverse proxy) para escalar.
 - Quando usar: páginas indexáveis que dependem de dados variáveis por request (auth, geolocalização, personalização) ou dados que mudam com frequência.
@@ -559,9 +829,11 @@ layout: two-cols
 
 #### CSR (Client-Side Rendering)
 
-- Como funciona: o servidor entrega a casca da página e o browser busca os dados (ex.: useEffect + axios) e renderiza no cliente.
+É o que o nosso projeto Vite faz por padrão.
+
+- Como funciona: o servidor entrega a casca da página (`index.html`) e o browser busca os dados (ex.: useEffect + axios) e renderiza no cliente.
 - Vantagens: ótima experiência em dashboards/SPAs autenticadas; menos carga no servidor; interações ricas após o primeiro carregamento.
-- Custos: conteúdo chega “vazio” para robôs/SEO (a menos que use hidratação/SSG); pode ter layout shift durante loading.
+- Custos: conteúdo chega “vazio” para robôs/SEO; pode ter layout shift durante loading.
 - Quando usar: áreas logadas (SEO menos relevante), interação pesada, polling, websockets, formulários complexos.
 
 
@@ -572,9 +844,9 @@ layout: two-cols
 | Aspecto       | Hydration                                         | Reconciliação                                                                   |
 | ------------- | ------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Objetivo      | Tornar **interativo** um DOM já existente         | Calcular **diferenças** entre árvores e aplicar no DOM                          |
-| Quando ocorre | Primeira montagem no cliente após SSR/SSG         | Em **toda atualização** (e também durante a hydration para corrigir mismatches) |
+| Quando ocorre | Primeira montagem no cliente após SSR         | Em **toda atualização** (e também durante a hydration para corrigir mismatches) |
 | Efeito no DOM | Idealmente **reuso** dos nós + **anexar eventos** | **Adicionar/alterar/remover** nós conforme o diff                               |
-| APIs típicas  | `hydrateRoot(...)` (Next cuida disso)             | Interna ao React; você vê os efeitos via `setState`, transições etc.            |
+| APIs típicas  | `hydrateRoot(...)` (usado quando há SSR; nosso projeto Vite usa apenas `createRoot`) | Interna ao React; você vê os efeitos via `setState`, transições etc.            |
 
 
 
@@ -628,10 +900,11 @@ export default Welcome;
 import Welcome from './Welcome';
 
 function App() {
-  return
+  return (
     <div className="App">
       <Welcome name="John"/>
     </div>
+  )
 }
 ```
 
@@ -660,7 +933,7 @@ import React, { useState } from 'react';
 
 function Counter() {
   const [count, setCount] = useState(0)
-  return (<div>{count}<div>);
+  return (<div>{count}</div>);
 }
 ```
 
@@ -769,7 +1042,7 @@ background-size: contain
 
 Utilizado para facilitar o consumo de valores do Context API sem precisar passar props manualmente. Evita o “prop drilling” (passar props de componente em componente até chegar onde precisa).
 
-```typescript
+```jsx
 const TemaContext = React.createContext("light");
 
 function Botao() {
@@ -777,6 +1050,32 @@ function Botao() {
   return <button style={{ background: tema === "dark" ? "black" : "white" }}>Clique</button>;
 }
 ```
+
+---
+
+### Outros hooks úteis
+
+React oferece outros hooks nativos para casos mais específicos de performance e acesso direto ao DOM:
+
+- **`useRef`**: guarda um valor mutável que não dispara re-render quando muda. Muito usado para acessar elementos do
+  DOM diretamente (`inputRef.current.focus()`) ou guardar valores entre renders (ex: id de um `setInterval`).
+- **`useMemo`**: memoriza o **resultado** de um cálculo caro entre renders, recalculando apenas quando as dependências
+  mudam. Evita refazer operações pesadas (ex: filtrar/ordenar uma lista grande) a cada render.
+- **`useCallback`**: memoriza a **referência** de uma função entre renders. Útil para evitar re-renders desnecessários
+  em componentes filhos otimizados com `React.memo` que recebem essa função como prop.
+
+```jsx
+const total = useMemo(() => calcularTotalPesado(itens), [itens]);
+
+const handleClick = useCallback(() => {
+  fazerAlgo(id);
+}, [id]);
+```
+
+#### Hooks customizados
+
+Também é possível criar hooks próprios (funções que começam com `use` e podem chamar outros hooks) para extrair e
+reutilizar lógica com estado entre componentes — por exemplo, um `useFetch` que encapsula `useState` + `useEffect`.
 
 ---
 
@@ -863,7 +1162,7 @@ Colocando a lógica no pai, o mesmo componente filho pode ter comportamentos dif
 
 ---
 
-```typescript
+```jsx
 function Pagina() {
   const [nome, setNome] = React.useState("");
 
@@ -884,7 +1183,7 @@ function Pagina() {
 
 ---
 
-```typescript
+```jsx
 function Formulario({ onEnviar }) {
   const [texto, setTexto] = React.useState("");
 
@@ -1018,912 +1317,6 @@ argumento será chamado.
   request: {}
 }
 ```
-
----
-layout: image
-image: /crud.png
-background-size: contain
----
-
----
-
-### CORS?
-
-CORS é uma lib que funciona como um middleware, ele nos permite "relaxar" a segurança aplicada a uma API.
-
-Isso é feito contornando os cabeçalhos, que especificam quais podem acessar a API.
-
-> Cross-Origin Resource SharingAccess-Control-Allow-Originorigins
-
-Em outras palavras, o CORS é um recurso de segurança do navegador que restringe solicitações HTTP de origem cruzada com outros servidores e específica quais domínios acessam seus recursos.
-
----
-layout: image
-image: /bloqueio.png
-background-size: contain
----
-
----
-layout: image
-image: /cors.png
-background-size: contain
----
-
-
----
-layout: two-cols
----
-
-### SPA
-
-Uma das características do REACT é a possibilidade de criar SPA(**Single Page Applications**)
-
-Usando o pages router, cada página criada dentro da pasta pages, vai redirecionar para uma url de acordo com o nome do
-arquivo. Porém essa navegação envolve o load normal das páginas.
-
-Por exemplo a página `listarPessoas.tsx` vai refletir com a url `localhost:3000/listarPessoas` e a página default
-`index.tsx` é associada a url `localhost:3000/`.
-
-::right::
-
-#### Router
-
-Diversas libs podem ser usadas para gerênciar as rotas de páginas, uma delas é o
-[`react-router-dom`](https://reactrouter.com/en/main).
-
-Para instalar
-
-```shell
-npm install react-router-dom
-```
-
-Para configurar o router no projeto next precisamos alterar a estrutura da aplicação.
-
----
-
-#### _app.tsx
-
-```jsx
-import "@/styles/globals.css"
-import {AppProps} from 'next/app'
-import {useEffect, useState} from 'react'
-
-function App({Component, pageProps}: AppProps) {
-  const [render, setRender] = useState(false)
-  useEffect(() => setRender(true), [])
-  return render ? <Component {...pageProps} /> : null
-}
-export default App
-```
-
----
-
-#### index.tsx
-
-```jsx
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import ListarPessoas from "@/pages/listarPessoas";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-export default function Home() {
-  return (
-      <Router>
-          <main className="container">
-              <Routes>
-                  <Route path="/" element={<h1>Home</h1>}/>
-                  <Route path="/listarPessoas" element={<ListarPessoas/>}/>
-              </Routes>
-          </main>
-      </Router>
-  );
-}
-```
-
----
-layout: two-cols
----
-
-## Autenticação
-
-Os dois principais métodos de autenticação na web são através de `sessions` e `tokens`. Cada um tem suas características
-pontos fracos e fortes, como sempre a utilização desses métodos varia conforme com o projeto e o escopo.
-
-Ou seja `depende`...
-
-### Sessions
-
-O método de **sessions** é o tradicional na web sendo utilizado em diversos tipos de aplicativos...
-
-Ele consiste em:
-
-::right::
-
-- Usuário faz o login
-- O server cria uma sessão, essa sessão é armazenada em memória no server ou em um banco de dados
-- O server devolve o response do login e com o {session ID}
-- O cliente armazena essa sessão em um cookie no browser
-- O cliente faz uma requisição enviando juntamente o cookie
-- O servidor busca essa sessão para checar se ela é válida
-- Se estiver tudo certo o servidor devolve o response
-
-
----
-
-Essa abordagem foi muito utilizada e existe debate entre os prós e cons de utilizar sessões.
-Dentre os cons podemos destacar os dois principais:
-
-#### Segurança:
-
-O principal ponto de falha de segurança nessa abordagem são os ataques de `cross site request forgery`,
-[CSRF](https://owasp.org/www-community/attacks/csrf)
-
-Esse tipo de ataque consiste em utilizar uma sessão atualizada em um cookie no navegador da vítima, e enviar um request
-malicioso que usa essa sessão armazenada para fazer alguma ação no servidor verdadeiro.
-
-Se a aplicação for desenvolvida com recursos modernos e frameworks para validação, esse risco diminuí, também é
-necessária uma boa engenharia social por parte do atacante...
-
----
-layout: image
-image: /csrf.webp
-backgroundSize: contain
----
-
----
-
-#### Performance issues
-
-O maior problema atual na utilização de sessões é a sessão ser armazenada ou em memória no servidor, ou em um banco de
-dados, não parece um problema grande né..., mas pense da seguinte forma...
-
-1) cada usuário que faz login cria uma sessão.
-2) a sessão é armazenada
-3) quando um usuário faz qualquer request o server deve:
-   - buscar no banco de dados ou em memória essa sessão e validar se é válida
-4) agora imagine que temos 10 instâncias desse servidor(API) em execução,
-uma API escalada horizontalmente em um cloud server
-5) e imagine que temos 1 milhão de usuários logados em cada instância e cada usuário vai fazer em média 5 requisições
-
----
-
-### JWT
-
-Uma alternativa para o uso de sessions é a utilização de tokens, o mais utilizado hoje é o
-JWT[**Json web token**](https://jwt.io/).
-
-O JWT é um padrão de autenticação definido pela [RFC7519](https://datatracker.ietf.org/doc/html/rfc7519).
-No JWT é utilizado um token Base64 que pode ser usado com par de chaves ou assinatura(public/private).
-
-Usando JWT o servidor não precisa armazenar nada, ele gera o JWT e devolve para o cliente.
-
-
-
----
-
-Um JWT é uma string com três partes separadas por um `.`, as três partes são `header`, `payload`, `signature`.
-
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6InRlc3RlQHRlc3RlLmNvbSJ9.SnpFarLPRcuEFZ-bnUC-2PLhEAyzgdSYrS4oNcr6v5Q
-
-<br>
-
-<style>
-   .meio {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-   }
-</style>
-<div class="meio">
-   <pre class="pre">
-      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-     <span style="color:rgb(178, 111, 0)">└──────────────────┬─────────────────┘</span>
-                      <span style="color:rgb(178, 111, 0)">header</span>
-      eyJpZCI6IjEiLCJlbWFpbCI6InRlc3RlQHRlc3RlLmNvbSJ9.
-     <span style="color:#d63aff">└────────────────────────┬───────────────────────┘</span>
-                           <span style="color:#d63aff">payload</span>
-      SnpFarLPRcuEFZ-bnUC-2PLhEAyzgdSYrS4oNcr6v5Q
-     <span style="color:#00b9f1">└──────────────────────┬────────────────────┘</span>
-                        <span style="color:#00b9f1">signature</span>
-   </pre>
-</div>
-
----
-
-#### header
-
-Headers é o cabeçalho do token onde passamos basicamente duas informações: o `alg` que informa
-qual algoritmo é usado para criar a assinatura e o `typ` que indica qual o tipo de token.
-
-```json
-{
-  "alg": "HS256",
-  "typ": "JWT"
-}
-```
-
-#### payload
-
-É onde os dados são armazenados. Pode conter informações como o identificador do usuário, permissões,
-expiração do token, etc. O JWT é assinado digitalmente, mas isso não é o mesmo que criptografia,
-não é aconselhável utilizar dados sensíveis em um JWT.
-
-```json
-{
-  "id": "1",
-  "email": "teste@teste.com"
-}
-```
-
----
-
-#### signature
-
-A assinatura do token (signature) é composta pela codificação do header e do payload somada
-a uma chave secreta gerada pelo algoritmo especificado no header.
-
-```shell
-HS256SHA256(
-    base64UrlEncode(header) + "." + base64UrlEncode(payload), secret_key)
-```
-
-<br>
-
-Outros atributos que são comuns no `payload` são:
-
-- `sub`: usado para representar o `subject` ou id do usuário
-- `iat`: usado para definir o `inserted at` do token
-- `eat`: usado para definir o `expire at` do token
-
----
-layout: image
-image: /jwt.png
-backgroundSize: contain
----
-
----
-
-```ts
-export const doLogin = async (req: Request, res: Response) => {
-   const { username, password } = req.body
-   if (!username || !password) {
-      return res.status(400).json({ error: 'Username e password são obrigatórios' })
-   }
-   const usuarioRepository = AppDataSource.getRepository(Usuario)
-   try {
-      const usuario = await usuarioRepository.findOneBy({ username: username })
-      if (!usuario) {
-         return res.status(401).json({ error: 'Usuário não encontrado' })
-      }
-      const isPasswordValid = await bcrypt.compare(password, usuario.password)
-      if (!isPasswordValid) {
-         return res.status(401).json({ error: 'Credenciais inválidas' })
-      }
-      return res.status(200).json({ message: 'Login com sucesso' })
-   } catch (error) {
-      console.error('Erro durante login:', error)
-      return res.status(500).json({ error: 'Internal server error' })
-   }
-}
-```
-
----
-layout: two-cols
----
-
-Vamos adaptar a api para utilizar jwt. Primeiro precisamos adicionar o jsonwebtoken ao projeto.
-
-```shell
-npm install jsonwebtoken
-npm i --save-dev @types/jsonwebtoken
-```
-
-Agora nosso processo de login ao verificar um usuário no banco, devemos gerar um token para enviar no response,
-esse token vai ser utilizado para autenticar outras requisições.
-
-No método de login vamos importar a lib do jsonwebtoken
-
-```shell
-import jwt from "jsonwebtoken"
-```
-
-::right::
-
-Vamos mudar o trecho após a validação do login adicionando a criação do token e o retorno do mesmo no response
-
-```ts
-const token = jwt.sign({
-   username: username
-}, process.env.TOKEN, {
-    expiresIn: '1h'
-})
-
-res.status(200).json({
-   auth: true,
-   token: token }).send()
-```
-
-Agora com o token, precisamos de um método para fazer a autenticação desse token.
-
----
-
-```ts
-import {Request, Response} from "express";
-import jwt from "jsonwebtoken";
-class Authentication {
-    async hasAuthorization(req: Request, res: Response, next: () => void) {
-        const bearerHeader = req.headers.authorization
-        if (!bearerHeader) {
-            res.status(403).json({auth: false, message: 'Nenhum token fornecido.'})
-        }
-        const bearer = bearerHeader.split(' ')[1]
-        jwt.verify(bearer, process.env.TOKEN, function (err, decoded) {
-            if (err) return res.status(500).json({
-                auth: false,
-                message: 'Failed to authenticate token.'
-            });
-            req.params.token = bearer;
-            next();
-        });
-    }
-}
-export default new Authentication()
-```
-
----
-
-Depois precisamos adicionar a função que criamos para autenticação nas rotas que queremos "proteger".
-
-```ts
-routerUsuario.get("/usuarios/listar", Auth.hasAuthorization ,getUsuarios)
-```
-
-![](/postman-jwt.png)
-
----
-layout: image-right
-image: /migrations.jpg
----
-
-## Migrations
-
-No contexto do TypeORM com Express, migrations são uma ferramenta para versionar e aplicar mudanças no banco de dados de forma controlada, sem a necessidade de manipular as tabelas ou SQL diretamente. Uma migration permite que você crie, altere ou remova tabelas e colunas, o que facilita o gerenciamento de versões e a colaboração em equipe.
-
-As migrations são criadas com comandos que especificam o que deve ser alterado no banco de dados, como adicionar ou modificar colunas.
-Quando executada, uma migration aplica as alterações especificadas. O TypeORM mantém um controle das migrations executadas, garantindo que cada uma seja aplicada apenas uma vez.
-As migrations podem ser revertidas, restaurando o estado do banco de dados ao estado anterior.
-
----
-
-
-```typescript
-npx typeorm migration:create ./src/migrations/AlterUserPasswordColumn
-
-import { MigrationInterface, QueryRunner, TableColumn } from "typeorm";
-export class AlterPasswordColumnTypeTimestamp implements MigrationInterface {
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "password" DROP NOT NULL`)
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "password" TYPE varchar USING "password"::varchar`)
-        await queryRunner.query(`UPDATE "user" SET "password" = 'default_password' WHERE "password" IS NULL`)
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "password" SET NOT NULL`)
-    }
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "password" DROP NOT NULL`)
-        await queryRunner.query(`ALTER TABLE "user" ALTER COLUMN "password" TYPE integer USING "password"::integer`)
-    }
-}
-npm run build
-npx typeorm migration:run -d ./build/src/data-source.js
-npx typeorm migration:revert
-```
-
-<!--
-Alterar o data source migrations: [__dirname+"/migrations/*.{js,ts}"],, falar da tabela migrations e da replicação para bancos...
-
-Quando você executa uma migration que altera o tipo da coluna (password de int para varchar), o comportamento depende do banco de dados em uso. No PostgreSQL, por exemplo, a conversão automática de dados entre tipos pode ocorrer, mas há algumas considerações:
-
-Dados Existentes: Se a coluna password já contém dados do tipo int, o banco de dados tenta fazer a conversão desses valores automaticamente para o tipo varchar. Assim, o valor 1234 (inteiro) seria convertido para "1234" (texto). Essa conversão normalmente ocorre sem problemas, desde que os dados no tipo int possam ser representados como varchar.
-
-Conversões Problemáticas: Em alguns casos, especialmente quando você faz uma conversão para tipos incompatíveis, pode haver erros ou perda de dados. Mas, no caso de int para varchar, essa conversão é geralmente segura, já que qualquer número pode ser representado como texto sem perda de informação.
-
-Reversão da Migration: No método down, a migração altera o tipo de volta para int. No entanto, isso só funcionará se todos os valores da coluna puderem ser convertidos novamente em números inteiros. Caso você tenha dados que não sejam representáveis como números, isso resultará em um erro de conversão.
-
-Para evitar problemas com dados que não podem ser revertidos para int, você pode verificar os dados na coluna antes de executar o down ou definir uma lógica de fallback, se possível.
--->
-
----
-
-## Seeders
-
-Seeders são funções que populam o banco de dados com dados iniciais ou de exemplo. Diferente das migrations, eles não alteram a estrutura do banco, mas sim inserem dados para uso em desenvolvimento, testes ou como dados iniciais na aplicação. No TypeORM, seeders não são nativamente suportados como migrations, mas podemos configurar seeders manualmente utilizando scripts específicos.
-
-Edite o `package.json` e adicione um script para executar as seeds:
-
-```json
-"scripts": {
-    "seed": "ts-node src/seeders/seed.ts"
-}
-```
-
-Vamos criar uma pasta chamada seeders, e dentro dela vamos adicionar os arquivos e após isso podemos utilizar o comando `npm run seed` para executar as seeds.
-Adicione a biblioteca [faker](https://fakerjs.dev/) para gerar dados "randomicos"
-
-```shell
-npm install @faker-js/faker
-```
-
----
-
-```typescript
-import { getRepository } from "typeorm";
-import { User } from "../entities/user";
-import { faker } from "@faker-js/faker";
-
-export class UserSeed {
-    public static async seed(): Promise<void> {
-        if (!appDataSource.isInitialized) {
-            await appDataSource.initialize();
-        }
-        const userRepository = appDataSource.getRepository(User)
-        const userCount = 100;
-        for (let i = 0; i < userCount; i++) {
-            const user = userRepository.create({
-                name: faker.person.fullName(),
-                email: faker.internet.email(),
-                password: i,
-            });
-            await userRepository.save(user);
-        }
-        console.log("Users seeded successfully with Faker data!");
-    }
-}
-```
-
----
-
-```typescript
-import { UserSeed } from "./userSeed";
-
-const seed = async () => {
-    await UserSeed.seed();
-};
-
-seed().then(() => {
-    console.log("Seeding completed successfully.");
-}).catch((error) => {
-    console.error("Seeding failed:", error);
-});
-```
-
----
-layout: image
-image: /testes0.png
-backgroundSize: contain
----
-
----
-layout: image
-image: /custoatraso.png
-backgroundSize: contain
----
-
----
-layout: image
-image: /smartpipelines.png
-backgroundSize: contain
----
-
----
-layout: image
-image: /tests.png
-backgroundSize: contain
----
-
-
----
-layout: image
-image: /testes1.png
-backgroundSize: contain
----
-
----
-layout: image
-image: /testes2.png
-backgroundSize: contain
----
-
----
-layout: image
-image: /testes3.png
-backgroundSize: contain
----
-
----
-layout: image
-image: /engenhariaqualidade.png
-backgroundSize: contain
----
-
-
-
-
----
-layout: two-cols
----
-
-## Testando a API
-
-Para implementarmos testes na API vamos utilizar duas bibliotecas, [Jest](https://jestjs.io/) e
-[Supertest](https://github.com/ladjs/supertest#readme)
-
-- "Jest é um framework de teste de JavaScript encantador com foco na simplicidade." Jest website
-
-- SuperTest é uma biblioteca de asserções HTTP que permite testar seus servidores HTTP Node.js.
-
-<br>
-
-```shell
-npm install --save-dev jest
-npm install --save-dev supertest ts-jest
-npm i --save-dev @types/jest
-npm i --save-dev @types/supertest
-```
-
-::right::
-
-No `package.json`, vamos adicionar o script de teste. E vamos criar uma pasta para armazenar todos os
-testes, `__test__`.
-
-```json
-{
-  "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns":
-      ["/node_modules/"]
-  }
-}
-```
-
----
-layout: two-cols
----
-
-Criamos um arquivo na raiz do projeto chamado `jest.config.ts` que vai conter configurações do jest.
-
-````js
-module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    testMatch: ['<rootDir>/**/*.test.ts'],
-    verbose: true,
-    forceExit: true,
-    clearMocks: true,
-}
-````
-
-::right::
-
-Essa configuração determina que o jest vai utilizar o ts-jest para typescript,
-que o ambiente de teste é um container node, e que vai buscar por todos os arquivos de
-teste dentro das pastas do projeto que sigam a nomenclatura `*.test.ts`.
-
-O `verbose` é utilizado para "logar" mais informações sobre os testes em execução para facilitar a interpretação do
-resultado.
-
-O `clearMocks` opção é uma configuração que limpa automaticamente os dados simulados entre cada teste.
-Garantindo que seus testes sejam executados isoladamente e que as afirmações sobre o comportamento simulado
-sejam precisas.
-
----
-
-O jest cria blocos de teste utilizando o `describe` dentro dele existem quantos casos de teste forem necessários.
-A nomenclatura para nome de arquivos de teste normalmente segue o nome da classe que está sendo testada, seguido de
-`.test`, por exemplo dentro da pasta `__test__` temos a arquivo `login.test.ts`.
-
-```javascript
-const request = require('supertest');
-const server = require('./server');
-
-describe('GET /usuarios/listar', () => {
-    it('deve retornar uma lista de usuários', async () => {
-        const response = await request(server).get('/usuarios/listar');
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toBeInstanceOf(Array);
-    });
-});
-```
-
----
-layout: two-cols
----
-
-## Adicionando mais segurança
-
-Além de testes e da validação utilizando jwt tokens, existem outras medidas de segurança que podemos adotar para
-diminuir riscos.
-
-### Restringindo requests
-
-Dependendo do escopo da api podemos restringir a origem das chamadas garantindo que apenas um determinado domínio tenha
-acesso a api.
-
-Para isso vamos utilizar a lib `CORS` e definir os domínios permitidos, requests externos vão ser bloqueados.
-
-::right::
-
-<br>
-<br>
-
-```js
-const cors = require('cors');
-const app = express();
-const allow = ['https://localhost'];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allow.indexOf(origin) !== -1
-         || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error());
-    }
-  }
-};
-app.use(cors(corsOptions));
-```
-
-<!--
-app.use((err, req, res, next) => {
-   if (err) {
-      res.status(403).json(
-        { message: 'Access forbidden: CORS policy not met' }
-      )
-   } else {
-      next()
-   }
-}) -->
-
----
-layout: two-cols
----
-
-### Headers
-
-Para melhorar a proteção contra Cross-Site Scripting entre outros, podemos utilizar o middleware
-[`helmet`](https://helmetjs.github.io/?ref=escape.tech).
-
-```shell
-npm install helmet
-```
-
-Depois utilizar como middleware no app
-
-```js
-import helmet from "helmet"
-
-const app = express()
-
-
-app.use(helmet())
-```
-
-O helmet seta diversos headers na api para mitigar alguns tipos de ataque.
-
-
-::right::
-
-### Permissões
-
-Uma medida que podemos tomar é definir permissões específicas para a api conforme o acesso do usuário.
-Por exemplo: apenas usuários com permissão de admin podem fazer determinada chamada para a api. Nesse caso verificamos
-as permissões do usuário que fez o request. Isso pode e é normalmente feito no frontend mas também podemos adicionar a
-validação na api.
-
-Aqui podemos causar um problema de lentidão ao verificar diversas vezes a permissão do usuário no banco, esse tipo de
-medida pode causar uma lentidão conforme o tamanho do sistema.
-
----
-layout: two-cols
----
-
-### rate limit
-
-Alguns ataques consistem em derrubar a aplicação utilizando força bruta(ddos), nesses casos podemos delimitar a
-quantidade de requisições por IP. Uma biblioteca que possibilita isso é a `express-rate-limit`.
-
-```shell
-npm install express-rate-limit
-```
-
-::right::
-
-```js
-import rateLimit from 'express-rate-limit'
-
-const limiter = rateLimit({
-   windowMs: 15 * 60 * 1000,
-   // 15 minutes
-   max: 100,
-   // Limit to 100 requests by ID
-   standardHeaders: true,
-   // Return rate limit info in the
-   // `RateLimit-*` headers
-   legacyHeaders: false,
-   // Disable the `X-RateLimit-*`
-   // headers
-})
-
-app.use(limiter)
-```
-
----
-layout: two-cols
----
-
-### Sanitization
-
-Uma das mais recomendadas boas práticas em apis é a
-[sanitização](https://dev.to/gimnathperera/yup-vs-zod-vs-joi-a-comprehensive-comparison-of-javascript-validation-libraries-4mhi)
-de parâmetros. Existem muitas bibliotecas que ajudam nessa tarefa, aqui vamos usar o `zod`.
-
-```shell
-npm install zod
-```
-
-Com o zod criamos "schemas"(`schema`) onde passamos o body ou parâmetros que queremos validar para um objeto validador.
-
-```ts
-const userSchema = z.object({
-  name: z.string().min(1).required(),
-  email: z.string().email().optional(),
-  password: z.string().min(8).max(100),
-  limit: z.number().int().positive(),
-});
-```
-
-::right::
-
-```ts
-import { z } from 'zod'
-const loginSchema = z.object({
-   username: z.string().min(1).max(20),
-   password: z.string().min(5).max(12),
-})
-const validate = (schema, body) => {
-   try {
-      schema.parse(body);
-      return {
-          isValid: true,
-         errors: null
-      }
-   } catch (e) {
-      return {
-          isValid: false,
-         errors: e.errors
-      }
-   }
-}
-```
-
-
----
-
-Desta forma podemos chamar a função validate conforme o schema utilizado
-```ts
-const { isValid, errors } = validate( userSchema, req.body )
-
-if (!isValid) {
-    return res.status(400).json(
-        { errors }
-    )
-}
-```
-
----
-layout: two-cols-header
----
-
-## Lint
-
-```bash
-npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin
-```
-
-::left::
-
-Precisamos de um arquivo chamado `.prettierrc` na raiz do projeto
-
-```json
-{
-  "singleQuote": true,
-  "semi": false,
-  "tabWidth": 2,
-  "trailingComma": "es5",
-  "printWidth": 100
-}
-```
-<br/>
-<br/>
-<br/>
-
-::right::
-
-Scripts no `package.json`
-
-```json
-"scripts": {
-  "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-  "format": "prettier --write ."
-}
-```
-
-Depois criamos o arquivo na raiz do projeto que armazena as configurações do lint
-`.eslintrc.json`
-
-
----
-layout: two-cols
----
-
-```json
-{
-"env": {
-  "browser": true,
-  "es2021": true,
-  "node": true
-},
-"extends": [
-  "eslint:recommended",
-  "plugin:react/recommended",
-  "plugin:@typescript-eslint/recommended",
-  "plugin:prettier/recommended"
-],
-"parser": "@typescript-eslint/parser",
-"parserOptions": {
-  "ecmaVersion": "latest",
-  "sourceType": "module"
-},
-```
-
-::right::
-
-```json
-"plugins": ["react", "@typescript-eslint",
- "prettier"],
-  "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "semi": false,
-        "tabWidth": 2,
-        "trailingComma": "es5",
-        "printWidth": 100
-      }
-    ]
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  }
-}
-```
----
-
-Podemos configurar o vscode para formatar e corrigir problemas simples ao salvar o arquivo. para isso alteramos o arquivo `.vscode/settings.json`
-
-```json
-{
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
-}
-```
-
 
 ---
 

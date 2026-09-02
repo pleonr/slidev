@@ -3,7 +3,6 @@ packages:
   # drafts — not deployed, kept out of the pnpm workspace (see slidev-workspace.yaml `exclude` too)
   - '!slides/algoritmos'
   - '!slides/auth'
-  - '!slides/frontend'
   - '!slides/pagamentos'
   - '!slides/poo'
   - '!slides/ux'

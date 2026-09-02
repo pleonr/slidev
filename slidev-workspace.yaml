@@ -7,7 +7,6 @@ exclude:
   - .git
   - algoritmos
   - auth
-  - frontend
   - pagamentos
   - poo
   - ux
