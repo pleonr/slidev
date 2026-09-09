@@ -290,7 +290,7 @@ O Vite gera um projeto enxuto: não existe pasta `pages` ou rotas automáticas, 
 
 ::right::
 
-- `index.html`: fica na **raiz** do projeto (não dentro de `public`), é o ponto de entrada real da aplicação. Contém a `<div id="root">` e o `<script type="module" src="/src/main.jsx">` que carrega o app — o atributo `type="module"` diz ao navegador para tratar o arquivo como um **ES Module** (permite `import`/`export` nativamente).
+- `index.html`: fica na **raiz** do projeto (não dentro de `public`), é o ponto de entrada real da aplicação. Contém a `<div id="root">` e o `<script type="module" src="/src/main.jsx">` que carrega o app. O atributo `type="module"` diz ao navegador para tratar o arquivo como um **ES Module** (permite `import`/`export` nativamente).
 - `src/main.jsx`: monta a árvore React na div `root` usando `createRoot`.
 - `src/App.jsx`: componente raiz da aplicação.
 - `vite.config.js`: configurações do Vite (plugins, aliases, porta do dev server, etc).
@@ -447,7 +447,7 @@ adicionados, removidos ou reordenados sem precisar recriar o componente inteiro.
 - **Evite usar o índice do array como key** quando a lista pode ser reordenada, filtrada ou ter itens inseridos/removidos:
   o React associa o estado interno do componente à posição, o que pode misturar o estado entre itens diferentes.
 - Sem `key` (ou com uma key errada), o React não sabe reaproveitar os elementos existentes e pode re-renderizar mais do
-  que o necessário — ou pior, preservar estado no elemento errado.
+  que o necessário ou pior, preservar estado no elemento errado.
 
 ---
 
@@ -647,7 +647,7 @@ function Aviso() {
 }
 ```
 
-- `className`: aponta para uma classe definida em um arquivo `.css` importado — melhor para estilos reutilizáveis.
+- `className`: aponta para uma classe definida em um arquivo `.css` importado, melhor para estilos reutilizáveis.
 - `style`: útil para valores **dinâmicos**, calculados em tempo de execução (ex: cor que depende de uma prop ou state).
 
 ---
@@ -817,13 +817,13 @@ layout: two-cols
 
 ### SSR (Server-Side Rendering)
 
-Recurso oferecido por meta-frameworks React (Next.js, Remix, Astro, etc). O nosso projeto Vite **não** faz isso — sem um
+Recurso oferecido por meta-frameworks React (Next.js, Remix, Astro, etc). O nosso projeto Vite **não** faz isso, sem um
 desses frameworks, o React só roda no cliente. Fica aqui como comparação conceitual.
 
 - Como funciona: a página é renderizada no servidor a cada requisição, e o HTML já pronto é enviado ao browser.
 - Vantagens: HTML completo desde o primeiro byte (melhor SEO e Time-to-First-Byte previsível); dados sempre frescos.
 - Custos: mais carga no servidor; latência inclui fetch + render a cada request; cache exigirá camada externa (CDN/reverse proxy) para escalar.
-- Quando usar: páginas indexáveis que dependem de dados variáveis por request (auth, geolocalização, personalização) ou dados que mudam com frequência.
+- Quando usar: dados que mudam com frequência.
 
 ::right::
 
@@ -854,13 +854,13 @@ desses frameworks, o React só roda no cliente. Fica aqui como comparação conc
 
 ### Componentes de classe
 
-Os **componentes de classes** têm acesso a recursos adicionais, como o ciclo de vida do componente.
-Isso permite que os desenvolvedores controlem o comportamento do componente em diferentes estágios, `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`
+Os **componentes de classes** têm acesso a recursos adicionais, como o **ciclo de vida** do componente: uma sequência
+de métodos que o próprio React chama automaticamente em momentos específicos da vida do componente.
 
 Eles também têm suporte nativo ao gerenciamento de estado usando o objeto `state`. Isso permite que os desenvolvedores
 armazenem e atualizem o estado interno do componente de forma fácil e intuitiva.
 
-Esses componentes precisavam de um método render() para poder retornar o JSX.
+Esses componentes precisavam de um método `render()` para poder retornar o JSX.
 
 ```jsx
 import React, { Component } from 'react'
@@ -868,6 +868,45 @@ import React, { Component } from 'react'
 class Welcome extends React.Component {
   render() {
     return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+```
+
+---
+
+### Ciclo de vida: as 3 fases
+
+O ciclo de vida de um componente de classe é dividido em três fases:
+
+| Fase | Quando ocorre | Principal método |
+| --- | --- | --- |
+| **Montagem** | o componente é criado e inserido no DOM pela primeira vez | `componentDidMount` |
+| **Atualização** | o componente re-renderiza por mudança de `props` ou `state` | `componentDidUpdate` |
+| **Desmontagem** | o componente é removido do DOM | `componentWillUnmount` |
+
+- `componentDidMount`: roda **uma única vez**, logo depois do componente aparecer na tela. É o lugar ideal para buscar
+  dados de uma API ou iniciar um timer/subscription.
+- `componentDidUpdate(prevProps, prevState)`: roda depois de **cada atualização** (nunca na primeira renderização).
+  Recebe as props/state anteriores, úteis para comparar o que mudou antes de reagir a isso.
+- `componentWillUnmount`: roda **antes** do componente sumir da tela. É o lugar ideal para limpeza: cancelar timers,
+  remover event listeners, cancelar requisições pendentes, evitando vazamentos de memória.
+
+---
+
+```jsx
+class Relogio extends React.Component {
+  state = { hora: new Date() };
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.setState({ hora: new Date() }), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer); // limpeza
+  }
+
+  render() {
+    return <p>Hora atual: {this.state.hora.toLocaleTimeString()}</p>;
   }
 }
 ```
@@ -1035,6 +1074,37 @@ image: /useEffectDependency.png
 background-size: contain
 ---
 
+---
+
+### Ciclo de vida com hooks
+
+Em componentes funcionais não existem os métodos `componentDidMount`, `componentDidUpdate` e `componentWillUnmount`,
+o `useEffect` sozinho cobre as três fases, variando apenas o array de dependências e o uso (ou não) do retorno de
+limpeza:
+
+| Classe | Hook equivalente |
+| --- | --- |
+| `componentDidMount` | `useEffect(() => { ... }, [])`: array vazio, roda só na montagem |
+| `componentDidUpdate` | `useEffect(() => { ... }, [dep])`: roda na montagem e sempre que `dep` mudar |
+| `componentWillUnmount` | a função retornada dentro do `useEffect`: `return () => { ... }` |
+
+O mesmo relógio do slide de componentes de classe, agora com hooks:
+
+```jsx
+import { useState, useEffect } from "react";
+
+function Relogio() {
+  const [hora, setHora] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setHora(new Date()), 1000); // como componentDidMount
+
+    return () => clearInterval(timer); // como componentWillUnmount
+  }, []); // array vazio = roda só uma vez (montagem)
+
+  return <p>Hora atual: {hora.toLocaleTimeString()}</p>;
+}
+```
 
 ---
 
@@ -1071,11 +1141,6 @@ const handleClick = useCallback(() => {
   fazerAlgo(id);
 }, [id]);
 ```
-
-#### Hooks customizados
-
-Também é possível criar hooks próprios (funções que começam com `use` e podem chamar outros hooks) para extrair e
-reutilizar lógica com estado entre componentes — por exemplo, um `useFetch` que encapsula `useState` + `useEffect`.
 
 ---
 
