@@ -466,8 +466,6 @@ layout: two-cols
 
 # Modelos Físicos
 
-Segunda Aula
-
 No contexto de Sistemas Distribuídos, os modelos físicos representam a base concreta sobre a qual os sistemas são implementados. os modelos físicos descrevem explicitamente os componentes físicos envolvidos, computadores, servidores, dispositivos móveis, sensores embarcados e outros hardwares bem como os meios de comunicação que interconectam esses elementos, por exemplo redes locais (LANs), redes geograficamente distribuídas (WANs), redes sem fio e a própria Internet.
 
 - Descrição explícita do sistema: **hardware**, computadores, dispositivos móveis e embarcados
@@ -567,7 +565,7 @@ Termo criado por Mark Wiser (1998) Artigo: “The Computer for 21 Century” par
 - Interoperabilidade espontânea
 
 ---
-layout: two-cols-header
+layout: two-cols
 ---
 
 #### Pervasiva
@@ -1739,12 +1737,12 @@ Na virada de 30/06 para 01/07/2012, uma interação entre o **hrtimer** e o **fu
 
 Para economizar memória (cara nos anos 60-90), muitos sistemas armazenavam o ano com **apenas 2 dígitos** (`99` em vez de `1999`).
 
-- Na virada para o ano 2000, `99 + 1` viraria `00` — que muitos sistemas interpretariam como **1900**, não 2000.
+- Na virada para o ano 2000, `99 + 1` viraria `00`, que muitos sistemas interpretariam como **1900**, não 2000.
 - Risco: cálculos de idade, juros, validade de contratos e datas de vencimento ficariam errados; sistemas de folha de pagamento, bancos, aviação e usinas nucleares dependiam dessas datas.
 
-Diferente do leap second bug (uma falha inesperada de kernel), o Y2K foi um **risco conhecido com anos de antecedência** — gerou um dos maiores esforços de correção de software da história: estimativas apontam **US$300-600 bilhões** gastos globalmente revisando e corrigindo código legado (muito em COBOL) antes de 31/12/1999.
+Diferente do leap second bug (uma falha inesperada de kernel), o Y2K foi um **risco conhecido com anos de antecedência** gerou um dos maiores esforços de correção de software da história: estimativas apontam **US$300-600 bilhões** gastos globalmente revisando e corrigindo código legado (muito em COBOL) antes de 31/12/1999.
 
-Resultado: poucas falhas graves ocorreram na virada — debate até hoje se foi porque o risco era exagerado, ou porque a correção massiva realmente funcionou.
+Resultado: poucas falhas graves ocorreram na virada, debate até hoje se foi porque o risco era exagerado, ou porque a correção massiva realmente funcionou.
 
 ---
 layout: two-cols-header
@@ -1965,16 +1963,16 @@ Processo 1 recebeu mensagem. Novo relógio: 6
   - Manutenibilidade: facilidade e rapidez para reparar e evoluir o sistema (tempo de restauração).
   - Confidencialidade: informação só acessível por quem tem autorização (intersecção com segurança).
 - Ameaças (como o problema aparece)
-  - Falhas (faults): causas potenciais — humanas, físicas, de software, ambientais.
+  - Falhas (faults): causas potenciais humanas, físicas, de software, ambientais.
   - Erros (errors): estados internos incorretos causados por falhas.
   - Defeitos (failures): quando o serviço entregue diverge do especificado (o usuário percebe).
 - Meios (como enfrentamos)
   - Prevenção de falhas: evitar que falhas entrem no sistema (revisões, padrões, verificação). Ex.: assinaturas digitais impedindo forjar mensagens (ver "Resultado Formal" nos Generais Bizantinos).
   - Tolerância a falhas: o sistema continua correto apesar de falhas (redundância, deteção/recuperação). Ex.: quóruns e replicação em Paxos, relógios vetoriais para detectar conflitos concorrentes.
   - Remoção de falhas: encontrar e corrigir falhas já presentes (testes, depuração, correções).
-  - Previsão de falhas: entender probabilidade/impacto (métricas como MTTF/MTTR, análise e modelagem — ver slide "MTTF, MTTR e a Fórmula de Disponibilidade").
+  - Previsão de falhas: entender probabilidade/impacto (métricas como MTTF/MTTR, análise e modelagem, ver slide "MTTF, MTTR e a Fórmula de Disponibilidade").
 
-(Taxonomia de **Avižienis, Laprie, Randell & Landwehr, "Basic Concepts and Taxonomy of Dependable and Secure Computing", 2004** — referência clássica da área.)
+(Taxonomia de **Avižienis, Laprie, Randell & Landwehr, "Basic Concepts and Taxonomy of Dependable and Secure Computing", 2004** referência clássica da área.)
 
 ---
 
@@ -2003,7 +2001,7 @@ graph TD
     ME --> ME4[Previsão]
 ```
 
-A relação entre os três ramos é sequencial: as **Ameaças** são o que pode dar errado, os **Meios** são como o sistema se defende disso, e os **Atributos** são o que se ganha (ou perde) como resultado — é o que se mede para saber se um sistema é, de fato, confiável.
+A relação entre os três ramos é sequencial: as **Ameaças** são o que pode dar errado, os **Meios** são como o sistema se defende disso, e os **Atributos** são o que se ganha (ou perde) como resultado é o que se mede para saber se um sistema é, de fato, confiável.
 
 ---
 
@@ -2216,7 +2214,7 @@ sequenceDiagram
 
 - Tenente 1 recebeu "Atacar" direto do Comandante e "Recuar" via Tenente 2, mas não sabe se o Comandante mentiu ou se é o Tenente 2 quem está mentindo sobre o que recebeu.
 - Essa situação é **indistinguível**, do ponto de vista do Tenente 1, de um cenário onde o Comandante é leal (manda "Atacar" para os dois) e o traidor é o Tenente 2, inventando que ouviu "Recuar".
-- Como as duas situações parecem idênticas, não existe regra de decisão que garanta Tenente 1 e Tenente 2 sempre concordarem — **3 generais nunca bastam para tolerar 1 traidor** com mensagens orais.
+- Como as duas situações parecem idênticas, não existe regra de decisão que garanta Tenente 1 e Tenente 2 sempre concordarem **3 generais nunca bastam para tolerar 1 traidor** com mensagens orais.
 
 ---
 
@@ -2389,7 +2387,7 @@ Padrão comum em SLAs (Service Level Agreements) de cloud: medir disponibilidade
 
 ### Falha Famosa: Boeing 737 MAX
 
-O sistema **MCAS** (Maneuvering Characteristics Augmentation System) foi criado para compensar a tendência de "cavalo de pau" para cima causada pelos motores maiores e reposicionados do 737 MAX. Ele dependia de um único **sensor de ângulo de ataque (AoA)** — sem comparar com o segundo sensor, já instalado na aeronave, sem cruzar dados.
+O sistema **MCAS** (Maneuvering Characteristics Augmentation System) foi criado para compensar a tendência de "cavalo de pau" para cima causada pelos motores maiores e reposicionados do 737 MAX. Ele dependia de um único **sensor de ângulo de ataque (AoA)**, sem comparar com o segundo sensor, já instalado na aeronave, sem cruzar dados.
 
 - Um sensor com leitura defeituosa disparava o MCAS repetidamente, forçando o nariz do avião para baixo, mesmo com os pilotos tentando corrigir manualmente.
 - **Lion Air 610** (out/2018) e **Ethiopian Airlines 302** (mar/2019): 346 mortes ao todo. Frota **suspensa globalmente** em março de 2019, por quase 20 meses.
@@ -2417,11 +2415,11 @@ Em 1º de agosto de 2012, a Knight Capital implantou um novo software de negocia
 
 - Nesse servidor "esquecido", uma flag antiga de um recurso de teste desativado (`Power Peg`) foi **reaproveitada** com outro significado pelo novo código. Nos 7 servidores atualizados, a flag ativava a função nova; no 8º, ainda rodando o código antigo, a mesma flag reativou o código morto de teste.
 - Ao abrir o mercado, esse servidor começou a disparar uma enxurrada de ordens de compra/venda não intencionais, reais, na bolsa de Nova York.
-- Levaram **45 minutos** para identificar e desligar o sistema — tempo suficiente para acumular **~US$440 milhões em prejuízo** e quase quebrar a empresa (foi vendida/incorporada logo depois).
+- Levaram **45 minutos** para identificar e desligar o sistema, tempo suficiente para acumular **~US$440 milhões em prejuízo** e quase quebrar a empresa (foi vendida/incorporada logo depois).
 
 **Causas raiz:** deploy manual sem checklist confiável, código morto nunca removido (e reativado por engano), ausência de um "kill switch" para parar automação descontrolada, e monitoramento insuficiente para detectar a anomalia rapidamente.
 
-**Conexão direta com o slide de MTTF/MTTR:** o problema técnico durou segundos para começar, mas o **MTTR foi de 45 minutos** — o tempo de detecção e reação, não de correção do bug em si, foi o que transformou um erro de deploy num dos maiores desastres operacionais já documentados em finanças.
+**Conexão direta com o slide de MTTF/MTTR:** o problema técnico durou segundos para começar, mas o **MTTR foi de 45 minutos**, o tempo de detecção e reação, não de correção do bug em si, foi o que transformou um erro de deploy num dos maiores desastres operacionais já documentados em finanças.
 
 ---
 layout: two-cols
@@ -2980,7 +2978,7 @@ Por exemplo, um sensor de temperatura publica dados em um tópico sensores/tempe
 
 ---
 
-### 📦 Publisher (Publicador)
+### Publisher (Publicador)
 
 ```python
 import pika
@@ -2999,7 +2997,7 @@ connection.close()
 
 ---
 
-### 📦 Subscriber (Assinante)
+### Subscriber (Assinante)
 
 ```python
 import pika
@@ -3046,7 +3044,7 @@ python publisher.py
 ```
 
 - Acesse http://localhost:15672
-🔑 Login padrão, user e senha: guest
+ Login padrão, user e senha: guest
 
 ---
 
@@ -3065,7 +3063,7 @@ python publisher.py
 layout: two-cols
 ---
 
-## Concorrência Concorrência em Sistemas Distribuídos
+## Concorrência em Sistemas Distribuídos
 
 Concorrência significa que várias atividades independentes são executadas de forma intercalada ou paralela.
 
@@ -3247,7 +3245,9 @@ O "problema do jantar dos filósofos" é um problema clássico de sincronizaçã
 
 Um filósofo alterna entre querer comer ou pensar. Para comer, o filósofo deve pegar os dois pauzinhos de ambos os lados de sua posição. O problema original exigia que cada filósofo tivesse dois garfos.
 
-<!-- - Imagine N filósofos sentados ao redor de uma mesa circular.
+<!-- 
+https://www.geeksforgeeks.org/operating-systems/dining-philosopher-problem-using-semaphores/
+- Imagine N filósofos sentados ao redor de uma mesa circular.
 - Cada filósofo alterna entre dois estados: pensar e comer.
 - Para comer, cada filósofo precisa de dois garfos (ou hashis), um à esquerda e outro à direita.
 - Os garfos são recursos compartilhados entre vizinhos.
@@ -3733,12 +3733,12 @@ Cada dado no banco mantém:
 
 ::right::
 
-🧾 1. Leitura de X por transação T:
+1. Leitura de X por transação T:
 
 - Permitida se TS(T) ≥ TS_W(X) → transação é mais nova que a última escrita.
 - Aborta se TS(T) < TS_W(X) → transação está lendo dado que já foi sobrescrito por outra mais nova.
 
-✍️ 2. Escrita de X por transação T:
+2. Escrita de X por transação T:
 - Permitida se TS(T) ≥ TS_R(X) e TS(T) ≥ TS_W(X)
 - Aborta se a transação for mais velha que alguma leitura ou escrita já feita → violaria a ordem.
 
@@ -3868,6 +3868,8 @@ Considere um sistema com 5 nós, onde cada nó tem 1 voto. Podemos definir VR = 
 Para ler um item, precisamos obter 3 votos. Podemos ler de qualquer combinação de 3 nós.
 Para escrever um item, precisamos obter 3 votos. Precisamos escrever em qualquer combinação de 3 nós.
 Como VR + VW (3 + 3 = 6) é maior que V (5) e VW (3) é maior que V/2 (2.5), as regras de consistência são satisfeitas.
+
+https://blog.nhduc.com/distinguish-2pc-3pc-paxos-raft-in-distributed-transaction
 
 -->
 
@@ -4144,13 +4146,13 @@ O 3PC ainda não é 100% à prova de falhas, especialmente com falhas simultâne
 
 ## Paxos: Consenso Tolerante a Falhas
 
-O 2PC/3PC dependem de um **coordenador único** — se ele falha, o sistema bloqueia ou fica incerto. Paxos ataca esse problema pela raiz.
+O 2PC/3PC dependem de um **coordenador único** se ele falha, o sistema bloqueia ou fica incerto. Paxos ataca esse problema pela raiz.
 
 Proposto por **Leslie Lamport em 1989** (publicado em 1998 como "The Part-Time Parliament"), Paxos resolve **consenso distribuído** sem depender de um coordenador fixo e sem bloquear indefinidamente, desde que uma **maioria (quórum)** dos nós esteja disponível.
 
 Objetivo: um conjunto de nós concorda sobre um **único valor**, mesmo com nós falhando (crash) e mensagens sendo perdidas, atrasadas ou duplicadas.
 
-- Paxos assume falhas do tipo *crash* (nó para de responder), **não** falhas bizantinas (nó mentindo) — para isso existe o Paxos Bizantino, visto no slide de Byzantine Generals.
+- Paxos assume falhas do tipo *crash* (nó para de responder), **não** falhas bizantinas (nó mentindo) para isso existe o Paxos Bizantino, visto no slide de Byzantine Generals.
 
 ---
 
@@ -4160,7 +4162,7 @@ Objetivo: um conjunto de nós concorda sobre um **único valor**, mesmo com nós
 - **Acceptor**: vota nas propostas recebidas; a decisão depende do voto da **maioria** dos Acceptors.
 - **Learner**: aprende/replica o valor já escolhido, sem participar da votação.
 
-Na prática, um mesmo nó costuma acumular os três papéis, e um único Proposer é eleito líder para evitar disputas constantes — otimização conhecida como **Multi-Paxos**.
+Na prática, um mesmo nó costuma acumular os três papéis, e um único Proposer é eleito líder para evitar disputas constantes, otimização conhecida como **Multi-Paxos**.
 
 Quórum: com `N` Acceptors, o sistema tolera até `f = ⌊(N-1)/2⌋` falhas, pois toda decisão exige maioria (`⌊N/2⌋ + 1` votos).
 
@@ -4170,9 +4172,9 @@ Quórum: com `N` Acceptors, o sistema tolera até `f = ⌊(N-1)/2⌋` falhas, po
 
 Cada proposta tem um número único e crescente `n` (ex.: `(contador, id_do_proposer)` para desempate).
 
-**1a. Prepare(n)** — o Proposer envia `Prepare(n)` para a maioria dos Acceptors.
+**1a. Prepare(n)** o Proposer envia `Prepare(n)` para a maioria dos Acceptors.
 
-**1b. Promise(n, ...)** — cada Acceptor que recebe `Prepare(n)`:
+**1b. Promise(n, ...)** cada Acceptor que recebe `Prepare(n)`:
 - Se `n` é maior que qualquer número já visto, **promete** não aceitar mais nenhuma proposta com número menor que `n`.
 - Responde com a maior proposta que **já aceitou** anteriormente, se houver (número + valor).
 - Caso contrário, ignora ou rejeita o pedido.
@@ -4183,14 +4185,14 @@ Essa fase serve para o Proposer descobrir se algum valor já pode ter sido parci
 
 ### Fase 2: Accept / Accepted
 
-**2a. Accept(n, v)** — se o Proposer recebeu `Promise` da maioria dos Acceptors:
-- Se algum Acceptor reportou um valor já aceito, o Proposer **é obrigado** a reusar o valor da proposta de maior número reportada — não pode escolher seu próprio valor livremente. É essa regra que garante a segurança do protocolo.
+**2a. Accept(n, v)**  se o Proposer recebeu `Promise` da maioria dos Acceptors:
+- Se algum Acceptor reportou um valor já aceito, o Proposer **é obrigado** a reusar o valor da proposta de maior número reportada, não pode escolher seu próprio valor livremente. É essa regra que garante a segurança do protocolo.
 - Caso contrário, é livre para propor seu próprio valor `v`.
 - Envia `Accept(n, v)` para a maioria dos Acceptors.
 
-**2b. Accepted(n, v)** — cada Acceptor aceita `(n, v)` se ainda não prometeu a um número maior que `n`.
+**2b. Accepted(n, v)** cada Acceptor aceita `(n, v)` se ainda não prometeu a um número maior que `n`.
 
-Quando a **maioria** aceita `(n, v)`, o valor `v` está **escolhido** — de forma irreversível, mesmo que nós ainda não saibam disso.
+Quando a **maioria** aceita `(n, v)`, o valor `v` está **escolhido** de forma irreversível, mesmo que nós ainda não saibam disso.
 
 ---
 layout: two-cols
@@ -4222,32 +4224,148 @@ sequenceDiagram
 
 ### Lendo o Diagrama
 
-- Só A1 e A2 respondem — A3 pode estar lento ou fora do ar. Ainda é maioria (2 de 3), então o protocolo segue normalmente.
+- Só A1 e A2 respondem A3 pode estar lento ou fora do ar. Ainda é maioria (2 de 3), então o protocolo segue normalmente.
 - Nenhum Acceptor tinha valor previamente aceito, o Proposer fica livre para propor seu próprio valor `"X"`.
-- Assim que a maioria confirma `Accepted`, o valor `"X"` está **definitivamente escolhido** — mesmo que A3 nunca responda ou volte depois com outra proposta.
+- Assim que a maioria confirma `Accepted`, o valor `"X"` está **definitivamente escolhido**, mesmo que A3 nunca responda ou volte depois com outra proposta.
 
 ---
 
 ### Garantias e Limitações
 
-**Safety (segurança) — sempre garantido:**
+**Safety (segurança) sempre garantido:**
 - Nunca dois valores diferentes são escolhidos.
 - Um valor já escolhido nunca é "desfeito", mesmo com falhas e mensagens perdidas depois.
 
-**Liveness (progresso) — não é garantido em teoria:**
-- Se dois Proposers competem ao mesmo tempo com números cada vez maiores (**"dueling proposers"**), o protocolo pode entrar em livelock — nenhuma proposta junta maioria antes de ser superada por outra.
+**Liveness (progresso) não é garantido em teoria:**
+- Se dois Proposers competem ao mesmo tempo com números cada vez maiores (**"dueling proposers"**), o protocolo pode entrar em livelock, nenhuma proposta junta maioria antes de ser superada por outra.
 - Na prática, resolvido elegendo um **único líder estável** por período (Multi-Paxos), evitando disputas constantes entre Proposers.
 
 ---
 
 ### Paxos na Prática
 
-- **Multi-Paxos**: com um líder estável, a Fase 1 é reaproveitada para várias decisões seguidas — só a Fase 2 se repete a cada novo valor, reduzindo o overhead de duas fases por decisão.
+- **Multi-Paxos**: com um líder estável, a Fase 1 é reaproveitada para várias decisões seguidas, só a Fase 2 se repete a cada novo valor, reduzindo o overhead de duas fases por decisão.
 - Usado (ou variantes próximas) em sistemas reais:
-  - **Google Chubby** — serviço de lock distribuído, replica seu log via Paxos.
-  - **Google Spanner** — replica cada shard de dados usando Paxos.
-  - **Apache ZooKeeper** — usa ZAB (ZooKeeper Atomic Broadcast), inspirado em Paxos.
-- **Raft** (2014) surgiu como alternativa mais fácil de entender e implementar, com as mesmas garantias de Paxos — hoje é mais comum em sistemas novos (etcd, Consul, CockroachDB).
+  - **Google Chubby** serviço de lock distribuído, replica seu log via Paxos.
+  - **Google Spanner** replica cada shard de dados usando Paxos.
+  - **Apache ZooKeeper** usa ZAB (ZooKeeper Atomic Broadcast), inspirado em Paxos.
+- **Raft** (2014) surgiu como alternativa mais fácil de entender e implementar, com as mesmas garantias de Paxos, hoje é mais comum em sistemas novos (etcd, Consul, CockroachDB).
+
+---
+
+## Raft: Consenso Compreensível
+
+Proposto por **Diego Ongaro e John Ousterhout em 2014** (paper "In Search of an Understandable Consensus Algorithm"), o Raft resolve o mesmo problema do Paxos, consenso distribuído tolerante a falhas de *crash*, mas foi desenhado priorizando **compreensibilidade**: mesmas garantias, porém mais fácil de entender, implementar e ensinar.
+
+Raft decompõe o consenso em três subproblemas independentes:
+
+- **Eleição de líder**: escolher um único nó coordenador.
+- **Replicação de log**: o líder propaga as entradas para os demais.
+- **Segurança**: garantir que o log replicado nunca diverge nem "esquece" uma entrada já confirmada.
+
+---
+
+### Papéis no Raft
+
+Cada nó está sempre em um de três estados:
+
+- **Leader**: único nó que recebe escritas e replica o log para os Followers.
+- **Follower**: passivo, apenas responde a requisições do Leader/Candidate.
+- **Candidate**: estado transitório assumido por um Follower que não ouviu o Leader e tenta se eleger.
+
+O tempo é dividido em **termos** (`term`), números inteiros crescentes. Cada termo tem no máximo um Leader; se não houver consenso na eleição, o termo termina sem líder e um novo começa.
+
+---
+
+### Eleição de Líder
+
+- Cada Follower mantém um **timeout de eleição aleatório** (tipicamente 150–300ms). Se não recebe heartbeat do Leader antes disso, vira **Candidate**.
+- O Candidate incrementa seu `term`, vota em si mesmo e envia `RequestVote` para os demais nós.
+- Cada nó vota no máximo uma vez por termo, para o primeiro candidato cujo log esteja **pelo menos tão atualizado** quanto o seu.
+- Quem recebe voto da **maioria** vira Leader e passa a enviar `AppendEntries` vazios (heartbeats) para manter sua liderança.
+
+O timeout aleatório é o que evita disputas constantes entre Candidates (**split vote**) diferente do Paxos, que precisa do Multi-Paxos para resolver o mesmo problema.
+
+---
+
+### Replicação de Log
+
+- Toda escrita passa pelo **Leader**, que a adiciona ao próprio log e envia via `AppendEntries` para os Followers.
+- Uma entrada é **committed** (segura, aplicada à máquina de estados) quando replicada na **maioria** dos nós.
+- `AppendEntries` também carrega o índice e termo da entrada anterior; o Follower rejeita se seu log não tiver essa entrada (**log matching**), forçando o Leader a retroceder e reenviar até encontrar o ponto de convergência.
+
+Esse mecanismo garante que os logs de todos os nós, uma vez consistentes, permanecem idênticos dali em diante.
+
+---
+layout: two-cols
+---
+
+### Exemplo: Eleição + Replicação
+
+```mermaid
+sequenceDiagram
+    participant F1 as Follower1
+    participant C as Candidate
+    participant F2 as Follower2
+
+    Note over C: timeout, vira Candidate (term=2)
+    C->>F1: RequestVote(term=2)
+    C->>F2: RequestVote(term=2)
+    F1-->>C: Vote granted
+    F2-->>C: Vote granted
+    Note over C: maioria, C vira Leader
+
+    C->>F1: AppendEntries(log="X")
+    C->>F2: AppendEntries(log="X")
+    F1-->>C: Success
+    F2-->>C: Success
+    Note over C: maioria replicou, "X" committed
+```
+
+::right::
+
+### Lendo o Diagrama
+
+- Assim como no Paxos, basta **maioria** (2 de 3) responder; o terceiro nó pode estar lento ou fora do ar.
+- `RequestVote` e `AppendEntries` são as duas únicas RPCs do protocolo. Diferente do Paxos, não há uma "Fase 1" separada a cada valor: o Leader eleito já resolve isso para todas as próximas entradas, de forma parecida ao Multi-Paxos.
+
+---
+
+### Garantias de Segurança
+
+Raft garante formalmente (com prova e especificação em TLA+):
+
+- **Election Safety**: no máximo um Leader por termo.
+- **Leader Append-Only**: o Leader nunca sobrescreve ou apaga entradas do próprio log, só adiciona.
+- **Log Matching**: se dois logs têm uma entrada com mesmo índice e termo, todas as entradas anteriores são idênticas.
+- **Leader Completeness**: uma entrada committed em um termo aparece nos logs de todo Leader eleito em termos posteriores.
+- **State Machine Safety**: se um nó aplicou uma entrada em determinado índice à sua máquina de estados, nenhum outro nó aplica uma entrada diferente nesse mesmo índice.
+
+---
+
+### Raft na Prática
+
+- Mais simples de implementar corretamente que Paxos, virou o algoritmo padrão para novos sistemas de consenso.
+- Usado (ou variantes próximas) em sistemas reais:
+  - **etcd** (Kubernetes usa para armazenar todo o estado do cluster).
+  - **HashiCorp Consul** e **Vault** (descoberta de serviços, segredos distribuídos).
+  - **CockroachDB** e **TiKV** (replicação de shards em bancos de dados distribuídos).
+- Trade-off: Raft assume um único Leader por vez, o que simplifica o modelo mas cria um possível gargalo de escrita, escalar leitura geralmente é feito lendo de Followers com alguma flexibilização de consistência.
+
+---
+
+### Comparativo: 2PC vs 3PC vs Paxos vs Raft
+
+| Característica                | 2PC                        | 3PC                          | Paxos                               | Raft                                     |
+|--------------------------------|-----------------------------|--------------------------------|----------------------------------------|---------------------------------------------|
+| Problema resolvido             | Commit atômico distribuído  | Commit atômico distribuído    | Consenso sobre um valor                | Consenso + replicação de log                |
+| Coordenador                    | Único, fixo                 | Único, fixo                   | Não fixo (Proposer, líder em Multi-Paxos) | Único, eleito (Leader) por termo         |
+| Tolera queda do coordenador    | Não (bloqueia)              | Parcialmente (fase extra)     | Sim (com quórum disponível)            | Sim (com quórum, reeleição automática)      |
+| Falhas toleradas               | Crash                       | Crash                         | Crash                                   | Crash                                        |
+| Quórum necessário               | Não (unanimidade)           | Não (unanimidade)             | Maioria                                 | Maioria                                      |
+| Bloqueio possível               | Sim                          | Reduzido                      | Não (com maioria disponível)           | Não (com maioria disponível)                |
+| Complexidade de entendimento    | Baixa                        | Média                         | Alta                                     | Baixa/Média (foco explícito nisso)          |
+| Uso típico                      | Transações DB/XA             | Raro                          | Chubby, Spanner, ZooKeeper (ZAB)        | etcd, Consul, CockroachDB, TiKV             |
 
 ---
 
@@ -4459,7 +4577,7 @@ layout: two-cols-header
 
 ### Fog Computing
 
-**Fog Computing** (ou Computação em Névoa) é um modelo intermediário entre o Edge e a Nuvem. Os dados são processados em **nós intermediários** — chamados de *fog nodes* — que podem estar em roteadores, gateways, ou servidores locais próximos ao edge.
+**Fog Computing** (ou Computação em Névoa) é um modelo intermediário entre o Edge e a Nuvem. Os dados são processados em **nós intermediários** chamados de *fog nodes*, que podem estar em roteadores, gateways, ou servidores locais próximos ao edge.
 
 - **Exemplo**:
   Câmeras de segurança enviam vídeos para um gateway local, que faz análise de movimento antes de enviar só o que for relevante para a nuvem.
