@@ -4877,6 +4877,213 @@ layout: two-cols
 | HTTP/REST | Comunicação web        | D2S, S2S, UI      |
 
 ---
+
+# Estudo de Caso: ESP32
+
+O ESP32 é um microcontrolador de baixo custo produzido pela Espressif, muito usado em projetos de IoT por já trazer **Wi-Fi e Bluetooth integrados** no próprio chip, sem necessidade de módulos externos. Isso o torna um dos "nós" mais comuns em redes de sensores e automação, tanto em projetos acadêmicos quanto em produtos comerciais.
+
+- Processador dual-core (até 240 MHz), com GPIOs, ADC, PWM e diversas interfaces (I2C, SPI, UART)
+- Wi-Fi 802.11 b/g/n integrado: permite conexão direta a uma rede local e à internet
+- Bluetooth Classic e Bluetooth Low Energy (BLE) integrados
+- Baixo custo (poucos dólares) e baixo consumo, com modos de *deep sleep* para projetos à bateria
+- Programável via Arduino IDE, ESP-IDF (framework oficial) ou MicroPython
+
+---
+layout: image-right
+image: /esp32.png
+backgroundSize: contain
+alt: Esp32
+---
+
+## Papel do ESP32 em uma arquitetura IoT
+
+Diferente do ZigBee, que depende de um coordenador dedicado, o ESP32 pode assumir múltiplos papéis na arquitetura, pois já fala os mesmos protocolos usados na internet:
+
+### Modelos de comunicação (RFC 7452) aplicados
+
+- **D2S**: ESP32 publica leituras via MQTT/HTTP para um broker ou API na nuvem
+- **D2D**: dois ESP32 trocam mensagens diretamente (ESP-NOW, BLE)
+- **D2UI**: ESP32 expõe uma página web local ou envia notificação a um app
+
+<!--
+O mesmo chip pode atuar como "coordinator" improvisado de uma rede de sensores, agregando dados de vários outros ESP32 antes de enviá-los à nuvem.
+
+- **Sensor/atuador (edge device)**: lê sensores e publica dados
+- **Gateway/hub**: recebe dados de outros dispositivos (ex.: via ESP-NOW ou BLE) e os encaminha para a nuvem via Wi-Fi
+- **Servidor local**: pode rodar um pequeno servidor HTTP e expor uma API própria
+
+-->
+
+---
+
+## Comunicação entre ESPs
+
+Existem várias formas de fazer dois ou mais ESP32 conversarem entre si, cada uma com um *trade-off* diferente entre alcance, velocidade, consumo e complexidade:
+
+- **Wi-Fi (TCP/IP)**: os ESP32 entram na mesma rede local e trocam dados via HTTP, WebSocket ou MQTT (precisa de um roteador/AP)
+- **ESP-NOW**: protocolo proprietário da Espressif, sem precisar de roteador, conecta os dispositivos diretamente pela camada de rádio Wi-Fi
+- **Bluetooth Low Energy (BLE)**: comunicação ponto a ponto ou via *advertising*, de baixo consumo e curto alcance
+- **ESP-MESH / painlessMesh**: várias unidades formam uma rede em malha, semelhante ao conceito visto no ZigBee
+
+---
+layout: two-cols
+---
+
+## ESP-NOW em detalhe
+
+- Comunicação **sem conexão** (*connectionless*): não precisa de handshake TCP nem de roteador Wi-Fi
+- Baixíssima latência (poucos milissegundos) e baixo consumo, ideal para telemetria e controle em tempo real
+- Suporta comunicação **unicast** (ponto a ponto) e **broadcast** (um para muitos)
+- Cada dispositivo é identificado pelo endereço MAC, e a lista de "peers" é configurada previamente
+- Alcance similar ao Wi-Fi (~100-200 m em campo aberto)
+
+::right::
+
+### Quando usar cada abordagem
+
+| Cenário | Melhor opção |
+|---------|-------------|
+| Enviar dados para a nuvem | Wi-Fi + MQTT/HTTP |
+| Vários ESP32 trocando dados entre si, sem internet | ESP-NOW |
+| Sensor à bateria próximo a um celular | BLE |
+| Rede grande, autoextensível, tolerante a falhas | ESP-MESH |
+
+<!--
+Assim como no ZigBee, a escolha do protocolo depende do trade-off entre alcance, consumo e necessidade de infraestrutura (roteador).
+-->
+
+---
+
+## ESP-MESH: rede em malha com ESP32
+
+O ESP-MESH (framework oficial da Espressif) e bibliotecas como o **painlessMesh** permitem que vários ESP32 formem uma **rede mesh auto-organizável**, sem depender de um roteador Wi-Fi central:
+
+- Um dispositivo assume o papel de **raiz (root)**, com ponte para a internet, semelhante ao *Coordinator* do ZigBee
+- Os demais nós retransmitem mensagens uns dos outros, estendendo o alcance da rede
+- Se um nó falha ou sai do alcance, a rede se reorganiza automaticamente (*self-healing*)
+- Permite comunicação broadcast (todos os nós) ou direcionada (nó a nó)
+
+
+---
+
+# Estudo de Caso: Protocolo ZigBee
+
+Zigbee é um protocolo de comunicação sem fio de baixo consumo, baseado no padrão IEEE 802.15.4, criado especificamente para redes de sensores e automação residencial/industrial. Diferente do Wi-Fi (foco em velocidade) e do Bluetooth clássico (conexão ponto a ponto), o Zigbee foi projetado para redes em **malha (mesh)** com muitos dispositivos de baixíssimo consumo de energia.
+
+- Baseado em IEEE 802.15.4 (camadas física e de enlace)
+- Opera na faixa de 2,4 GHz (também 868 MHz na Europa e 915 MHz nas Américas)
+- Baixa taxa de dados (até 250 kbps), suficiente para comandos e telemetria, não para vídeo/áudio
+- Baixíssimo consumo energético: sensores podem durar meses/anos com uma única bateria
+- Rede em malha: dispositivos retransmitem mensagens, estendendo o alcance total da rede
+- Padrão mantido pela Connectivity Standards Alliance (antiga ZigBee Alliance)
+
+---
+layout: two-cols
+---
+
+## Arquitetura do ZigBee
+
+Pilha de protocolos organizada em camadas:
+
+- **PHY e MAC** (IEEE 802.15.4): transmissão de rádio e controle de acesso ao meio
+- **NWK (Network Layer)**: roteamento mesh, formação e manutenção da topologia
+- **APS (Application Support)**: endereçamento de aplicações e segurança fim a fim
+- **ZDO (ZigBee Device Object)**: gerencia o papel de cada dispositivo na rede
+
+::right::
+
+### Papéis dos dispositivos
+
+- **Coordinator (Coordenador)**: único por rede, inicia e gerencia a rede, guarda as chaves de segurança
+- **Router (Roteador)**: sempre alimentado, retransmite mensagens e estende o alcance da malha
+- **End Device (Dispositivo Final)**: sensores/atuadores simples, geralmente à bateria, não retransmite
+
+<!--
+O Coordinator equivale a um "servidor" da rede: escolhe o canal de rádio, define o PAN ID e autoriza a entrada de novos dispositivos.
+-->
+
+---
+
+## Topologias suportadas
+
+- **Estrela**: todos os dispositivos se comunicam apenas com o coordenador
+- **Árvore**: roteadores formam uma hierarquia entre o coordenador e os dispositivos finais
+- **Malha (Mesh)**: qualquer roteador pode encaminhar mensagens para qualquer outro, criando caminhos alternativos
+
+A topologia mesh é o principal diferencial do ZigBee: se um caminho falha (roteador desligado, interferência), a rede se auto-organiza (*self-healing*) e busca automaticamente uma rota alternativa, o mesmo princípio de tolerância a falhas e redundância visto nos sistemas distribuídos tradicionais.
+
+---
+layout: two-cols
+---
+
+## ZigBee x outros protocolos
+
+| Protocolo    | Alcance                | Consumo     | Taxa de dados | Topologia          |
+|--------------|-------------------------|-------------|----------------|---------------------|
+| ZigBee       | ~10-100 m (malha estende)| Muito baixo | Até 250 kbps   | Mesh                |
+| Wi-Fi        | ~30-50 m                | Alto        | Mbps/Gbps      | Estrela             |
+| Bluetooth LE | ~10-30 m                | Baixo       | Até 2 Mbps     | Estrela / BLE Mesh  |
+| Z-Wave       | ~30-100 m (malha)       | Muito baixo | ~100 kbps      | Mesh                |
+
+::right::
+
+- O ZigBee compensa o baixo alcance individual com a **malha**: cada dispositivo alimentado (não à bateria) pode atuar como repetidor
+- Baixa taxa de dados não é limitação para automação: comandos como "ligar/desligar" e leituras de sensores são pacotes pequenos
+- Concorre diretamente com o **Z-Wave** (proprietário) e, mais recentemente, com o **Matter** (novo padrão sobre Thread/Wi-Fi que busca unificar o ecossistema smart home)
+
+---
+layout: image-right
+image: /iot.jpg
+alt: Case ZigBee Intelbras
+backgroundSize: contain
+---
+
+## Case: ZigBee na linha IZY da Intelbras
+
+A Intelbras, fabricante brasileira de eletrônicos, comercializa uma linha de automação residencial baseada em ZigBee 3.0, permitindo observar na prática os conceitos de rede mesh, coordenador e roteadores.
+
+- **Hub de automação ICA 1001**: atua como *Coordinator* da rede ZigBee
+  - Conecta e integra até 32 dispositivos ZigBee da linha IZY
+  - Alcance de até 100 m sem obstáculos, na faixa de 2,4 GHz
+  - Faz a ponte (*bridge*) entre a rede ZigBee local e a nuvem via Wi-Fi
+  - Controlado pelo app IZY/Mibo Smart e por comandos de voz (Alexa, Google Assistente)
+
+<!--
+Fonte: datasheet e páginas de produto Intelbras (ICA 1001, EZS 1001/1002/1003, EZS 211)
+-->
+
+---
+layout: two-cols
+---
+
+## Case: dispositivos e papel na malha
+
+- **Interruptores touch (EZS 1001/1002/1003)**
+  - ZigBee 3.0 (IEEE 802.15.4), alimentados pela rede elétrica (100~240 Vac)
+  - Por serem sempre alimentados, atuam como **Router**: repetem o sinal do hub, estendendo o alcance para cômodos mais distantes
+- **Minicontrolador ZigBee EZS 211**
+  - Transforma interruptores/tomadas comuns em dispositivos ZigBee controláveis
+
+::right::
+
+- Sensores e tomadas à bateria funcionam como **End Devices**
+  - Não retransmitem mensagens, para economizar energia
+- Quanto mais dispositivos alimentados (roteadores) instalados pela casa, mais robusta e abrangente fica a malha
+- Ilustra na prática a arquitetura Coordinator/Router/End Device: o hub não precisa "alcançar" sozinho todo cômodo, a própria rede se estende
+
+---
+
+## Case: por que ZigBee e não Wi-Fi?
+
+A Intelbras destaca que o ZigBee 3.0 oferece cerca de **5x mais alcance efetivo** que o Wi-Fi doméstico para esse tipo de dispositivo, além de:
+
+- Não sobrecarregar o roteador Wi-Fi da casa com dezenas de dispositivos de baixo tráfego
+- Consumo de energia compatível com sensores à bateria (presença, abertura de porta/janela, temperatura) que precisam durar meses ou anos
+- Formar uma rede independente e auto-organizável, tolerante à falha de um roteador individual
+
+Isso demonstra, em um produto comercial, os mesmos *trade-offs* discutidos em sistemas distribuídos: **descentralização, tolerância a falhas e escalabilidade**, aplicados a uma rede de sensores residencial.
+
+---
 layout: two-cols
 ---
 
@@ -4917,12 +5124,40 @@ layout: two-cols
 - Contextualizar: 38°C na pessoa X, armazenado, comunicado → **informação útil**
 - Necessidade de coleta, armazenamento e análise
 
+---
+layout: image
+image: /hub.jpeg
+alt: Hub Intelbras
+backgroundSize: contain
+---
 
+---
+layout: image
+image: /interruptor.jpeg
+alt: Interruptor
+backgroundSize: contain
+---
 
+---
+layout: image
+image: /sensorAbertura.jpeg
+alt: Sensor Abertura
+backgroundSize: contain
+---
 
+---
+layout: image
+image: /sensorMovimento.jpeg
+alt: Sensor Movimento
+backgroundSize: contain
+---
 
-
-
+---
+layout: image
+image: /sirene.jpeg
+alt: Sirene
+backgroundSize: contain
+---
 
 
 
@@ -4977,6 +5212,14 @@ University of Illinois. Viable Solutions (sessão "Deadlock") no curso CS 341: S
 COFFMAN, Edward G.; ELPHICK, Melanie; SHOSHANI, Arie. System deadlocks. ACM Computing Surveys (CSUR), v. 3, n. 2, p. 67–78, 1971. DOI: 10.1145/356586.356588.
 
 DIJKSTRA, Edsger W. Hierarchical ordering of sequential processes. [S.l.]: [s.n.], [19--]. Disponível em: http://www.cs.utexas.edu/users/EWD/ewd03xx/EWD310.PDF. Acesso em: 7 set. 2025.
+
+---
+
+INTELBRAS. Hub de automação smart ICA 1001. Disponível em: https://www.intelbras.com/pt-br/hub-de-automacao-smart-ica-1001. Acesso em: 17 set. 2026.
+
+INTELBRAS. Interruptor touch inteligente zigbee EZS 1003 & EIZ 1003. Disponível em: https://www.intelbras.com/pt-br/interruptor-touch-inteligente-zigbee-ezs-1003. Acesso em: 17 set. 2026.
+
+CONNECTIVITY STANDARDS ALLIANCE. ZigBee Specification. Disponível em: https://csa-iot.org/all-solutions/zigbee/. Acesso em: 17 set. 2026.
 
 ---
 
