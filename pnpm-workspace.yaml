@@ -5,7 +5,6 @@ packages:
   - '!slides/auth'
   - '!slides/pagamentos'
   - '!slides/poo'
-  - '!slides/ux'
 
 allowBuilds:
   esbuild: false

@@ -1,3 +1,8 @@
 {
-    "slidev.force-enabled": true
+    "slidev.force-enabled": true,
+    "slidev.include": [
+        "**/slides.md",
+        "**/slides/slides.md",
+        "slides/ux/slides.md"
+    ]
 }

@@ -9,7 +9,6 @@ exclude:
   - auth
   - pagamentos
   - poo
-  - ux
 
 hero:
   title: Prof. Leon slides
