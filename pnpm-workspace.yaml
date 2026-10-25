@@ -6,14 +6,19 @@ packages:
   - '!slides/pagamentos'
   - '!slides/poo'
 
-allowBuilds:
-  esbuild: false
-  playwright-chromium: false
-  vue-demi: false
-
 catalog:
   '@slidev/cli': ^52.18.0
   '@slidev/theme-default': ^0.25.0
   '@slidev/theme-seriph': ^0.25.0
   slidev-theme-dracula: ^0.2.0
   vue: ^3.5.40
+
+# Our own package is bumped right after each release, so skip the release-age wait for it
+minimumReleaseAgeExclude:
+  - slidev-workspace
+
+# pnpm 11 requires an explicit decision; these were already skipped under pnpm 10
+allowBuilds:
+  esbuild: false
+  playwright-chromium: false
+  vue-demi: false

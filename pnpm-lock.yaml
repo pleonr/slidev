@@ -24,8 +24,8 @@ importers:
   .:
     dependencies:
       slidev-workspace:
-        specifier: ^0.9.3
-        version: 0.9.3(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(esbuild@0.27.3)(jiti@2.7.0)(typescript@6.0.3)
+        specifier: ^0.10.0
+        version: 0.10.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(esbuild@0.27.3)(jiti@2.7.0)(typescript@6.0.3)
     devDependencies:
       playwright-chromium:
         specifier: ^1.62.0
@@ -126,6 +126,21 @@ importers:
         version: 3.5.40(typescript@6.0.3)
 
   slides/javascript:
+    dependencies:
+      '@slidev/cli':
+        specifier: 'catalog:'
+        version: 52.18.0(@nuxt/kit@3.21.10)(@types/markdown-it@14.1.2)(@types/node@22.20.1)(@vue/compiler-sfc@3.5.40)(cac@7.0.0)(esbuild@0.27.3)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.0)(playwright-chromium@1.62.0)(postcss@8.5.23)(rolldown@1.1.5)(rollup@4.57.1)(srvx@0.12.4)
+      '@slidev/theme-default':
+        specifier: 'catalog:'
+        version: 0.25.0
+      '@slidev/theme-seriph':
+        specifier: 'catalog:'
+        version: 0.25.0
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.40(typescript@6.0.3)
+
+  slides/lectures/class01/topic1:
     dependencies:
       '@slidev/cli':
         specifier: 'catalog:'
@@ -276,6 +291,21 @@ importers:
         version: 3.5.40(typescript@6.0.3)
 
   slides/solid:
+    dependencies:
+      '@slidev/cli':
+        specifier: 'catalog:'
+        version: 52.18.0(@nuxt/kit@3.21.10)(@types/markdown-it@14.1.2)(@types/node@22.20.1)(@vue/compiler-sfc@3.5.40)(cac@7.0.0)(esbuild@0.27.3)(lightningcss@1.33.0)(markdown-it-async@2.2.0)(markdown-it@14.3.0)(playwright-chromium@1.62.0)(postcss@8.5.23)(rolldown@1.1.5)(rollup@4.57.1)(srvx@0.12.4)
+      '@slidev/theme-default':
+        specifier: 'catalog:'
+        version: 0.25.0
+      '@slidev/theme-seriph':
+        specifier: 'catalog:'
+        version: 0.25.0
+      vue:
+        specifier: 'catalog:'
+        version: 3.5.40(typescript@6.0.3)
+
+  slides/talks/slidev-starter-2:
     dependencies:
       '@slidev/cli':
         specifier: 'catalog:'
@@ -3892,8 +3922,8 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
-  slidev-workspace@0.9.3:
-    resolution: {integrity: sha512-QdK2COOxLtukUNtJj8VUUpodindVsW19jKZiFm7acGAGoU74u/X1H0Mi5w7gKXNVPTZsaCmPeQ8Wmdgov3Mr3A==}
+  slidev-workspace@0.10.0:
+    resolution: {integrity: sha512-i66ffSQET+LgmwbFg1qlLX0CptxqcslVGAHLcY3k7z8Rsbpbma8cTQVSS6WJ8lAyoNthvB+IiRbJMZ5WjOw0FQ==}
     hasBin: true
 
   source-map-js@1.2.1:
@@ -8440,7 +8470,7 @@ snapshots:
 
   sisteransi@1.0.5: {}
 
-  slidev-workspace@0.9.3(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(esbuild@0.27.3)(jiti@2.7.0)(typescript@6.0.3):
+  slidev-workspace@0.10.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(esbuild@0.27.3)(jiti@2.7.0)(typescript@6.0.3):
     dependencies:
       '@tailwindcss/vite': 4.3.3(rolldown-vite@7.3.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(esbuild@0.27.3)(jiti@2.7.0)(yaml@2.9.0))
       '@vitejs/plugin-vue': 6.0.8(rolldown-vite@7.3.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@types/node@22.20.1)(esbuild@0.27.3)(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.40(typescript@6.0.3))
