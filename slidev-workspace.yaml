@@ -5,7 +5,6 @@ baseUrl: /slidev
 exclude:
   - node_modules
   - .git
-  - algoritmos
   - auth
   - pagamentos
   - poo
